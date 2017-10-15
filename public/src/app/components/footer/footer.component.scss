@@ -1,0 +1,126 @@
+@import '../../../assets/scss/variables';
+
+footer {
+  position: fixed;
+  top: auto; right: 0; bottom: 0; left: 0;
+  z-index: -3;
+  height: 400px;
+  background: #2E2E2E;
+}
+.section-content{
+  height: 400px;
+  margin: auto;
+  background: #2E2E2E;
+  position: fixed;
+  z-index: -2;
+  top: auto; right: 0; bottom: 0; left: 0;
+  padding: 5rem 0 2rem 0;
+  margin-bottom: 0;
+  color: darken(white, 20%);
+  font-size: .9rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas:
+    "list1 list2 list3"
+    "copyright social social"
+  ;
+  grid-gap: 1rem;
+}
+.footer-header {
+  font-size: .7rem;
+  margin: 1rem 0 1rem 0;
+}
+.footer-list {
+  list-style-type: none;
+  line-height: 1.6;
+}
+.footer-link {
+  text-decoration: none;
+  color: darken(white, 20%);
+}
+
+.social-list-item {
+  list-style-type: none;
+  display: inline-block;
+  margin: .5rem .5rem 0 0;
+  &:last-child {
+    margin: .5rem 0 0 0;
+  }
+}
+.footer-social-link {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: darken(white, 50%);
+}
+
+#footer-main-list {
+  grid-area: list1;
+  align-self: start;
+}
+#footer-examples-list {
+  grid-area: list2;
+  justify-self: center;
+  align-self: start;
+}
+#footer-support-list {
+  grid-area: list3;
+  justify-self: right;
+  align-self: start;
+}
+
+#copyright {
+  grid-area: copyright;
+  align-self: end;
+  color: darken(white, 50%);
+}
+#social-list {
+  grid-area: social;
+  align-self: end;
+  justify-self: end;
+  text-align: right;
+}
+
+@media only screen and (max-width: 550px) {
+  .footer-spacer {
+     min-height: 780px;
+  }
+  .footer {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 3fr 2fr 2fr 2fr 1fr;
+    grid-template-areas:
+      "list1 list1 list1"
+      "list2 list2 list2"
+      "list3 list3 list3"
+      "social social social"
+      "copyright copyright copyright"
+    ;
+    grid-gap: 1rem;
+  }
+  
+  
+  #footer-support-list {
+    justify-self: center;
+  }
+  #social-list {
+    justify-self: center;
+    text-align: center;
+  }
+  .social-list-item {
+    display: block;
+    margin: .5rem .5rem 0 0;
+    &:last-child {
+      margin: .5rem 0 0 0;
+    }
+  }
+  .footer-social-link {
+    color: darken(white, 20%);
+  }
+  #copyright {
+    align-self: end;
+    text-align: center;
+  }
+  .footer-list {
+    text-align: center; 
+  }
+}

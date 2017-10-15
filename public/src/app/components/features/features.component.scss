@@ -1,0 +1,27 @@
+@import '../../../assets/scss/variables';
+
+#features {
+  background: white;
+  p {
+    color: $text-color;
+    line-height: $line-height;
+    margin: 1rem auto;
+  }
+  ul {
+    list-style-image: url("http://colinknebl.com/assets/images/list-style-type.png");
+    list-style-position: inside;
+    color: $text-color;
+    line-height: $line-height;
+  }
+  .features-btn {
+    background: white;
+    color: $pri-color;
+    margin: 1rem auto 0;
+    font-size: 1rem;
+    transform: background .25s, color 5s;
+    &:hover, &:active {
+      background: linear-gradient(to right, #1EF3A7, $pri-color);
+      color: white;
+    }
+  }
+}

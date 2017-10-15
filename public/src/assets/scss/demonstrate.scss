@@ -1,0 +1,74 @@
+@import 'variables';
+
+#demonstrate {
+  background: whitesmoke;
+  form {
+    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas: 
+      "first last"
+      "email email"
+      "wod-type muscle-grp"
+      "submit submit";
+    grid-gap: 1rem;
+    label {
+      color: $text-color;
+      // &:nth-child(odd) {
+      //   background: #999;
+      // }
+    }
+    input, select {
+      box-sizing: border-box;
+      width: 100%;
+      padding: .4rem;
+      margin-top: .5rem;
+      font-size: 1rem;
+      color: $text-color;
+      border: none;
+      border-bottom: 2px solid $pri-color;
+      &:focus {
+        // border: 2px solid $pri-color;
+        outline: none;
+      }
+    }
+    button {
+      background: linear-gradient(to right, #1EF3A7, $pri-color);
+      color: whitesmoke;
+      font-size: 1.25rem;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 5px 5px #aaa;
+      transition: box-shadow .2s;
+      &:active {
+        box-shadow: none;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+    #form-first-name {
+      grid-area: first;
+    }
+    #form-last-name {
+      grid-area: last;
+    }
+    #form-email {
+      grid-area: email;
+    }
+    #form-wod-type {
+      grid-area: wod-type;
+    }
+    #form-muscle-grp {
+      grid-area: muscle-grp;
+    }
+    #form-submit-btn {
+      grid-area: submit;
+    }
+
+  } 
+  .input-text, select {
+    
+  }
+}

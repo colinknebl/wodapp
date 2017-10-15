@@ -1,0 +1,89 @@
+@import '../../../assets/scss/variables';
+
+#landing {
+  height: 100vh;
+  background: {
+    image: url("https://static.wixstatic.com/media/84a81e_f909f64f68a94fda980dee0fb3aa7d12~mv2.png/v1/fill/w_1000,h_729,al_c/84a81e_f909f64f68a94fda980dee0fb3aa7d12~mv2.png");
+    position: center;
+    size: cover;
+  }
+  display: flex;
+  flex-direction: column;
+}
+header {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .menu-btn {
+    margin: 0;
+    display: inline-block;
+    svg {
+      cursor: pointer;
+      vertical-align: middle;
+      line {
+        stroke: $pri-color;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+    }
+  }
+}
+
+.welcome-text {
+  color: whitesmoke;
+  text-align: left;
+}
+.welcome-container {
+  padding: 0 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.welcome-msg {
+  @extend .welcome-text;
+  font-size: 3rem;
+  line-height: 1.2;
+  text-align: right;
+}
+.welcome-description {
+  text-align: center;
+  margin: 3rem auto;
+  h1 {
+    display: inline-block;
+    color: $pri-color;
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+  p {
+    display: inline;
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: whitesmoke;
+  }
+}
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.welcome-btn:first-child {
+  margin-bottom: 1rem;
+}
+@media only screen and (min-width: 550px) {
+  .welcome-msg {
+    text-align: center;
+  }
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+@import 'variables';
+
+// about section
+#about {
+  background: #FaFaFa;
+  p {
+    color: $text-color;
+    line-height: $line-height;
+    margin: 1rem auto;
+  }
+  .about-setting {
+    background: white;
+    box-shadow: 0 3px 3px 3px #eee;
+    text-align: center;
+    width: 50%;
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+  .about-img {
+    margin: .5rem;
+    width: 80%;
+    height: auto;
+    max-width: 170px;
+  }
+}
