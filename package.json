@@ -1,0 +1,19 @@
+{
+  "name": "wodapp",
+  "version": "1.0.0",
+  "description": "Application to generate custom CrossFit style workouts",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colinknebl/wodapp.git"
+  },
+  "author": "Colin Knebl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colinknebl/wodapp/issues"
+  },
+  "homepage": "https://github.com/colinknebl/wodapp#readme"
+}
