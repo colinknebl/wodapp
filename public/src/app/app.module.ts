@@ -1,31 +1,48 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router'; 
 
 import { AppComponent } from './app.component';
+import { IndexComponent } from './pages/index/index.component';
+import { FeaturesComponent } from './pages/features/features.component';
+import { PricingComponent } from './pages/pricing/pricing.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { FeaturesComponent } from './components/features/features.component';
-import { CtaBarComponent } from './components/cta-bar/cta-bar.component';
-import { NavComponent } from './components/header/nav/nav.component';
 import { MobileNavComponent } from './components/mobile-nav/mobile-nav.component';
 
 // services
 import { NavService } from './services/nav.service';
 import { DemonstrateComponent } from './components/demonstrate/demonstrate.component';
 
+
+const appRoutes:Routes = [
+  // {path:'', component:DashboardComponent, canActivate:[AuthGuard]},
+  {path:'', component:IndexComponent},
+  {path:'features', component:FeaturesComponent},
+  {path:'pricing', component:PricingComponent},
+//   {path:'register', component:RegisterComponent, canActivate:[RegisterGuard]},
+//   {path:'login', component:LoginComponent},
+//   {path:'add-client', component:AddClientComponent, canActivate:[AuthGuard]},
+//   {path:'client/:id', component:ClientDetailsComponent, canActivate:[AuthGuard]}, 
+//   {path:'edit-client/:id', component:EditClientComponent, canActivate:[AuthGuard]},
+//   {path:'settings', component:SettingsComponent, canActivate:[AuthGuard]},
+//   {path:'**', component:PageNotFoundComponent},
+];
+
 @NgModule({
   declarations: [
     AppComponent,
+    IndexComponent,
+    FeaturesComponent,
+    PricingComponent,
     HeaderComponent,
     FooterComponent,
-    FeaturesComponent,
-    CtaBarComponent,
-    NavComponent,
     MobileNavComponent,
     DemonstrateComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     NavService

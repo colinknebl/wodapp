@@ -4,6 +4,7 @@
         './assets/scss/features',
         './assets/scss/variables',
         './assets/scss/nav',
+        './assets/scss/landing',
         './assets/scss/demonstrate';
 
 @import url('https://fonts.googleapis.com/css?family=Lato');
@@ -13,9 +14,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Lato', sans-serif;
-}
-body {
-  height: calc(100vh * 2);
 }
 .super {
   vertical-align: top;
