@@ -3,30 +3,28 @@
 footer {
   position: fixed;
   top: auto; right: 0; bottom: 0; left: 0;
-  z-index: -3;
-  height: 400px;
-  background: #2E2E2E;
-}
-.section-content{
-  height: 400px;
-  margin: auto;
-  background: #2E2E2E;
-  position: fixed;
   z-index: -2;
-  top: auto; right: 0; bottom: 0; left: 0;
-  padding: 5rem 0 2rem 0;
-  margin-bottom: 0;
-  color: darken(white, 20%);
-  font-size: .9rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 2fr 1fr;
-  grid-template-areas:
-    "list1 list2 list3"
-    "copyright social social"
-  ;
-  grid-gap: 1rem;
+  height: 400px;
+  background: $footer-color;
+  .section-content{
+    height: 100%;
+    background: $footer-color;
+    top: auto; right: 0; bottom: 0; left: 0;
+    padding: 5rem 0 2rem 0;
+    margin-bottom: 0;
+    color: darken(white, 20%);
+    font-size: .9rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas:
+      "list1 list2 list3"
+      "copyright social social"
+    ;
+    grid-gap: 1rem;
+  }
 }
+
 .footer-header {
   font-size: .7rem;
   margin: 1rem 0 1rem 0;
@@ -86,6 +84,7 @@ footer {
      min-height: 780px;
   }
   .footer {
+    border: 2px solid red;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 3fr 2fr 2fr 2fr 1fr;
     grid-template-areas:

@@ -16,16 +16,12 @@ $break-point-plus-one: 701px;
     display: none;
   }
   .desktop-menu {
-    // border: 2px solid purple;
-    
+
     .nav-menu-list {
       padding: 0;
       margin: 0;
-      // border: 2px solid red;
-
       .nav-menu-item {
         display: inline-block;
-        // border: 2px solid aqua;
         &:last-of-type {
           .nav-menu-link {
             margin-right: 0;

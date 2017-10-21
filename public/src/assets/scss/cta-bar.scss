@@ -6,12 +6,14 @@
   background: linear-gradient(to right, #1EF3A7, $pri-color);
   color: white;
 //box-shadow: none|h-shadow v-shadow blur spread color |inset|initial|inherit;
-  box-shadow: 0px 0px 100px 50px darken(#2E2E2E, 0%);
+  box-shadow: 0px 0px 100px 50px darken($footer-color, 0%);
+  margin-bottom: 400px;
 }
 .footer-spacer {
+  border: 5px solid red;
   height: $footer-height;
   min-height: 400px;
-  background-color: #2E2E2E;
+  background-color: $footer-color;
   position: relative;
-  z-index: -5;
+  z-index: -3;
 }
