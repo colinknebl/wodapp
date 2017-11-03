@@ -1,0 +1,632 @@
+db.exercises.insertMany(
+  [
+    {
+      "name" : "Back Squats",
+      "level" : "gold",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "quadriceps",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings"
+      ],
+      "necessaryEquip" : [
+        "rack",
+        "barbell",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Front Squats",
+      "level" : "gold",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "quadriceps",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings"
+      ],
+      "necessaryEquip" : [
+        "rack",
+        "barbell",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Deadlifts",
+      "level" : "gold",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["legs", "back"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "lower back",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings"
+      ],
+      "necessaryEquip" : [
+        "barbell",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Lunges",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "quadriceps",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings"
+      ]
+    },
+    {
+      "name" : "Dumbbell Bench Presses",
+      "level" : "gold",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "chest",
+      "muscleGrps" : ["chest", "shoulders", "arms"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "pectoralis major",
+      "secondaryMuscleTarget" : [
+        "shoulders",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bench",
+        "dumbbells"
+      ]
+    },
+    {
+      "name" : "Barbell Bench Presses",
+      "level" : "gold",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "chest",
+      "muscleGrps" : ["chest", "shoulders", "arms"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "pectoralis major",
+      "secondaryMuscleTarget" : [
+        "shoulders",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bench",
+        "barbell",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Box Jumps",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "",
+      "weighted" : false,
+      "primaryMuscleTarget" : "quadriceps",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings"
+      ],
+      "necessaryEquip" : [
+        "plyo box"
+      ]
+    },
+    {
+      "name" : "Air Squats",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "gymnastics",
+      "weighted" : false,
+      "primaryMuscleTarget" : "quadriceps",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings"
+      ]
+    },
+    {
+      "name" : "Pull-Ups",
+      "level" : "gold",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["back", "arms"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "latissimus dorsi",
+      "secondaryMuscleTarget" : [
+        "biceps brachii"
+      ],
+      "necessaryEquip" : [
+        "pull-up bar"
+      ]
+    },
+    {
+      "name" : "Push-Ups",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "chest",
+      "muscleGrps" : ["chest", "shoulders", "arms"],
+      "category" : "gymnastics",
+      "weighted" : false,
+      "primaryMuscleTarget" : "pectoralis major",
+      "secondaryMuscleTarget" : [
+        "anterior deltoid",
+        "triceps brachii"
+      ]
+    },
+    {
+      "name" : "Dips",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "triceps",
+      "muscleGrps" : ["triceps", "arms", "chest", "shoulders"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "triceps brachii",
+      "secondaryMuscleTarget" : [
+        "pectoralis major",
+        "anterior deltoid"
+      ],
+      "necessaryEquip" : [
+        "dip station",
+        "bench"
+      ]
+    },
+    {
+      "name" : "Handstand Push-Ups",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "shoulders",
+      "muscleGrps" : ["shoulders", "chest", "arms", "traps"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "anterior deltoid",
+      "secondaryMuscleTarget" : [
+        "pectoralis major",
+        "triceps brachii",
+        "latissimus dorsi",
+        "trapezius"
+      ]
+    },
+    {
+      "name" : "Rope Climb",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "biceps",
+      "muscleGrps" : ["biceps", "arms", "shoulders", "forearms", "back", "core"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "biceps brachii",
+      "secondaryMuscleTarget" : [
+        "deltoids",
+        "forearms",
+        "back",
+        "core"
+      ],
+      "necessaryEquip" : [
+        "climbing rope"
+      ]
+    },
+    {
+      "name" : "Muscle-Up",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["back", "chest", "arms", "shoulders", "traps"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "latissimus dorsi",
+      "secondaryMuscleTarget" : [
+        "pectoralis major",
+        "triceps brachii",
+        "biceps brachii",
+        "deltoids",
+        "trapezius"
+      ],
+      "necessaryEquip" : [
+        "pull-up bar",
+        "rings"
+      ]
+    },
+    {
+      "name" : "Back Extension",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["back", "legs"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "erector spinae",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings",
+        "lower back"
+      ],
+      "optionalEquip" : [
+        "ghd"
+      ]
+    },
+    {
+      "name" : "Sit-Ups",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "abs",
+      "muscleGrps" : ["core"],
+      "category" : "gymnastics",
+      "weighted" : "either",
+      "primaryMuscleTarget" : "abdominals",
+      "secondaryMuscleTarget" : [
+        "obliques"
+      ],
+      "optionalEquip" : [
+        "abmat"
+      ]
+    },
+    {
+      "name" : "Run",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "metabolic conditioning",
+      "weighted" : false
+    },
+    {
+      "name" : "Bike",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs"],
+      "category" : "metabolic conditioning",
+      "weighted" : false,
+      "necessaryEquip" : [
+        "bicycle",
+        "air bike"
+      ]
+    },
+    {
+      "name" : "Row",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["back", "legs", "arms", "shoulders"],
+      "category" : "metabolic conditioning",
+      "weighted" : false,
+      "necessaryEquip" : [
+        "rower"
+      ]
+    },
+    {
+      "name" : "Jump Rope (Single Unders)",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "shoulders"],
+      "category" : "metabolic conditioning",
+      "weighted" : false,
+      "necessaryEquip" : [
+        "jump rope"
+      ]
+    },
+    {
+      "name" : "Jump Rope (Double Unders)",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "shoulders"],
+      "category" : "metabolic conditioning",
+      "weighted" : false,
+      "necessaryEquip" : [
+        "jump rope"
+      ]
+    },
+    {
+      "name" : "Squat Cleans",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "back", "shoulders", "traps"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "quadriceps",
+        "calves",
+        "deltoids",
+        "trapezius"
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Power Cleans",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["legs", "back", "shoulders", "traps"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "quadriceps",
+        "calves",
+        "deltoids",
+        "trapezius"
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Hang Cleans",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["legs", "back", "shoulders", "traps"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "quadriceps",
+        "calves",
+        "deltoids",
+        "trapezius"
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Clean and Jerks",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "back", "shoulders", "traps"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "quadriceps",
+        "calves",
+        "deltoids",
+        "trapezius",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Power Snatches",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["legs", "back", "shoulders", "traps"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "quadriceps",
+        "calves",
+        "deltoids",
+        "trapezius",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Squat Snatches",
+      "level" : "gold",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "legs", "shoulders", "traps"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "quadriceps",
+        "calves",
+        "deltoids",
+        "trapezius",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Kettlebell Swings",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "back", "shoulders"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "lower back",
+        "deltoids"
+      ],
+      "necessaryEquip" : [
+        "kettlebell"
+      ]
+    },
+    {
+      "name" : "Dumbbell Swings",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "back", "shoulders"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "glutes",
+      "secondaryMuscleTarget" : [
+        "hamstrings",
+        "lower back",
+        "deltoids"
+      ],
+      "necessaryEquip" : [
+        "dumbbells"
+      ]
+    },
+    {
+      "name" : "Wall Balls",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "legs",
+      "muscleGrps" : ["legs", "shoulders"],
+      "category" : "metabolic conditioning",
+      "weighted" : true,
+      "primaryMuscleTarget" : "quadriceps",
+      "secondaryMuscleTarget" : [
+        "glutes",
+        "hamstrings",
+        "deltoids"
+      ],
+      "necessaryEquip" : [
+        "medicine ball"
+      ]
+    },
+    {
+      "name" : "Turkish Get-Up",
+      "level" : "bronze",
+      "skillLevel" : "advanced",
+      "priMuscleGrp" : "",
+      "muscleGrps" : ["legs", "shoulders", "core", "back", "chest"],
+      "category" : "miscellaneous",
+      "weighted" : true,
+      "primaryMuscleTarget" : "",
+      "secondaryMuscleTarget" : [
+        ""
+      ],
+      "necessaryEquip" : [
+        "kettlebell",
+        "dumbbells"
+      ]
+    },
+    {
+      "name" : "Barbell Row",
+      "level" : "gold",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["back", "biceps", "arms"],
+      "category" : "weightlifting",
+      "weighted" : true,
+      "primaryMuscleTarget" : "",
+      "secondaryMuscleTarget" : [
+        ""
+      ],
+      "necessaryEquip" : [
+        "bar",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Dumbbell Row",
+      "level" : "silver",
+      "skillLevel" : "beginner",
+      "priMuscleGrp" : "back",
+      "muscleGrps" : ["back", "biceps", "arms"],
+      "category" : "body building",
+      "weighted" : true,
+      "necessaryEquip" : [
+        "dumbbells"
+      ]
+    },
+    {
+      "name" : "Dumbbell Flyes",
+      "level" : "bronze",
+      "skillLevel" : "intermediate",
+      "priMuscleGrp" : "chest",
+      "muscleGrps" : ["chest", "shoulders", "triceps", "arms"],
+      "category" : "body building",
+      "weighted" : true,
+      "necessaryEquip" : [
+        "bench",
+        "dumbbells"
+      ]
+    }
+  ]
+);
+
+
+
+
+,
+    {
+      "name" : "",
+      "level" : "",
+      "skillLevel" : "",
+      "priMuscleGrp" : "",
+      "muscleGrps" : [""],
+      "category" : "",
+      "weighted" : ,
+      "primaryMuscleTarget" : "",
+      "secondaryMuscleTarget" : [
+        ""
+      ],
+      "necessaryEquip" : [
+        ""
+      ]
+    }
+
+
+db.exercises.find({
+  {
+    priMuscleGrp: "chest",
+    
+  },
+  {
+    _id:0
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

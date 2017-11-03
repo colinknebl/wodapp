@@ -13,6 +13,7 @@ import { MobileNavComponent } from './components/mobile-nav/mobile-nav.component
 // services
 import { NavService } from './services/nav.service';
 import { DemonstrateComponent } from './components/demonstrate/demonstrate.component';
+import { WorkoutGeneratorComponent } from './pages/workout-generator/workout-generator.component';
 
 
 const appRoutes:Routes = [
@@ -20,6 +21,7 @@ const appRoutes:Routes = [
   {path:'', component:IndexComponent},
   {path:'features', component:FeaturesComponent},
   {path:'pricing', component:PricingComponent},
+  {path:'workout-generator', component:WorkoutGeneratorComponent},
 //   {path:'register', component:RegisterComponent, canActivate:[RegisterGuard]},
 //   {path:'login', component:LoginComponent},
 //   {path:'add-client', component:AddClientComponent, canActivate:[AuthGuard]},
@@ -38,7 +40,8 @@ const appRoutes:Routes = [
     HeaderComponent,
     FooterComponent,
     MobileNavComponent,
-    DemonstrateComponent
+    DemonstrateComponent,
+    WorkoutGeneratorComponent
   ],
   imports: [
     BrowserModule,
