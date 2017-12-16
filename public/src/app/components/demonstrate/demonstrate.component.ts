@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-demonstrate',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./demonstrate.component.scss']
 })
 export class DemonstrateComponent implements OnInit {
+  @ViewChild("_id", {read: ElementRef}) tref: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  assignId() {
+    let time = new Date().getTime();
+    this.tref.nativeElement.value = time;
   }
 
 }

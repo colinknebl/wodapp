@@ -1,3 +1,23 @@
-<p>
-  workout-generator works!
-</p>
+<section class="wod-display-container">
+  <section class="jumbo-tron">
+    <h1 class="wod-display-h1">Your WOD</h1>
+  </section>
+
+  <section class="workout-generator-main">
+    
+    <div class="wod-display" *ngFor="let wod of wod">
+      
+      <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes.</p>
+      <div *ngFor="let exercise of wod.exercises">
+        <p>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+      </div>
+      <p>don't forget, I changed the link in the get wod service to the dev api.</p>
+    </div>
+
+  </section>
+</section>  
+<!-- <section class="something">
+  <h1>Something</h1>
+</section> -->
+
+<app-cta-bar></app-cta-bar>

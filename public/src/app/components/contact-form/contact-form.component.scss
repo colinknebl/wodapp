@@ -1,0 +1,47 @@
+@import '../../../assets/scss/variables',
+        '../../../assets/scss/main-classes';
+
+form {
+  // border: 4px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
+  grid-gap: 1rem;
+  grid-template-areas: 
+    "first-name last-name"
+    "email request-type"
+    "message message"
+    "submit submit";
+}
+.form-first-name {
+  grid-area: first-name;
+}
+.form-last-name {
+  grid-area: last-name;
+}
+.form-email {
+  grid-area: email;
+}
+.form-request-type {
+  grid-area: request-type;
+}
+select {
+  -webkit-appearance: none;
+  border-radius: 0px;
+}
+textarea {
+  width: 100%;
+}
+.form-message {
+  grid-area: message;
+}
+.submit {
+  grid-area: submit;
+}
+.input-text, select {
+  @extend .general-input-styles;
+  @extend .input-border;
+  width: 100%;
+  background: white;
+}
+

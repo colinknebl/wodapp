@@ -1,0 +1,48 @@
+@import '../../../assets/scss/variables';
+
+.wod-display-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.jumbo-tron {
+  height: 30vh;
+  background: {
+    image: url('https://static.pexels.com/photos/669584/pexels-photo-669584.jpeg');
+    position: center;
+    size: cover;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .wod-display-h1 {
+    color: whitesmoke;
+    font-size: 3rem;
+  }
+}
+
+.workout-generator-main {
+  background: whitesmoke;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wod-display {
+  // border: 3px solid $pri-color;
+  border-radius: 10px;
+  padding: 5rem 2rem;
+  // background: rgba(70,224,188,0.2);
+  color: $text-color;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+
+
+.something {
+  height: 500px;
+  background: whitesmoke;
+}

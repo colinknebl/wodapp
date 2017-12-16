@@ -1,6 +1,7 @@
+
 <header id="nav-bar">
   <a routerLink="/">
-    <img class="logo" src="http://colinknebl.com/assets/images/Logo.png" alt="logo" width="165" height="37.5">
+    <img class="logo" src="../../../assets/images/logo.png" alt="logo" width="165" height="81.3">
   </a>
 
   <div id="nav-btn-push-right" class="nav-btn" (click)="navOpen()">
@@ -13,12 +14,13 @@
 
   <nav class="desktop-menu">
     <ul id="menu" class="nav-menu-list">
+      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/">Home</a><span class="pipe">|</span></li>
       <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/features">Features</a><span class="pipe">|</span></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/pricing">Pricing</a><span class="pipe">|</span></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/">Case Studies</a><span class="pipe">|</span></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/">More</a><span class="pipe">|</span></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/">Check Status</a><span class="pipe">|</span></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/">Get Updates</a></li>
+      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/about">About</a><span class="pipe">|</span></li>
+      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/contact">Contact</a><span class="pipe">|</span></li>
+      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/donate">Donate</a></li>
+      <!-- <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/blog">Blog</a></li> -->
+      <!-- <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/get-updates">Get Updates</a></li> -->
     </ul>
     <!-- <ul id="more-menu" class="nav-menu-list">
       <li class="nav-menu-item"><a href="#" class="nav-menu-link">Payments</a></li>
@@ -31,5 +33,6 @@
   </nav>
 
 </header>
+
 
 

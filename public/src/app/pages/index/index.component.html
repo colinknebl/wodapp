@@ -1,61 +1,96 @@
-<section class="welcome-container">
-  <p class="welcome-msg">The last CrossFit<span class="registered-logo-lg">&reg;</span> App you will ever need</p>
-  <div class="welcome-description"><h1>WODwhiz</h1> <p>is the complete, full-featured CrossFit<span class="registered-logo-md">&reg;</span> App</p></div>
-  <div class="btn-container">
-    <button id="status-btn" class="btn welcome-btn">Check App Status</button>
-    <button id="updates-btn" class="btn welcome-btn">Get Updates</button>
-  </div>
-</section>
+<main class="router-section">
+  <section class="router-section-jumbotron">
+    <h1>forge ahead</h1>
+  </section>
 
-<section id="features" class="section">
-  <div class="section-content">
-    <h2 class="section-head color-gradient">The complete CrossFit<span class="registered-logo-md">&reg;</span> workout platform</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia labore enim dolore et delectus illum unde aliquid tempora laboriosam amet! Harum, sapiente ullam? Quae eaque amet doloremque similique ipsa soluta iste, quos voluptatibus commodi corrupti ut repellendus quam impedit voluptas.</p>
-    <ul>
-      <li>Custom WOD Generator</li>
-      <li>Muscle Targeting</li>
-      <li>Workout Tracker</li>
-      <li>Timer</li>
-      <li>Social Media Integration</li>
-    </ul>
-    <button class="btn features-btn" routerLink="/features">
-      See Complete List of Features
-    </button>
-  </div>
-</section>
+  <nav class="btm-border circle-nav-section">
+    
+    <article class="circle-nav">
+      <a class="circle-nav-link" href="#features">
+        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
+        <h2 class="circle-nav-header">Features</h2>
+      </a>
+    </article>
+    
+    <article class="circle-nav">
+      <a class="circle-nav-link" href="#about">
+        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
+        <h2 class="circle-nav-header">About</h2>
+      </a>
+    </article>    
 
+    <!-- <article class="circle-nav">
+      <a class="circle-nav-link" routerLink="/blog" href="">
+        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
+        <h2 class="circle-nav-header">Blog</h2>
+      </a>
+    </article> -->    
 
-<section id="about" class="section">
-  <div class="section-content">
-    <h2 class="section-head color-gradient">Adaptable to Any Setting</h2>
-    <p>Whether you exercise in your home/garage gym, your local CrossFit<span class="registered-logo-sm">&reg;</span> box, or the full-scale commercial gym, this app can power your workouts. All of these venues have different equipment available and it can be difficult coming up with creative ways to use the tools at your disposal. This app takes the guess work out of your work out.</p>
-    <div class="about-setting">
-      <img class="about-img" src="http://colinknebl.com/assets/images/garage-gym.png" alt="commercial gym" width="170" height="95">
-      <p>Garage Gym</p>
+    <article class="circle-nav">
+      <a class="circle-nav-link" routerLink="/contact" href="">
+        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
+        <h2 class="circle-nav-header">Contact</h2>
+      </a>
+    </article>    
+
+    <article class="circle-nav">
+      <a class="circle-nav-link" routerLink="/donate" href="">
+        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
+        <h2 class="circle-nav-header">Donate</h2>
+      </a>
+    </article>  
+
+  </nav>
+
+  <section class="btm-border button-section">
+    <button class="btn btn-gradient-right index-main-btn" routerLink="/check-status">Check Status</button>
+    <a class="btn btn-gradient-left index-main-btn" href="#demonstrate">Generate Workout</a>
+  </section>
+
+  <section id="features" class="section features-section btm-border">
+    <div class="section-content">
+      <h2 class="section-head text-color-gradient">The complete workout platform</h2>
+      <p class="section-paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia labore enim dolore et delectus illum unde aliquid tempora laboriosam amet! Harum, sapiente ullam? Quae eaque amet doloremque similique ipsa soluta iste, quos voluptatibus commodi corrupti ut repellendus quam impedit voluptas.</p>
+      <ul class="features-list">
+        <li>Custom WOD Generator</li>
+        <li>Muscle Targeting</li>
+        <li>Workout Tracker</li>
+        <li>Timer</li>
+        <li>Social Media Integration</li>
+      </ul>
+      <button class="btn btn-gradient-right features-section-btn" routerLink="/features">
+        See Complete List of Features
+      </button>
     </div>
-    <div class="about-setting">
-      <img class="about-img" src="http://colinknebl.com/assets/images/crossfit-box.png" alt="commercial gym" width="170" height="95">
-      <p>CrossFit<span class="registered-logo-sm">&reg;</span> Box</p>
+  </section>
+
+  <section id="about" class="section about-section btm-border">
+    <div class="section-content">
+      <h2 class="section-head text-color-gradient">Adaptable to Any Setting</h2>
+      <p class="section-paragraph">Whether you exercise in your home/garage gym, your local CrossFit<span class="registered-logo-sm">&reg;</span> box, or the full-scale commercial gym, this app can power your workouts. All of these venues have different equipment available and it can be difficult coming up with creative ways to use the tools at your disposal. This app takes the guess work out of your work out.</p>
+      <section class="about-settings">
+        <article class="about-setting">
+          <img class="about-img" src="http://colinknebl.com/assets/images/garage-gym.png" alt="garage gym" width="170" height="95">
+          <p>Garage Gym</p>
+        </article>
+        <article class="about-setting">
+          <img class="about-img" src="http://colinknebl.com/assets/images/crossfit-box.png" alt="crossfit box" width="170" height="95">
+          <p>CrossFit<span class="registered-logo-sm">&reg;</span> Box</p>
+        </article>
+        <article class="about-setting">
+          <img class="about-img" src="http://colinknebl.com/assets/images/commercial-bldg.png" alt="commercial gym" width="170" height="95">
+          <p>Commercial Gym</p>
+        </article>
+      </section>
+      <button class="btn btn-gradient-left about-section-btn" routerLink="/about">Learn more about Forgd</button>
     </div>
-    <div class="about-setting">
-      <img class="about-img" src="http://colinknebl.com/assets/images/commercial-bldg.png" alt="commercial gym" width="170" height="95">
-      <p>Commercial Gym</p>
+  </section>
+
+  <section id="demonstrate" class="section generate-section">
+    <div class="section-content">
+      <h2 class="section-head color-gradient">Try It Out</h2>
+        <app-demonstrate></app-demonstrate>
     </div>
-  </div>
-</section>
-
-
-<section id="demonstrate" class="section">
-  <div class="section-content">
-    <h2 class="section-head color-gradient">Try It Out</h2>
-      <app-demonstrate></app-demonstrate>
-  </div>
-</section> 
-
-
-<section id="cta" class="section">
-  <div class="section-content">
-    <h2>Download the App and start exercising today!</h2>
-  </div>
-</section>
-<!-- <div class="footer-spacer"></div> -->
+  </section> 
+</main>
+<app-cta-bar></app-cta-bar>

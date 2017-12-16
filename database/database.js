@@ -1,34 +1,24 @@
 const MongoClient = require('mongodb').MongoClient,
-      assert = require('assert'),
+      assert      = require('assert'),
       exerciseUrl = 'mongodb://localhost:27017/exercises',
-      userUrl = 'mongodb://localhost:27017/users';
-
-// const wodGenerator = require('../workout_gen_software/wodGenerator');
-
-
-
+      userUrl     = 'mongodb://localhost:27017/users',
+      wodsUrl     = 'mongodb://localhost:27017/wods',
+      wodAppUrl   = 'mongodb://localhost:27017/wodapp';
 
 mongodb = {
   
   // CONNECT TO MONGODB DATABASE USING MONGODB
-  exerciseConnect: () => {
-    MongoClient.connect(exerciseUrl, (err, db) => {
+  testConnection: () => {
+    MongoClient.connect(wodAppUrl, (err, db) => {
       assert.equal(null, err); 
-      console.log('MongoDB exercise connection works.');
-      db.close();
-    });
-  },
-
-  userConnect: () => {
-    MongoClient.connect(userUrl, (err, db) => {
-      assert.equal(null, err); 
-      console.log('MongoDB user connection works.');
+      // assert.notEqual(docs.length, 0);
+      console.log('MongoDB connection works.');
       db.close();
     });
   },
 
   addUser: (userFirstName, userLastName, userEmail) => {
-    MongoClient.connect(userUrl, (err, db) => {
+    MongoClient.connect(wodAppUrl, (err, db) => {
       assert.equal(null, err); 
       console.log('adding user to user db...');
 
@@ -44,172 +34,243 @@ mongodb = {
     });
   },
 
-  exerciseQueryX: (userSkillLvl, userRepScheme, userWodType, userMuscleGrp, userMaxBench, userMaxSquat, userMaxSnatch, userMaxDead, userEquip) => {
-
-    MongoClient.connect(exerciseUrl, (err, db) => {
+  addWod: (wod) => {
+    MongoClient.connect(wodAppUrl, (err, db) => {
       assert.equal(null, err); 
-      console.log('querying exercise db...');
 
-      let level = 'gold';
+      db.collection('wods').insertOne(wod);
+      db.close();
       
-      let exercises = db.collection('exercises')
-        .find({
-          muscleGrps: userMuscleGrp
-        },
-        {
-          name: 1, 
-          _id: 0
+    });
+  },
+
+  getWod: (_id) => {
+
+    return new Promise((resolve, reject) => {
+
+      MongoClient.connect(wodAppUrl, (err, db) => {
+        assert.equal(null, err); 
+
+        let wodArray = [];
+        let wod = db.collection('wods').find({'_id': _id});
+
+        wod.forEach((wod, err) => {
+          wodArray.push(wod);
+        }, () => {
+          db.close();
+          if (wodArray) {
+            resolve(wodArray);
+          } else {
+            reject(err);
+          }
+        });
+      });
+    });
+  },
+
+  exerciseQuery: (user, queryType, categorySearchValue) => {
+    
+    // BUILD THE DATABASE QUERY
+    const query = mongodb.queryBuilder(user, queryType, categorySearchValue);
+    console.log(query);
+    // ************************
+
+    return new Promise((resolve, reject) => {
+
+      MongoClient.connect(wodAppUrl, (err, db) => {
+
+        assert.equal(null, err);
+
+        const exerciseArray = [];
+        const projection = {
+          _id:0,
+          "primaryMuscleTarget":0,
+          "secondaryMuscleTarget":0
+        };
+      
+        const cursor = db.collection('exercises').find(query, projection);
+
+        cursor.forEach((exercise, err) => {
+          exerciseArray.push(exercise);
+        }, () => {
+          db.close();
+          if (exerciseArray) {
+            resolve(exerciseArray);
+          } else {
+            reject('failed to load');
+          }
+        });
+      });
+    });
+  },
+
+  queryBuilder: (user, queryType, categorySearchValue) => {
+    // exerciseQuery argument list
+    // argument 1 = user object
+    // argument 2 = array of query types
+    //    - priMuscleGrp
+    //    - secMuscleGrp
+    //    - oppMuscleGrp
+    //    - category
+    // argument 3 = array of values for category type searches
+    //    - metabolic conditioning
+
+
+
+    // console.log('start queryBuilder');
+    // console.log(`categorySearchValue: ${categorySearchValue}`);
+
+    let queryDetails = {};
+
+    let query = {
+      $and : [queryDetails]
+    };
+
+    for (var i = 0; i < queryType.length; i++) {
+
+      // console.log(`queryType: ${queryType[i]}`);
+
+      if (queryType[i] === 'priMuscleGrp') {
+
+        if ('muscleGrp' in user && user.muscleGrp !== 'any') {
+          queryDetails.priMuscleGrp = user.muscleGrp;
+        } 
+      }
+
+      else if (queryType[i] === 'secMuscleGrp') {
+
+        if ('muscleGrp' in user && user.muscleGrp !== 'any') {
+          queryDetails.muscleGrps = user.muscleGrp;
+        } 
+      }
+
+      else if (queryType[i] === 'oppMuscleGrp') {
+
+        let oppMuscleGrp;
+
+        switch (user.muscleGrp) {
+          case "chest":
+            oppMuscleGrp = "back";
+            break;
+          case "back":
+            oppMuscleGrp = "chest";
+            break;
+          case "quads":
+            oppMuscleGrp = "hamstrings";
+            break;
+          case "hamstrings":
+            oppMuscleGrp = "quads";
+            break;
+          case "anterior deltoids":
+            oppMuscleGrp = "posterior deltoids";
+            break;
+          case "posterior deltoids":
+            oppMuscleGrp = "anterior deltoids";
+            break;
+          case "biceps":
+            oppMuscleGrp = "triceps";
+            break;
+          case "triceps":
+            oppMuscleGrp = "biceps";
+            break;
         }
-      );
-      
-      exercises.forEach((exercise, err) => {
-        console.log(exercise);
-      }, () => {
-        db.close();
-        console.log('closing connection to db');
-      });
-    });
-  },
 
-  exerciseQuery: (userSkillLvl, userRepScheme, userWodType, userMuscleGrp, userMaxBench, userMaxSquat, userMaxSnatch, userMaxDead, userEquip) => {
-    
-    mongodb.exercises = [];
+        queryDetails.opposingMuscleGrp = oppMuscleGrp;
+      }
 
-    if (userMuscleGrp !== "any") {
-      mongodb.exerciseQueryByMuscleGrp(userMuscleGrp);
-    } else {
-      console.log('no muscle group selected');
+      else if (queryType[i] === 'skillLevel') {
+        // skillLevel values in db
+        //  - beginner
+        //  - intermediate
+        //  - advanced
+
+        if ('skillLvl' in user) {
+          queryDetails.skillLevel = user.skillLvl;
+        }
+      }
+
+      else if (queryType[i] === 'category') {
+        // category values in db
+        //  - weightlifting
+        //  - gymnastics
+        //  - plyometric
+        //  - crossfit
+        //  - metabolic conditioning
+        //  - body building
+
+
+        if (categorySearchValue) {
+
+          // console.log(`categorySearchValue: ${categorySearchValue}`);
+          // console.log(`categorySearchValue.length: ${categorySearchValue.length}`);
+
+          if (categorySearchValue.length === 1) {
+
+            queryDetails.category = categorySearchValue[0];
+
+          }
+
+          else if (categorySearchValue > 1) {
+
+            let categories = [];
+
+            queryDetails.category = {
+              $or : categories
+            };
+            
+            for (let i = 0; i < categorySearchValue.length; i++) {
+              let categoryInstance = {};
+              categoryInstance.category = categorySearchValue[i];
+              categories.push(categoryInstance);
+
+            }
+          }
+        }
+
+        else if (!categorySearchValue) {
+
+          if (
+            user.wodType === 'amrap'      ||
+            user.wodType === 'bodyweight' ||
+            user.wodType === 'chipper'    ||
+            user.wodType === 'couplet'    ||
+            user.wodType === 'emom'       ||
+            user.wodType === 'hybrid'     ||
+            user.wodType === 'singlet'    ||
+            user.wodType === 'tabata'     ||
+            user.wodType === 'timeCap'
+          ) {
+            queryDetails.category = 'crossfit';
+          }
+          else if (user.wodType === 'endurance') {
+            queryDetails.category = 'endurance';
+          }
+          else if (user.wodType === 'strength') {
+            queryDetails.category = 'strength'; 
+          }
+          else if (user.wodType === 'strongman') {
+            queryDetails.category = 'strongman'; 
+          }
+          else if (user.wodType === 'weightlifting') {
+            queryDetails.category = 'weightlifting'; 
+          }
+          else if (user.wodType === 'bodybuilding') {
+            queryDetails.category = 'bodybuilding'; 
+          }
+          else {
+            console.error('invalid search category');
+          }
+        }
+
+        else {
+          console.error('error with search category');
+        }
+      }
     }
-    
-  },
 
-  exerciseQueryByPrimaryMuscleGrp: (userMuscleGrp, userEquip) => {
+    // console.log(query);
 
-    console.log('entered exerciseQueryByPrimaryMuscleGrp');
-
-    // const exerciseArray = [];
-
-    return new Promise((resolve, reject) => {
-      console.log('entered exerciseQueryByPrimaryMuscleGrp promise');
-
-      MongoClient.connect(exerciseUrl, (err, db) => {
-
-        console.log('entered exerciseQueryByPrimaryMuscleGrp db connect');
-
-        assert.equal(null, err);
-        const exerciseArray = [];
-
-        let exercises = db.collection('exercises')
-          .find({
-            priMuscleGrp: userMuscleGrp
-          },
-          {
-            _id: 0
-          }
-        );
-
-        exercises.forEach((exercise, err) => {
-          exerciseArray.push(exercise);
-        }, () => {
-          db.close();
-          if (exerciseArray) {
-            console.log('exerciseQueryByPrimaryMuscleGrp resolved');
-            console.log(userEquip);
-            console.log(exerciseArray);
-            resolve(exerciseArray); 
-          } else {
-            reject('failed to load');
-          }          
-
-        });
-        console.log('finished exerciseQueryByPrimaryMuscleGrp db connect');
-      });
-      console.log('finished exerciseQueryByPrimaryMuscleGrp promise');
-    });
-  },
-
-  exerciseQueryBySecondaryMuscleGrp: (userMuscleGrp) => {
-
-    console.log('entered exerciseQueryBySecondaryMuscleGrp');
-
-    return new Promise((resolve, reject) => {
-
-      console.log('entered exerciseQueryBySecondaryMuscleGrp promise');
-
-      MongoClient.connect(exerciseUrl, (err, db) => {
-
-        console.log('entered exerciseQueryBySecondaryMuscleGrp db connect');
-
-        assert.equal(null, err);
-        const exerciseArray = [];
-      
-        let exercises = db.collection('exercises')
-          .find({
-            muscleGrps: userMuscleGrp
-          },
-          {
-            _id: 0
-          }
-        );
-
-        exercises.forEach((exercise, err) => {
-          exerciseArray.push(exercise);
-        }, () => {
-          db.close();
-          if (exerciseArray) {
-            console.log('exerciseQueryBySecondaryMuscleGrp resolved');
-            resolve(exerciseArray);
-          } else {
-            reject('failed to load');
-          }
-        });
-
-        console.log('finished exerciseQueryBySecondaryMuscleGrp db connect');
-      });
-
-      console.log('finished exerciseQueryBySecondaryMuscleGrp promise');
-    });
-  },
-
-  exerciseQueryByCategory: (userMuscleGrp) => {
-
-    console.log('entered exerciseQueryByCategory');
-
-    return new Promise((resolve, reject) => {
-
-      console.log('entered exerciseQueryByCategory promise');
-
-      MongoClient.connect(exerciseUrl, (err, db) => {
-
-        console.log('entered exerciseQueryByCategory db connect');
-
-        assert.equal(null, err);
-        const exerciseArray = [];
-      
-        let exercises = db.collection('exercises')
-          .find({
-            category: userMuscleGrp
-          },
-          {
-            _id: 0
-          }
-        );
-
-        exercises.forEach((exercise, err) => {
-          exerciseArray.push(exercise);
-        }, () => {
-          db.close();
-          if (exerciseArray) {
-            console.log('exerciseQueryByCategory resolved');
-            resolve(exerciseArray);
-          } else {
-            reject('failed to load');
-          }
-        });
-        console.log('finished exerciseQueryByCategory db connect');
-      });
-      console.log('finished exerciseQueryByCategory promise');
-    });
+    return query;
   }
 
 };

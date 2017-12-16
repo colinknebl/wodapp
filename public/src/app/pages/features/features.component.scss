@@ -1,0 +1,52 @@
+@import '../../../assets/scss/variables',
+        '../../../assets/scss/main-classes';
+
+
+.features-img-1 {
+  background-image: url('https://img.huffingtonpost.com/asset/58fef0152600001400c47847.jpg?ops=crop_0_0_1600_800,scalefit_820_noupscale');
+}
+
+.features-img-2 {
+  background-image: url('http://photos.demandstudios.com/getty/article/235/161/467294074.jpg');
+}
+
+
+.text-left-image-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+    "header icon"
+    "paragraph icon"
+  ;
+  grid-gap: 1rem;
+  margin: 2.5rem auto 2.5rem auto;
+  text-align: center;
+}
+.text-right-image-left {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+    "icon header"
+    "icon paragraph"
+  ;
+  grid-gap: 1rem;
+  margin: 2.5rem auto 2.5rem auto;
+  text-align: center;
+}
+.features-list-article-header {
+  margin-bottom: .5rem;
+  color: $pri-color;
+  font-size: 1.5rem;
+  grid-area: header;
+}
+.grid-paragraph {
+  grid-area: paragraph;
+}
+.grid-icon {
+  grid-area: icon;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

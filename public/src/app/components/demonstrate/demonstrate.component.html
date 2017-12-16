@@ -1,7 +1,7 @@
 <form action="/workout-generator" method="post">
 
   <label id="form-first-name">First Name*
-    <input type="text" name="firstName" class="input-text" value="Colin" required>
+    <input type="text" name="firstName" class="input-text" value="Colin" required (blur)="assignId()">
   </label>
 
   <label id="form-last-name">Last Name*
@@ -36,16 +36,17 @@
       <option value="tabata">Tabata</option>
       <option value="timeCap">Time Cap</option>
       <option value="weightlifting">Weightlifting</option>
+      <option value="bodybuilding">Bodybuilding</option>
     </select> 
   </label>
 
   <label id="form-muscle-grp">Muscle Group Focus
     <select name="muscleGrp">
-      <option value="shoulders">Shoulders</option>
+      <option value="chest">Chest</option>
       <option value="any">Any</option>
+      <option value="shoulders">Shoulders</option>
       <option value="legs">Legs</option>
       <option value="back">Back</option>
-      <option value="chest">Chest</option>
     </select>
   </label>
 
@@ -126,16 +127,16 @@
     <legend>Enter Your PRs</legend>
     <div class="fieldset-lifts-grid">
       <label>Flat Bench Press
-        <input type="number" class="input-max" name="maxBench">
+        <input type="number" class="input-max" name="maxBench" value="135">
       </label>
       <label>Back Squat
-        <input type="number" class="input-max" name="maxSquat">
+        <input type="number" class="input-max" name="maxSquat" value="225">
       </label>
       <label>Snatch
-        <input type="number" class="input-max" name="maxSnatch">
+        <input type="number" class="input-max" name="maxSnatch" value="115">
       </label>
       <label>Deadlift
-        <input type="number" class="input-max" name="maxDead">
+        <input type="number" class="input-max" name="maxDead" value="250">
       </label>
     </div>
   </fieldset>
@@ -147,7 +148,7 @@
         <input type="checkbox" class="input-equip" name="equipment" value="barbell"> Barbell
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="dumbbells"> Dumbbells
+        <input type="checkbox" class="input-equip" name="equipment" value="dumbbells" checked="checked"> Dumbbells
       </label>
       <label>
         <input type="checkbox" class="input-equip" name="equipment" value="jumpRope"> Jump Rope
@@ -186,7 +187,7 @@
         <input type="checkbox" class="input-equip" name="equipment" value="rack"> Rack
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="bench"> Bench
+        <input type="checkbox" class="input-equip" name="equipment" value="bench" checked="checked"> Bench
       </label>
       <label>
         <input type="checkbox" class="input-equip" name="equipment" value="sledgeHammer"> Sledge Hammer
@@ -223,6 +224,8 @@
       </label>
     </div>
   </fieldset>
+
+  <input #_id type="hidden" name="_id">
 
   <button id="form-submit-btn" type="submit">Give me my custom workout!</button>
   
