@@ -2,7 +2,8 @@
 @import './assets/scss/variables',
         './assets/scss/nav';
 
-@import url('https://fonts.googleapis.com/css?family=Lato');
+// @import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 :root {
   font-size: 18px;
@@ -12,7 +13,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Lato', sans-serif;
+  // font-family: 'Lato', sans-serif;
+  font: {
+    family: 'Roboto', 'HelveticaNeue', 'Helvetica Neue', 'Helvetica', 'Arial', 'Lucida Grande', 'sans-serif';
+    weight: 100 !important;
+  }
   color: $text-color;
   line-height: 1.6;
 }
@@ -25,10 +30,10 @@ h5,
 h6 {
   color: $pri-color;
 }
-h1 {font-size: 4rem;}
-h2 {font-size: 2.5rem;}
-h3 {font-size: 2rem;}
-h4 {font-size: 1.5rem;}
+h1 {font-size: 2.5rem;}
+h2 {font-size: 1.75rem;}
+h3 {font-size: 1.5rem;}
+h4 {font-size: 1.25rem;}
 h5 {font-size: 1rem;}
 h6 {font-size: 0.75rem;}
 

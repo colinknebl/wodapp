@@ -1,66 +1,228 @@
 @import '../../../assets/scss/variables',
         '../../../assets/scss/main-classes';
 
+$form-bg: #2D2D2D;
+
 .router-section-jumbotron {
   // border: 4px solid aqua;
-  height: 40vh;
+  height: 80vh;
+  min-height: 600px;
   background: {
-    image: url('https://static.wixstatic.com/media/84a81e_f909f64f68a94fda980dee0fb3aa7d12~mv2.png/v1/fill/w_1000,h_729,al_c/84a81e_f909f64f68a94fda980dee0fb3aa7d12~mv2.png');
+    image: url('https://www.rogueeurope.eu/media/catalog/product/cache/5/rogue_header_2015/472321edac810f9b2465a359d8cdc0b5/x/x/xx3943-lg_1.jpg');
+    attachment: fixed;
     position: center;
     size: cover;
   }
+  position: relative;
   display: flex;
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: .3;
+  }
+}
+.header-section-content {
+  // border: 4px solid black;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
 }
-.circle-nav-section {
-  background: white;
-  height: 40vh;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1rem;
-}
-.circle-nav-link {
-  // border: 2px solid green;
-  // position: relative;
-  text-decoration: none;
-}
-.circle-nav-header {
+.msg-form {
   // border: 2px solid blue;
-  // position: absolute;
-  // top: 100px;
   width: 100%;
-  // left: 20px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.circle-nav {
+.header-header {
+  // border: 2px solid green;
+  line-height: 1;
+  font-style: italic;
+}
+.header-form-aside {
+  border: 2px solid $pri-color;
+  padding: 1.5rem 2rem;
+  background: $form-bg;
+  width: 40%;
+  h5 {
+    // border: 2px solid blue;
+    margin-bottom: 1rem;
+  }
+  form {
+    // border: 2px solid yellow;
+  }
+  input {
+    // border: 2px solid hotpink;
+    border: 2px solid $form-bg;
+    background: whitesmoke;
+    width: 100%;
+    padding: .2rem;
+    font-size: .75rem;
+    outline: none;
+    display: block;
+    &:first-of-type {
+      margin-bottom: .5rem;
+    }
+    &:focus {
+      box-shadow: 0px 0px 5px 0px black inset;
+    }
+  }
+  button {
+    border: 2px solid $pri-color;
+    border-radius: 0px;
+    background: $form-bg;
+    color: $pri-color;
+    cursor: pointer;
+    font-size: .75rem;
+    margin: .5rem auto 5px 2px;
+    padding: .2rem;
+    width: calc(100% - 4px);
+    transition: background .25s;
+    outline: none;
+    &:hover, &:active {
+      background: lighten($form-bg, 20%);
+    }
+  }
+}
+.header-btn {
+  border: 2px solid $pri-color;
+  border-radius: 50px;
+  background: $pri-color;
+  display: inline-block;
+  width: 40%;
+  text-align: center;
+  padding: 1rem 2rem;
+  color: $form-bg;
+  text-decoration: none;
+  align-self: flex-end;
+  transition: background .25s, color .25s;
+  &:hover, &:active {
+    background: $form-bg;
+    color: $pri-color;
+  }
+}
+
+
+
+.inner-div {
+  // border: 3px solid limegreen;
+  &:first-of-type {
+    margin-bottom: 3rem;
+  }
+}
+.para {
+  // border: 2px solid pink;
+  text-align: center;
+  margin-bottom: 1rem;
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
+}
+.why-ct {
   // border: 2px solid red;
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
-.circle-nav-img {
-  height: 200px;
-  width: 200px;
-  // max-width: 200px;
-  // height: auto;
-  border-radius: 50%;
+.why-box {
+  // border: 2px solid blue;
+  margin-bottom: 2rem;
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
 }
-.button-section {
-  background: darken(white, 2%);
-  height: 20vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+.why-box-title {
+  color: $text-color;
+  font-weight: bolder;
 }
-.index-main-btn {
-  width: 35%;
-  min-width: 300px;
-}
-.section-paragraph {
+
+
+.about-settings {
+  // border: 2px solid blue;
   margin: 1rem auto;
 }
+.about-setting {
+  // border: 2px solid red;
+  margin-bottom: 1rem;
+  background: white;
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0px 0px 15px $text-color inset;
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
+}
+.about-section-btn {
+  width: 100%;
+}
+
+.instructions-section {
+  background: {
+    image: url('https://static.visionamp.org/rubix/20150818/orig_3365eda27d54b0198fd2b4f1d6a66b90a970ac6b.jpg') !important;
+    attachment: fixed !important;
+    position: center !important;
+    size: cover !important;
+  }
+  .section-content {
+    border: 2px solid $pri-color;
+    background-color: $form-bg;
+    color: $pri-color;
+  }
+  ol {
+    // border: 2px solid purple;
+    margin: 1rem;
+    line-height: $line-height;
+  }
+  li {
+    // border: 1px solid yellow;
+    color: $pri-color; 
+    line-height: $line-height;
+    margin-bottom: .5rem;
+    &:last-of-type {
+      margin-bottom: 0rem;
+    }
+  }
+  .extra-pad {
+    color: $pri-color; 
+    padding-left: 1.2em;
+  }
+}
+
+
+@media screen and (min-width: $break-point) {
+  .header-header {
+    font-size: 3rem;
+  }
+  .why-ct {
+    flex-direction: row;
+  }
+  .why-box {
+    width: 33.3%;
+    margin: 0rem 1rem 0rem 0rem;
+    &:last-of-type {
+      margin-right: 0rem;
+    }
+  }
+  .about-settings {
+    display: flex;
+  }
+  .about-setting {
+    width: 33.3%;
+    margin-bottom: 0rem;
+    margin-right: 1rem;
+    &:last-of-type {
+      margin-right: 0rem;
+    }
+  }
+}
+
 .features-list {
   margin: 1rem auto;
 }
@@ -68,31 +230,26 @@
   width: 100%;
 }
 
-.features-section {
-  background: darken(white, 4%);
+@media screen and (max-width: $break-point) {
+  .header-section-content {
+    // border: 5px solid red;
+    top: 30px;
+    flex-direction: column;
+  }
+  .msg-form {
+    // border: 5px solid aqua;
+    flex-direction: column;
+  }
+  .header-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .header-form-aside {
+    width: 100%;
+  }
+  .header-btn {
+    width: 100%;
+  }
 }
 
-.about-section {
-  background: darken(white, 6%);
-}
-.about-settings {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-}
-.about-setting {
-  background: white;
-  flex-grow: 1;
-  text-align: center;
-  padding: 1rem;
-  box-shadow: 0px 0px 15px $text-color;
-}
-.about-section-btn {
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.generate-section {
-  background: darken(white, 4%);
-}
 

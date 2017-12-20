@@ -1,5 +1,10 @@
 @import 'variables';
 
+// GENERAL STYLING
+.italic {
+  font-style: italic;
+}
+
 // PAGE LAYOUT
 .router-section {
   // border: 5px solid black;
@@ -32,6 +37,10 @@
 }
 .page-article-paragraph {
   // border: 2px solid purple;
+  margin-bottom: 1rem;
+  &:last-of-type {
+    margin-bottom: 0rem;
+  }
 }
 .divider-img {
   height: 50vh;
@@ -44,7 +53,11 @@
   }
 }
 .section {
-  padding: 6rem 1rem;
+  background: whitesmoke;
+  padding: 5rem 0rem;
+  &:nth-child(odd) {
+    background: #E1E1E1;
+  }
 }
 .section-content {
   margin: auto;
@@ -54,6 +67,7 @@
 .section-head {
   text-align: center;
   margin-bottom: 1.5rem;
+  font-size: 1.4rem;
 }
 .btm-border {
   border-bottom: 1px solid $text-color;
@@ -75,9 +89,13 @@
   }
   font-size: 1.25rem;
   outline: none;
-  box-shadow: 0 5px 5px #aaa;
+  // box-shadow: 0 5px 5px #aaa;
+  
   color: whitesmoke;
   transition: box-shadow .2s;
+  &:hover {
+    box-shadow: 0px 0px 15px $text-color;
+  }
   &:active {
     box-shadow: none;
   }

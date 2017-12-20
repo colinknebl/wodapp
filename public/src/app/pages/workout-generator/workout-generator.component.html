@@ -1,23 +1,27 @@
-<section class="wod-display-container">
-  <section class="jumbo-tron">
-    <h1 class="wod-display-h1">Your WOD</h1>
-  </section>
+<main class="router-section">
+  <div class="page-title">
+    <h1>Your Workout</h1>
+  </div>
 
-  <section class="workout-generator-main">
-    
-    <div class="wod-display" *ngFor="let wod of wod">
-      
-      <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes.</p>
-      <div *ngFor="let exercise of wod.exercises">
-        <p>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+  <section class="section workout-section">
+    <div class="section-content">
+      <div class="wod-display" *ngFor="let wod of wod">
+        
+        <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes.</p>
+        <div *ngFor="let exercise of wod.exercises">
+          <p>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+        </div>
+
       </div>
-      <p>don't forget, I changed the link in the get wod service to the dev api.</p>
     </div>
-
   </section>
-</section>  
-<!-- <section class="something">
-  <h1>Something</h1>
-</section> -->
+  
+  <section class="section notes-section">
+    <div class="section-content">
+      <h2 class="section-head text-color-gradient">Workout notes</h2>
+    </div>
+  </section>
+  
+</main>
 
 <app-cta-bar></app-cta-bar>

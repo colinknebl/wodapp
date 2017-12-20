@@ -14,20 +14,21 @@ wodGenerator = {
   wod: {},
 
   generateWod: (user, wodConst) => {
+    let wod;
 
     switch (user.wodType) {
       case "amrap":
-        let wod =  wodGenerator.amrap(user, wodConst);
+        wod = wodGenerator.amrap(user, wodConst);
         return Promise.resolve(wod);
-      case "bodyweight":
-        wodGenerator.bodyweight(user, wodConst);
-        break;
-      // case "chipper":
-      //   wodGenerator.(user, wodConst);
+      // case "bodyweight":
+      //   wodGenerator.bodyweight(user, wodConst);
       //   break;
-      // case "couplet":
-      //   wodGenerator.(user, wodConst);
-      //   break;
+      case "chipper":
+        wod = wodGenerator.chipper(user, wodConst);
+        return Promise.resolve(wod);
+      case "couplet":
+        wod = wodGenerator.couplet(user, wodConst);
+        return Promise.resolve(wod);
       // case "emom":
       //   wodGenerator.(user, wodConst);
       //   break;
@@ -37,9 +38,12 @@ wodGenerator = {
       // case "hybrid":
       //   wodGenerator.(user, wodConst);
       //   break;
-      // case "singlet":
-      //   wodGenerator.(user, wodConst);
-      //   break;
+      case "singlet":
+        wod = wodGenerator.singlet(user, wodConst);
+        return Promise.resolve(wod);
+      case "triplet":
+        wod = wodGenerator.triplet(user, wodConst);
+        return Promise.resolve(wod);
       // case "strength":
       //   wodGenerator.(user, wodConst);
       //   break;
@@ -61,8 +65,46 @@ wodGenerator = {
     }
   },
 
-  bodyweight: (user, wodConst) => {
+  couplet: (user, wodConst) => {
+    console.log('entered couplet method');
+  },
 
+  triplet: (user, wodConst) => {
+    console.log('entered triplet method');
+  },
+
+  chipper: (user, wodConst) => {
+    console.log('entered chipper method');
+  },
+
+  singlet: (user, wodConst) => {
+    console.log('entered singlet method');
+
+    return new Promise((resolve, reject) => {
+      // VARIABLE DECLARATIONS
+      let priExercises;
+      let WOD = wodConst;
+
+      // SET TIMER
+      WOD.timer = helpers.setTimer(user.timer);
+
+      // QUERY DATABASE
+      // SEE ARGUMENT DOCS IN MONGODB.EXERCISEQUERY METHOD
+      let priExerciseQuery = mongodb.exerciseQuery(user, ['muscleGrp', 'category'], ['weightlifting']);
+
+      priExerciseQuery
+        .then((priExercisesQueryResults) => { 
+
+          // RETRIEVE PRIMARY MUSCLE GROUP EXERCISES
+          priExercises = priExercisesQueryResults;
+          priExercises.forEach((exercise) => {
+            console.log(exercise.name);
+          });
+
+        })
+        .catch(err => console.error(err));
+
+    });
   },
 
   amrap: (user, wodConst) => {
@@ -71,7 +113,7 @@ wodGenerator = {
 
     return new Promise((resolve, reject) => {
 
-
+      // VARIABLE DECLARATIONS
       let priExercises;
       let secExercises;
       let conExercises;
@@ -82,30 +124,11 @@ wodGenerator = {
       let WOD = wodConst;
       WOD.instructions = 'As many rounds as possible';
 
-      if (user.timer === 'any') {
-        user.timer = helpers.numGenerator(5, 60);
-      } 
-      else if (user.timer === 'noTimer') {
-        user.timer = 'For Time';
-      }
-      else {
-        user.timer = user.timer;
-      }
-      // *****************************************************************************************************
-      // user.timer = 16;
-      // *****************************************************************************************************
-      WOD.timer = user.timer;
+      // SET TIMER
+      WOD.timer = helpers.setTimer(user.timer);
 
-      // exerciseQuery argument list
-      // argument 1 = user object
-      // argument 2 = array of query types
-      //    - priMuscleGrp
-      //    - secMuscleGrp
-      //    - oppMuscleGrp
-      //    - category
-      // argument 3 = array of values for category type searches
-      //    - metabolic conditioning
-
+      // QUERY DATABASE
+      // SEE ARGUMENT DOCS IN MONGODB.EXERCISEQUERY METHOD
       let priExerciseQuery = mongodb.exerciseQuery(user, ['priMuscleGrp', 'category']);
       let secExerciseQuery = mongodb.exerciseQuery(user, ['secMuscleGrp', 'category']);
       let conExerciseQuery = mongodb.exerciseQuery(user, ['category'], ['metabolic conditioning']);
@@ -200,6 +223,19 @@ wodGenerator = {
 module.exports = wodGenerator;
 
 helpers = {
+
+  setTimer: (timer) => {
+    if (timer === 'any') {
+      timer = helpers.numGenerator(5, 60);
+    } 
+    else if (timer === 'noTimer') {
+      timer = 'For Time';
+    }
+    else {
+      timer = timer;
+    }
+    return timer;
+  },
 
   sequenceWodExercises: (wodExercises) => {
 

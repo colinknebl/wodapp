@@ -9,9 +9,15 @@
   padding: 6rem 1rem;
 //box-shadow: none|h-shadow v-shadow blur spread color |inset|initial|inherit;
   box-shadow: 0px 0px 100px 50px darken($footer-color, 0%);
-  margin-bottom: 400px;
+  text-align: center;
   p {
     color: white;
     font-size: 2rem;
+  }
+}
+
+@media only screen and (min-width: $break-point) and (min-height: $footer-height-desktop) {
+  .cta {
+    margin-bottom: $footer-height-desktop;
   }
 }

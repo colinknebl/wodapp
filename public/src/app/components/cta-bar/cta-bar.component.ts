@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CtaBarComponent implements OnInit {
 
+  ctaText = "Where will your fitness take you?";
+
   constructor() { }
 
   ngOnInit() {

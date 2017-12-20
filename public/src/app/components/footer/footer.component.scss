@@ -2,125 +2,93 @@
         '../../../assets/scss/main-classes';
 
 footer {
-  position: fixed;
-  top: auto; right: 0; bottom: 0; left: 0;
-  z-index: -2;
-  height: 400px;
   background: $footer-color;
+  text-align: center;
+  display: flex;
+  justify-content: center;
   .section-content{
-    height: 100%;
-    background: $footer-color;
-    top: auto; right: 0; bottom: 0; left: 0;
-    padding: 5rem 0 2rem 0;
-    margin-bottom: 0;
-    color: darken(white, 20%);
-    font-size: .9rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 2fr 1fr;
-    grid-template-areas:
-      "list1 list2 list3"
-      "copyright social social"
-    ;
-    grid-gap: 1rem;
+    margin: 4rem auto 2rem;
   }
 }
 
 .footer-header {
-  font-size: .7rem;
-  margin: 1rem 0 1rem 0;
+  margin: 1rem auto;
 }
 .footer-list {
   list-style-type: none;
-  line-height: 1.6;
+  margin-bottom: 2rem;
 }
 .footer-link {
   text-decoration: none;
   color: darken(white, 20%);
-}
-
-.social-list-item {
-  list-style-type: none;
-  display: inline-block;
-  margin: .5rem .5rem 0 0;
-  &:last-child {
-    margin: .5rem 0 0 0;
+  &:hover, &:active {
+    color: darken(white, 50%);
   }
-}
-.footer-social-link {
-  text-transform: uppercase;
-  text-decoration: none;
-  color: darken(white, 50%);
-}
-
-#footer-main-list {
-  grid-area: list1;
-  align-self: start;
-}
-#footer-examples-list {
-  grid-area: list2;
-  justify-self: center;
-  align-self: start;
-}
-#footer-support-list {
-  grid-area: list3;
-  justify-self: right;
-  align-self: start;
 }
 
 #copyright {
-  grid-area: copyright;
-  align-self: end;
   color: darken(white, 50%);
 }
-#social-list {
-  grid-area: social;
-  align-self: end;
-  justify-self: end;
-  text-align: right;
-}
 
-@media only screen and (max-width: 550px) {
-  .footer-spacer {
-     min-height: 780px;
-  }
-  .footer {
-    border: 2px solid red;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 3fr 2fr 2fr 2fr 1fr;
-    grid-template-areas:
-      "list1 list1 list1"
-      "list2 list2 list2"
-      "list3 list3 list3"
-      "social social social"
-      "copyright copyright copyright"
-    ;
-    grid-gap: 1rem;
-  }
-  
-  
-  #footer-support-list {
-    justify-self: center;
-  }
-  #social-list {
-    justify-self: center;
-    text-align: center;
-  }
-  .social-list-item {
-    display: block;
-    margin: .5rem .5rem 0 0;
-    &:last-child {
-      margin: .5rem 0 0 0;
+
+@media only screen and (min-width: $break-point) and (min-height: $footer-height-desktop) {
+  footer {
+    position: fixed;
+    top: auto; right: 0; bottom: 0; left: 0;
+    z-index: -2;
+    height: $footer-height-desktop;
+    text-align: left;
+    .section-content{
+      display: grid;
+      grid-template-areas:
+        "list1 list2 list3"
+        "copyright social social"
+      ;
+      grid-gap: 1rem;
     }
   }
-  .footer-social-link {
-    color: darken(white, 20%);
-  }
-  #copyright {
-    align-self: end;
-    text-align: center;
+  .social-header {
+    display: none;
   }
   .footer-list {
-    text-align: center; 
+    margin-bottom: 0rem;
+    &:nth-of-type(2) {
+      justify-self: center;
+    }
+    &:nth-of-type(3) {
+      justify-self: end;
+    }
+  }
+  .social-list-item {
+    display: inline-block;
+    margin-left: 1rem;
+    &:first-of-type {
+      margin-left: 0px;
+    }
+  }
+  .social-list-item a {
+    color: darken(white, 50%);
+    &:hover, &:active {
+      color: darken(white, 20%);
+    }
+  }
+  #footer-site-map-list {
+    grid-area: list1;
+  }
+  #footer-examples-list {
+    grid-area: list2;
+  }
+  #footer-support-list {
+    grid-area: list3;
+  }
+  #copyright {
+    grid-area: copyright;
+    align-self: end;
+  }
+  #social-list {
+    grid-area: social;
+    align-self: end;
+    justify-self: end;
+    
   }
 }

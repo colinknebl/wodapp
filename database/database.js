@@ -69,10 +69,24 @@ mongodb = {
   },
 
   exerciseQuery: (user, queryType, categorySearchValue) => {
+
+    // exerciseQuery argument list. NOTE: if you add an argument to this method you must add the same argument to the "mongodb.queryBuilder" method.
+      // argument 1 = user object
+      // argument 2 = array of query types
+      //    - priMuscleGrp
+      //    - secMuscleGrp
+      //    - oppMuscleGrp
+      //    - category
+      //    - muscleGrp
+      // argument 3 = array of values for category type searches
+      //    - metabolic conditioning
     
     // BUILD THE DATABASE QUERY
     const query = mongodb.queryBuilder(user, queryType, categorySearchValue);
+    console.log('/*****************/');
+    console.log('The DB query is:');
     console.log(query);
+    console.log('/*****************/');
     // ************************
 
     return new Promise((resolve, reject) => {
@@ -105,20 +119,11 @@ mongodb = {
   },
 
   queryBuilder: (user, queryType, categorySearchValue) => {
-    // exerciseQuery argument list
-    // argument 1 = user object
-    // argument 2 = array of query types
-    //    - priMuscleGrp
-    //    - secMuscleGrp
-    //    - oppMuscleGrp
-    //    - category
-    // argument 3 = array of values for category type searches
-    //    - metabolic conditioning
-
-
 
     // console.log('start queryBuilder');
     // console.log(`categorySearchValue: ${categorySearchValue}`);
+
+    console.log(user);
 
     let queryDetails = {};
 
@@ -129,6 +134,14 @@ mongodb = {
     for (var i = 0; i < queryType.length; i++) {
 
       // console.log(`queryType: ${queryType[i]}`);
+
+      if (queryType[i] === 'muscleGrp') {
+
+        if ('muscleGrp' in user && user.muscleGrp !== 'any') {
+          console.log('test1');
+          queryDetails.muscleGrps = user.muscleGrp;
+        } 
+      }
 
       if (queryType[i] === 'priMuscleGrp') {
 

@@ -1,3 +1,68 @@
+/*
+**  level
+**    - gold
+**    - silver
+**    - bronze
+**
+**  skillLevel
+**    - beginner
+**    - intermediate
+**    - advanced
+**
+**  priMuscleGrp
+**    - quads
+**    - back
+**    - chest
+**    - triceps
+**    - anterior deltoids
+**    - biceps
+**    - abs
+**    - multi
+**
+**  opposingMuscleGrp
+**    - hamstrings
+**    - quads
+**    - back
+**    - chest
+**    - shoulders
+**    - arms
+**    - calves
+**    - triceps
+**    - traps
+**    - biceps
+**    - forearms
+**    - core
+**
+**  muscleGrps
+**    - legs
+**    - glutes
+**    - back
+**    - chest
+**    - shoulders
+**    - arms
+**    - calves
+**    - triceps
+**    - traps
+**    - biceps
+**    - forearms
+**    - core
+**
+**  category
+**    - weightlifting
+**    - gymnastics
+**    - plyometric
+**    - crossfit
+**    - metabolic conditioning
+**    - miscellaneous
+**    - body building
+**
+**  weighted
+**    - true
+**    - false
+**    - either
+**  
+*/
+
 db.exercises.insertMany(
   [
     {
@@ -1050,6 +1115,7 @@ db.exercises.find({$and: [{ muscleGrps: 'chest' }]}).pretty()
 
 db.exercises.find({ '$and': [ { priMuscleGrp: 'chest' } ], category: 'crossfit' }).pretty()
 
+db.exercises.find({$and: [{"muscleGrps": "legs", "category": "weightlifting"}]}, {_id:0, name:1}).pretty()
 
 {
     "_id": "1511310013211CK",

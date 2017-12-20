@@ -1,58 +1,60 @@
 <main class="router-section">
   <section class="router-section-jumbotron">
-    <h1>forge ahead</h1>
+    <div class="section-content header-section-content">
+      <div class="msg-form">
+        <h3 class="header-header">forging elite workouts</h3>
+        <aside class="header-form-aside">
+          <h5>Enter your info to receive app updates!</h5>
+          <form method="GET">
+            <input type="text" name="name" placeholder="Name">
+            <input type="email" name="email" placeholder="Email">
+            <button>Submit</button>
+          </form>
+        </aside>
+      </div>
+      <a class="header-btn" href="#demonstrate">Go to workout generator</a>
+    </div>
   </section>
 
-  <nav class="btm-border circle-nav-section">
-    
-    <article class="circle-nav">
-      <a class="circle-nav-link" href="#features">
-        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
-        <h2 class="circle-nav-header">Features</h2>
-      </a>
-    </article>
-    
-    <article class="circle-nav">
-      <a class="circle-nav-link" href="#about">
-        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
-        <h2 class="circle-nav-header">About</h2>
-      </a>
-    </article>    
-
-    <!-- <article class="circle-nav">
-      <a class="circle-nav-link" routerLink="/blog" href="">
-        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
-        <h2 class="circle-nav-header">Blog</h2>
-      </a>
-    </article> -->    
-
-    <article class="circle-nav">
-      <a class="circle-nav-link" routerLink="/contact" href="">
-        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
-        <h2 class="circle-nav-header">Contact</h2>
-      </a>
-    </article>    
-
-    <article class="circle-nav">
-      <a class="circle-nav-link" routerLink="/donate" href="">
-        <img class="circle-nav-img" src="http://www.shutrade.com.au/store/wp-content/uploads/2017/10/20kg.jpg">
-        <h2 class="circle-nav-header">Donate</h2>
-      </a>
-    </article>  
-
-  </nav>
-
-  <section class="btm-border button-section">
-    <button class="btn btn-gradient-right index-main-btn" routerLink="/check-status">Check Status</button>
-    <a class="btn btn-gradient-left index-main-btn" href="#demonstrate">Generate Workout</a>
-  </section>
-
-  <section id="features" class="section features-section btm-border">
+  <section class="section">
     <div class="section-content">
-      <h2 class="section-head text-color-gradient">The complete workout platform</h2>
-      <p class="section-paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia labore enim dolore et delectus illum unde aliquid tempora laboriosam amet! Harum, sapiente ullam? Quae eaque amet doloremque similique ipsa soluta iste, quos voluptatibus commodi corrupti ut repellendus quam impedit voluptas.</p>
+      <div class="inner-div">
+        <h2 class="section-head text-color-gradient">What is Forgd?</h2>
+        <p class="para">Forgd is a custom workout generator for exercisers of all ages and skill levels.</p>
+        <p class="para">Whether you are an elite athlete, weekend warrior, or somewhere in between, these workouts will help you accomplish even the toughest fitness goals. Go ahead, <a href="#demonstrate">try it out</a>.</p>
+      </div>
+      <div class="inner-div">
+        <h2 class="section-head text-color-gradient">Why Forgd?</h2>
+        <div class="why-ct">
+          <div class="why-box">
+            <fa class="grid-icon" name="check-square-o" size="3x"></fa>
+            <h5 class="why-box-title">Quality</h5>
+            <p>High quality workouts that leave you feeling the burn!</p>
+          </div>
+          <div class="why-box">
+            <fa class="grid-icon" name="users" size="3x"></fa>
+            <h5 class="why-box-title">Custom</h5>
+            <p>Tailored to each user — no cookie cutter workouts here.</p>
+          </div>
+          <div class="why-box">
+            <fa class="grid-icon" name="thumbs-up" size="3x"></fa>
+            <h5 class="why-box-title">Simple</h5>
+            <p>Answer a few questions, hit a button, and presto! Your workout on demand.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section features-section">
+    <div class="section-content">
+      <h2 class="section-head text-color-gradient">Your Workout, Your Future</h2>
+      <p class="para">Life is too short to be unhealthy. Forgd provides access to quality workouts for everyone to use and enjoy. No more "I'll start tomorrow", no more binging on movies all day, <em>no more excuses!</em></p>
+
+      <p class="para">The current feature set that Forgd has is enough to start getting great benefit! The core feature of Forgd is workout programming - which it does extremely well. Below are some existing and some future features of Forgd:</p> 
+
       <ul class="features-list">
-        <li>Custom WOD Generator</li>
+        <li>Custom Workout Generator</li>
         <li>Muscle Targeting</li>
         <li>Workout Tracker</li>
         <li>Timer</li>
@@ -64,10 +66,10 @@
     </div>
   </section>
 
-  <section id="about" class="section about-section btm-border">
+  <section id="about" class="section about-section">
     <div class="section-content">
       <h2 class="section-head text-color-gradient">Adaptable to Any Setting</h2>
-      <p class="section-paragraph">Whether you exercise in your home/garage gym, your local CrossFit<span class="registered-logo-sm">&reg;</span> box, or the full-scale commercial gym, this app can power your workouts. All of these venues have different equipment available and it can be difficult coming up with creative ways to use the tools at your disposal. This app takes the guess work out of your work out.</p>
+      <p class="para">Whether you exercise in your home/garage gym, your local CrossFit<span class="registered-logo-sm">&reg;</span> box, or the full-scale commercial gym, this app can power your workouts. All of these venues have different equipment available and it can be difficult coming up with creative ways to use the tools at your disposal. This app takes the guess work out of your work out.</p>
       <section class="about-settings">
         <article class="about-setting">
           <img class="about-img" src="http://colinknebl.com/assets/images/garage-gym.png" alt="garage gym" width="170" height="95">
@@ -83,6 +85,24 @@
         </article>
       </section>
       <button class="btn btn-gradient-left about-section-btn" routerLink="/about">Learn more about Forgd</button>
+    </div>
+  </section>
+
+  <section class="section instructions-section">
+    <div class="section-content">
+      <h2 class="section-head">How it Works</h2>
+        <ol>
+          <li>Fill in your name and email address.</li>
+          <li>Select your skill level.</li>
+          <li>Select your desired workout type (optional).</li>
+          <li>Select the muscle group you want to focus on (optional).</li>
+          <li>Select your desired rep scheme (optional).</li>
+          <li>Select how long you want your workout to last.</li>
+          <li>Enter you PRs (personal records) on the four exercises listed. NOTE: if you don't know what your PR is enter "0".</li>
+          <li>Select all the equipment you have available, and want to use during your workout.</li>
+          <li>Click or tap "Give me my custom workout" and off you go!</li>
+          <li>Don't forget to give it 110%!</li>
+        </ol>
     </div>
   </section>
 
