@@ -8,12 +8,13 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class GetWodService {
 
+  // private apiUrl = 'http://localhost:4800/api/get-wod/';
+  private apiUrl = 'http://forgdapp.com/api/get-wod/';
+
   constructor(public http:Http) { }
-// https://jsonplaceholder.typicode.com/posts
-// 'http://localhost:4800/api/get-wod/' + _id
-// 'http://localhost:5200/api/get-wod'
+
   getWod(_id) {
-    return this.http.get('http://localhost:4800/api/get-wod/' + _id)
+    return this.http.get(this.apiUrl + _id)
       .map(res => res.json())
       .catch((error:any) => Observable.throw(error || 'Server error'));
   }

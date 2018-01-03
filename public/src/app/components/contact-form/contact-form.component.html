@@ -1,20 +1,35 @@
 <div class="section-content">
-  <form method="post">
+  <form method="post" [formGroup]="contactForm" (submit)="submit()">
     
     <label class="form-first-name">First Name
-      <input class="input-text" type="text" name="firstName" required>
+      <input
+        class="input-text"
+        type="text" 
+        name="firstName" 
+        required
+        formControlName="firstName">
     </label>
 
     <label class="form-last-name">Last Name
-      <input class="input-text" type="text" name="lastName" required>
+      <input
+        class="input-text"
+        type="text"
+        name="lastName"
+        required
+        formControlName="lastName">
     </label>
 
     <label class="form-email">Email
-      <input class="input-text" type="email" name="email" required>
+      <input
+        class="input-text"
+        type="email"
+        name="email"
+        required
+        formControlName="email">
     </label>
 
     <label class="form-request-type">Request Type
-      <select>
+      <select formControlName="requestType">
         <option>Select</option>
         <option>Question</option>
         <option>Comment</option>
@@ -25,7 +40,7 @@
     </label>
 
     <label class="form-message">Message
-      <textarea class="input-text" rows="6" required></textarea>
+      <textarea class="input-text" rows="6" required formControlName="message"></textarea>
     </label>
 
     <input class="btn submit btn-gradient-right" type="submit" name="submit" value="Submit">

@@ -1,32 +1,49 @@
-<form action="/workout-generator" method="post">
+<!-- <form action="/workout-generator" method="post" [formGroup]="demonstrateForm"> -->
+<form [formGroup]="demoForm" (submit)="submit()">
   
   <div class="lg-form-st">
     <label class="main-label">First Name*
-      <input type="text" name="firstName" class="input-text" value="Colin" required (blur)="assignId()">
+      <input  type="text" 
+              name="firstName" 
+              class="input-text" 
+              value="Colin" 
+              required
+              formControlName="firstName">
     </label>
 
     <label class="main-label">Last Name*
-      <input type="text" name="lastName" class="input-text" value="Knebl" required>
+      <input  type="text" 
+              name="lastName" 
+              class="input-text" 
+              value="Knebl" 
+              required
+              formControlName="lastName">
     </label>
   </div>
   
   <div class="lg-form-st">
     <label class="main-label">Email*
-      <input type="email" name="email" class="input-text" value="colin.knebl@outlook.com" required>
+      <input  type="email" 
+              name="email" 
+              class="input-text" 
+              value="colin.knebl@outlook.com" 
+              required
+              formControlName="email">
     </label>
 
     <label class="main-label">Skill Level
-      <select name="skillLvl" id="">
+      <select name="skillLvl" formControlName="skillLvl">
         <option value="beginner">Beginner</option>
         <option value="intermediate">Intermediate</option>
         <option value="advanced">Advanced</option>
+        <option value="athlete">Athlete</option>
       </select>
     </label>
   </div>
   
   <div class="lg-form-st">
     <label class="main-label">Desired WOD Type
-      <select name="wodType">
+      <select name="wodType" formControlName="wodType">
         <option value="singlet">Singlet</option>
         <option value="any">Any</option>
         <option value="amrap">AMRAP</option>
@@ -47,7 +64,7 @@
     </label>
     
     <label class="main-label">Muscle Group Focus
-      <select name="muscleGrp">
+      <select name="muscleGrp" formControlName="muscleGrp">
         <option value="chest">Chest</option>
         <option value="any">Any</option>
         <option value="shoulders">Shoulders</option>
@@ -59,9 +76,9 @@
   
   <div class="lg-form-st">
     <label class="main-label">Desired Rep Scheme
-      <select name="repScheme">
+      <select name="repScheme" formControlName="repScheme">
         <option value="any">Any</option>
-        <option value="21-15-9">21 - 15 - 9</option>
+        <!-- <option value="21-15-9">21 - 15 - 9</option> -->
         <option value="lowRepHighWeight">Low Reps, High Weight</option>
         <option value="highRepLowWeight">High Reps, Low Weight</option>
         <option value="mediumRepsAndWeight">Medium Reps, Medium Weight</option>
@@ -69,7 +86,7 @@
     </label>
 
     <label class="main-label">WOD Timer <span class="wod-span">*in minutes*</span>
-      <select name="wodTimer">
+      <select name="wodTimer" formControlName="wodTimer">
         <option value="any">5 - 60</option>
         <option value="noTimer">No Timer</option>
         <option value="5">5</option>
@@ -137,18 +154,34 @@
     <div class="fieldset-lifts">
       <div class="lg-form-st">
         <label>Flat Bench Press
-          <input type="number" class="input-max" name="maxBench" value="135">
+          <input  type="number" 
+                  class="input-max" 
+                  name="maxBench" 
+                  value="135"
+                  formControlName="maxBench">
         </label>
         <label>Back Squat
-          <input type="number" class="input-max" name="maxSquat" value="225">
+          <input  type="number" 
+                  class="input-max" 
+                  name="maxSquat" 
+                  value="225"
+                  formControlName="maxSquat">
         </label>
       </div>
       <div class="lg-form-st">
         <label>Snatch
-          <input type="number" class="input-max" name="maxSnatch" value="115">
+          <input  type="number" 
+                  class="input-max" 
+                  name="maxSnatch" 
+                  value="115"
+                  formControlName="maxSnatch">
         </label>
         <label>Deadlift
-          <input type="number" class="input-max" name="maxDead" value="250">
+          <input  type="number" 
+                  class="input-max"
+                  name="maxDead"
+                  value="250"
+                  formControlName="maxDead">
         </label>
       </div>
     </div>
@@ -158,87 +191,193 @@
     <legend>Equipment</legend>
     <div class="fieldset-equip">
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="barbell"> Barbell
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="barbell"
+                formControlName="equipment"> Barbell
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="dumbbells" checked="checked"> Dumbbells
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="dumbbells"
+                formControlName="equipment"
+                checked="checked"> Dumbbells
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="jumpRope"> Jump Rope
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="jumpRope"
+                formControlName="equipment"> Jump Rope
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="box"> Plyo Box
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="box"
+                formControlName="equipment"> Plyo Box
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="kBell"> Kettle Bell
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="kBell"
+                formControlName="equipment"> Kettle Bell
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="dipStation"> Dip Station
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="dipStation"
+                formControlName="equipment"> Dip Station
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="pullUpBar"> Pull-Up Bar
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="pullUpBar"
+                formControlName="equipment"> Pull-Up Bar
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="weightPlates"> Weight Plates
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="plates"
+                formControlName="equipment"> Weight Plates
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="medBall"> Medicine Ball
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="medBall"
+                formControlName="equipment"> Medicine Ball
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="rings"> Rings
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="rings"
+                formControlName="equipment"> Rings
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="climbimgRope"> Climbing Rope
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="climbimgRope"
+                formControlName="equipment"> Climbing Rope
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="conditioningRope"> Conditioning Ropes
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="conditioningRope"
+                formControlName="equipment"> Conditioning Ropes
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="sled"> Sled
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="sled"
+                formControlName="equipment"> Sled
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="rack"> Rack
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="rack"
+                formControlName="equipment"> Rack
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="bench" checked="checked"> Bench
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="bench"
+                formControlName="equipment"
+                checked="checked"> Bench
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="sledgeHammer"> Sledge Hammer
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="sledgeHammer"
+                formControlName="equipment"> Sledge Hammer
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="abMat"> AbMat
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="abMat"
+                formControlName="equipment"> AbMat
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="resBands"> Resistance Bands
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="resBands"
+                formControlName="equipment"> Resistance Bands
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="tire"> Tire
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="tire"
+                formControlName="equipment"> Tire
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="chains"> Chains
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="chains"
+                formControlName="equipment"> Chains
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="pegBoard"> Peg Board
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="pegBoard"
+                formControlName="equipment"> Peg Board
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="ghd"> GHD
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="ghd"
+                formControlName="equipment"> GHD
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="airBike"> Air Bike
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="airBike"
+                formControlName="equipment"> Air Bike
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="rower"> Rower
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="rower"
+                formControlName="equipment"> Rower
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="skiErg"> SkiErg
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="skiErg"
+                formControlName="equipment"> SkiErg
       </label>
       <label>
-        <input type="checkbox" class="input-equip" name="equipment" value="Treadmill"> Treadmill
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="Treadmill"
+                formControlName="equipment"> Treadmill
       </label>
     </div>
   </fieldset>
 
-  <input #_id type="hidden" name="_id">
+  <input #_id type="hidden" name="_id" formControlName="_id">
 
   <button id="form-submit-btn" class="btn btn-gradient-right" type="submit">Give me my custom workout!</button>
   

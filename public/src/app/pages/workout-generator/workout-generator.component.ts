@@ -20,6 +20,7 @@ export class WorkoutGeneratorComponent implements OnInit {
     public route:ActivatedRoute) { }
 
   ngOnInit() {
+    
     this.id = this.route.snapshot.params['id'];
 
     this.wod = [];

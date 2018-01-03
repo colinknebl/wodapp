@@ -1,66 +1,113 @@
 /*
-**  level
-**    - gold
-**    - silver
-**    - bronze
-**
-**  skillLevel
-**    - beginner
-**    - intermediate
-**    - advanced
-**
-**  priMuscleGrp
-**    - quads
-**    - back
-**    - chest
-**    - triceps
-**    - anterior deltoids
-**    - biceps
-**    - abs
-**    - multi
-**
-**  opposingMuscleGrp
-**    - hamstrings
-**    - quads
-**    - back
-**    - chest
-**    - shoulders
-**    - arms
-**    - calves
-**    - triceps
-**    - traps
-**    - biceps
-**    - forearms
-**    - core
-**
-**  muscleGrps
-**    - legs
-**    - glutes
-**    - back
-**    - chest
-**    - shoulders
-**    - arms
-**    - calves
-**    - triceps
-**    - traps
-**    - biceps
-**    - forearms
-**    - core
-**
-**  category
-**    - weightlifting
-**    - gymnastics
-**    - plyometric
-**    - crossfit
-**    - metabolic conditioning
-**    - miscellaneous
-**    - body building
-**
-**  weighted
-**    - true
-**    - false
-**    - either
-**  
+  level
+    - gold
+    - silver
+    - bronze
+
+  skillLevel
+    - beginner
+    - intermediate
+    - advanced
+    - athlete
+
+  priMuscleGrpGeneral
+    (new)
+    - legs
+    - back
+    - chest
+    - arms
+    - shoulders
+    - abs
+    - multi
+
+    (old)
+    - quads
+    - back
+    - chest
+    - triceps
+    - anterior deltoids
+    - biceps
+    - abs
+    - multi
+
+  priMuscleGrpSpecific
+    - quads
+    - low back
+    - upper chest
+    - mid chest,
+    - lats
+    - triceps
+    - anterior deltoid
+    - biceps
+    - upper back
+    - abs
+    - multi
+    - outer chest
+
+  opposingMuscleGrp
+    - hamstrings
+    - quads
+    - back
+    - chest
+    - shoulders
+    - arms
+    - calves
+    - triceps
+    - traps
+    - biceps
+    - forearms
+    - core
+
+  muscleGrps
+    - legs
+    - glutes
+    - back
+    - chest
+    - shoulders
+    - arms
+    - calves
+    - triceps
+    - traps
+    - biceps
+    - forearms
+    - core
+
+  category
+    - weightlifting
+    - gymnastics
+    - plyometric
+    - crossfit
+    - metabolic conditioning
+    - miscellaneous
+    - body building
+
+  weighted
+    - true
+    - false
+    - either
+    - gender
+
+  maxOfExercise
+    - bench
+    - squat
+    - snatch
+    - deadlift
+
+  repScheme
+    - any
+    - low
+    - medium
+    - high
+
+  distance
+    - any
+    - short
+    - med
+    - long
+
+  weightAmount
+    - number or string
+  
 */
 
 db.exercises.insertMany(
@@ -69,7 +116,8 @@ db.exercises.insertMany(
       "name" : "Back Squats",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes"],
       "category" : [
@@ -79,6 +127,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 1,
+      "maxOfExercise" : "squat",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -94,7 +149,8 @@ db.exercises.insertMany(
       "name" : "Front Squats",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes"],
       "category" : [
@@ -103,7 +159,14 @@ db.exercises.insertMany(
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.6,
+      "percentOfMax" : 0.85,
+      "maxOfExercise" : "squat",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -119,7 +182,8 @@ db.exercises.insertMany(
       "name" : "Deadlifts",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "low back",
       "opposingMuscleGrp" : "quads",
       "muscleGrps" : ["legs", "back", "glutes"],
       "category" : [
@@ -129,6 +193,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 1,
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
+      "maxOfExercise" : "deadlift",
       "primaryMuscleTarget" : "lower back",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -143,7 +214,8 @@ db.exercises.insertMany(
       "name" : "Bodyweight Lunges",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes"],
       "category" : [
@@ -151,7 +223,14 @@ db.exercises.insertMany(
         "crossfit",
         "body building"
       ],
+      "weightAmount" : "BW",
       "weighted" : false,
+      "repScheme" : {
+        "any" : [10, 50],
+        "low" : [10, 19],
+        "mid" : [20, 29],
+        "high" : [30, 50]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -162,7 +241,8 @@ db.exercises.insertMany(
       "name" : "Dumbbell Lunges",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes"],
       "category" : [
@@ -171,18 +251,29 @@ db.exercises.insertMany(
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.15,
+      "percentOfMax" : 0.1,
+      "maxOfExercise" : "squat",
+      "repScheme" : {
+        "any" : [10, 40],
+        "low" : [5, 14],
+        "mid" : [15, 24],
+        "high" : [25, 40]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
         "hamstrings"
+      ],
+      "necessaryEquip" : [
+        "dumbbells"
       ]
     },
     {
       "name" : "Barbell Lunges",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes"],
       "category" : [
@@ -191,25 +282,44 @@ db.exercises.insertMany(
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.3,
+      "percentOfMax" : 0.2,
+      "maxOfExercise" : "squat",
+      "repScheme" : {
+        "any" : [1, 40],
+        "low" : [5, 14],
+        "mid" : [15, 24],
+        "high" : [25, 40]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
         "hamstrings"
+      ],
+      "necessaryEquip" : [
+        "barbell",
+        "plates"
       ]
     },
     {
-      "name" : "Dumbbell Bench Presses",
+      "name" : "Incline Bench Dumbbell Bench Presses",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "chest",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "upper chest",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["chest", "shoulders", "arms"],
       "category" : [
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.45,
+      "percentOfMax" : 0.40,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [3, 30],
+        "low" : [3, 7],
+        "mid" : [8, 14],
+        "high" : [15, 30]
+      },
       "primaryMuscleTarget" : "pectoralis major",
       "secondaryMuscleTarget" : [
         "shoulders",
@@ -221,10 +331,75 @@ db.exercises.insertMany(
       ]
     },
     {
-      "name" : "Barbell Bench Presses",
+      "name" : "Flat Bench Dumbbell Bench Presses",
+      "level" : "gold",
+      "skillLevel" : "intermediate",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "mid chest",
+      "opposingMuscleGrp" : "back",
+      "muscleGrps" : ["chest", "shoulders", "arms"],
+      "category" : [
+        "body building",
+        "crossfit"
+      ],
+      "weighted" : true,
+      "percentOfMax" : 0.45,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [3, 30],
+        "low" : [3, 7],
+        "mid" : [8, 14],
+        "high" : [15, 30]
+      },
+      "primaryMuscleTarget" : "pectoralis major",
+      "secondaryMuscleTarget" : [
+        "shoulders",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bench",
+        "dumbbells"
+      ]
+    },
+    {
+      "name" : "Flat Bench Barbell Bench Presses",
       "level" : "gold",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "chest",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "mid chest",
+      "opposingMuscleGrp" : "back",
+      "muscleGrps" : ["chest", "shoulders", "arms"],
+      "category" : [
+        "weightlifting",
+        "body building",
+        "crossfit"
+      ],
+      "weighted" : true,
+      "percentOfMax" : 1,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
+      "primaryMuscleTarget" : "pectoralis major",
+      "secondaryMuscleTarget" : [
+        "shoulders",
+        "triceps brachii"
+      ],
+      "necessaryEquip" : [
+        "bench",
+        "barbell",
+        "plates"
+      ]
+    },
+    {
+      "name" : "Incline Bench Barbell Bench Presses",
+      "level" : "gold",
+      "skillLevel" : "beginner",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "upper chest",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["chest", "shoulders", "arms"],
       "category" : [
@@ -232,7 +407,14 @@ db.exercises.insertMany(
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 1,
+      "percentOfMax" : 0.85,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "pectoralis major",
       "secondaryMuscleTarget" : [
         "shoulders",
@@ -248,7 +430,8 @@ db.exercises.insertMany(
       "name" : "Bodyweight Box Jumps",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes", "calves"],
       "category" : [
@@ -256,7 +439,14 @@ db.exercises.insertMany(
         "crossfit",
         "metabolic conditioning"
       ],
+      "weightAmount" : "BW",
       "weighted" : false,
+      "repScheme" : {
+        "any" : [5, 50],
+        "low" : [5, 14],
+        "mid" : [15, 29],
+        "high" : [30, 50]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -270,7 +460,8 @@ db.exercises.insertMany(
       "name" : "Weighted Box Jumps",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes", "calves"],
       "category" : [
@@ -279,6 +470,12 @@ db.exercises.insertMany(
         "metabolic conditioning"
       ],
       "weighted" : true,
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 14],
+        "mid" : [15, 29],
+        "high" : [30, 50]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -293,7 +490,8 @@ db.exercises.insertMany(
       "name" : "Air Squats",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "glutes"],
       "category" : [
@@ -301,7 +499,14 @@ db.exercises.insertMany(
         "crossfit",
         "body building"
       ],
+      "weightAmount" : "BW",
       "weighted" : false,
+      "repScheme" : {
+        "any" : [10, 100],
+        "low" : [10, 29],
+        "mid" : [30, 49],
+        "high" : [50, 100]
+      },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -312,7 +517,8 @@ db.exercises.insertMany(
       "name" : "Assisted Pull-Ups",
       "level" : "gold",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "lats",
       "opposingMuscleGrp" : "chest",
       "muscleGrps" : ["back", "arms"],
       "category" : [
@@ -321,6 +527,12 @@ db.exercises.insertMany(
         "body building"
       ],
       "assisted" : true,
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 9],
+        "mid" : [10, 19],
+        "high" : [20, 30]
+      },
       "primaryMuscleTarget" : "latissimus dorsi",
       "secondaryMuscleTarget" : [
         "biceps brachii"
@@ -334,7 +546,8 @@ db.exercises.insertMany(
       "name" : "Bodyweight Pull-Ups",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "lats",
       "opposingMuscleGrp" : "chest",
       "muscleGrps" : ["back", "arms"],
       "category" : [
@@ -342,7 +555,14 @@ db.exercises.insertMany(
         "crossfit",
         "body building"
       ],
+      "weightAmount" : "BW",
       "weighted" : false,
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 9],
+        "mid" : [10, 19],
+        "high" : [20, 30]
+      },
       "primaryMuscleTarget" : "latissimus dorsi",
       "secondaryMuscleTarget" : [
         "biceps brachii"
@@ -355,7 +575,8 @@ db.exercises.insertMany(
       "name" : "Weighted Pull-Ups",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "lats",
       "opposingMuscleGrp" : "chest",
       "muscleGrps" : ["back", "arms"],
       "category" : [
@@ -365,6 +586,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.05,
+      "maxOfExercise" : "deadlift",
+      "repScheme" : {
+        "any" : [3, 20],
+        "low" : [3, 7],
+        "mid" : [8, 14],
+        "high" : [15, 20]
+      },
       "primaryMuscleTarget" : "latissimus dorsi",
       "secondaryMuscleTarget" : [
         "biceps brachii"
@@ -378,7 +606,8 @@ db.exercises.insertMany(
       "name" : "Bodyweight Push-Ups",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "chest",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "mid chest",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["chest", "shoulders", "arms"],
       "category" : [
@@ -386,7 +615,14 @@ db.exercises.insertMany(
         "crossfit",
         "body building"
       ],
+      "weightAmount" : "BW",
       "weighted" : false,
+      "repScheme" : {
+        "any" : [10, 100],
+        "low" : [10, 29],
+        "mid" : [30, 49],
+        "high" : [50, 100]
+      },
       "primaryMuscleTarget" : "pectoralis major",
       "secondaryMuscleTarget" : [
         "anterior deltoids",
@@ -397,7 +633,8 @@ db.exercises.insertMany(
       "name" : "Weighted Push-Ups",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "chest",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "mid chest",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["chest", "shoulders", "arms"],
       "category" : [
@@ -406,7 +643,14 @@ db.exercises.insertMany(
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.1,
+      "percentOfMax" : 0.2,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [5, 50],
+        "low" : [5, 14],
+        "mid" : [15, 29],
+        "high" : [30, 50]
+      },
       "primaryMuscleTarget" : "pectoralis major",
       "secondaryMuscleTarget" : [
         "anterior deltoids",
@@ -420,7 +664,8 @@ db.exercises.insertMany(
       "name" : "Assisted Dips",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "triceps",
+      "priMuscleGrpGeneral" : "arms",
+      "priMuscleGrpSpecific" : "triceps",
       "opposingMuscleGrp" : "biceps",
       "muscleGrps" : ["triceps", "arms", "chest", "shoulders"],
       "category" : [
@@ -429,6 +674,12 @@ db.exercises.insertMany(
         "body building"
       ],
       "assisted" : true,
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 9],
+        "mid" : [10, 19],
+        "high" : [20, 30]
+      },
       "primaryMuscleTarget" : "triceps brachii",
       "secondaryMuscleTarget" : [
         "pectoralis major",
@@ -443,7 +694,8 @@ db.exercises.insertMany(
       "name" : "Bodyweight Dips",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "triceps",
+      "priMuscleGrpGeneral" : "arms",
+      "priMuscleGrpSpecific" : "triceps",
       "opposingMuscleGrp" : "biceps",
       "muscleGrps" : ["triceps", "arms", "chest", "shoulders"],
       "category" : [
@@ -451,7 +703,14 @@ db.exercises.insertMany(
         "crossfit",
         "body building"
       ],
+      "weightAmount" : "BW",
       "weighted" : false,
+      "repScheme" : {
+        "any" : [7, 30],
+        "low" : [7, 11],
+        "mid" : [12, 19],
+        "high" : [20, 30]
+      },
       "primaryMuscleTarget" : "triceps brachii",
       "secondaryMuscleTarget" : [
         "pectoralis major",
@@ -466,7 +725,8 @@ db.exercises.insertMany(
       "name" : "Weighted Dips",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "triceps",
+      "priMuscleGrpGeneral" : "arms",
+      "priMuscleGrpSpecific" : "triceps",
       "opposingMuscleGrp" : "biceps",
       "muscleGrps" : ["triceps", "arms", "chest", "shoulders"],
       "category" : [
@@ -476,6 +736,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.2,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [3, 30],
+        "low" : [3, 9],
+        "mid" : [10, 19],
+        "high" : [20, 30]
+      },
       "primaryMuscleTarget" : "triceps brachii",
       "secondaryMuscleTarget" : [
         "pectoralis major",
@@ -487,18 +754,82 @@ db.exercises.insertMany(
       ]
     },
     {
-      "name" : "Handstand Push-Ups",
+      "name" : "Strict Handstand Push-Ups",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "anterior deltoids",
+      "priMuscleGrpGeneral" : "shoulders",
+      "priMuscleGrpSpecific" : "anterior deltoids",
       "opposingMuscleGrp" : "posterior deltoids",
       "muscleGrps" : ["shoulders", "chest", "arms", "traps"],
       "category" : [
         "gymnastics",
         "crossfit"
       ],
-      "weighted" : "either",
+      "weightAmount" : "BW",
+      "weighted" : false,
+      "repScheme" : {
+        "any" : [3, 20],
+        "low" : [3, 6],
+        "mid" : [7, 12],
+        "high" : [13, 20]
+      },
+      "primaryMuscleTarget" : "anterior deltoids",
+      "secondaryMuscleTarget" : [
+        "pectoralis major",
+        "triceps brachii",
+        "latissimus dorsi",
+        "trapezius"
+      ]
+    },
+    {
+      "name" : "Kipping Handstand Push-Ups",
+      "level" : "gold",
+      "skillLevel" : "athlete",
+      "priMuscleGrpGeneral" : "shoulders",
+      "priMuscleGrpSpecific" : "anterior deltoids",
+      "opposingMuscleGrp" : "posterior deltoids",
+      "muscleGrps" : ["shoulders", "chest", "arms", "traps"],
+      "category" : [
+        "gymnastics",
+        "crossfit"
+      ],
+      "weightAmount" : "BW",
+      "weighted" : false,
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 11],
+        "mid" : [12, 19],
+        "high" : [20, 30]
+      },
+      "primaryMuscleTarget" : "anterior deltoids",
+      "secondaryMuscleTarget" : [
+        "pectoralis major",
+        "triceps brachii",
+        "latissimus dorsi",
+        "trapezius"
+      ]
+    },
+    {
+      "name" : "Weighted Handstand Push-Ups",
+      "level" : "gold",
+      "skillLevel" : "athlete",
+      "priMuscleGrpGeneral" : "shoulders",
+      "priMuscleGrpSpecific" : "anterior deltoids",
+      "opposingMuscleGrp" : "posterior deltoids",
+      "muscleGrps" : ["shoulders", "chest", "arms", "traps"],
+      "category" : [
+        "gymnastics",
+        "crossfit"
+      ],
+      "weighted" : true,
       "percentOfMax" : 0.1,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 20],
+        "low" : [1, 6],
+        "mid" : [7, 12],
+        "high" : [13, 20]
+      },
       "primaryMuscleTarget" : "anterior deltoids",
       "secondaryMuscleTarget" : [
         "pectoralis major",
@@ -511,15 +842,54 @@ db.exercises.insertMany(
       "name" : "Rope Climb",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "biceps",
+      "priMuscleGrpGeneral" : "arms",
+      "priMuscleGrpSpecific" : "biceps",
       "opposingMuscleGrp" : "triceps",
       "muscleGrps" : ["biceps", "arms", "shoulders", "forearms", "back", "core"],
       "category" : [
         "gymnastics",
         "crossfit"
       ],
-      "weighted" : "either",
+      "weightAmount" : "BW",
+      "weighted" : false,
+      "repScheme" : {
+        "any" : [1, 5],
+        "low" : [1, 2],
+        "mid" : [3, 4],
+        "high" : [5, 5]
+      },
+      "primaryMuscleTarget" : "biceps brachii",
+      "secondaryMuscleTarget" : [
+        "deltoids",
+        "forearms",
+        "back",
+        "core"
+      ],
+      "necessaryEquip" : [
+        "climbing rope"
+      ]
+    },
+    {
+      "name" : "Weighted Rope Climb",
+      "level" : "gold",
+      "skillLevel" : "athlete",
+      "priMuscleGrpGeneral" : "arms",
+      "priMuscleGrpSpecific" : "biceps",
+      "opposingMuscleGrp" : "triceps",
+      "muscleGrps" : ["biceps", "arms", "shoulders", "forearms", "back", "core"],
+      "category" : [
+        "gymnastics",
+        "crossfit"
+      ],
+      "weighted" : true,
       "percentOfMax" : 0.1,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 5],
+        "low" : [1, 2],
+        "mid" : [3, 4],
+        "high" : [5, 5]
+      },
       "primaryMuscleTarget" : "biceps brachii",
       "secondaryMuscleTarget" : [
         "deltoids",
@@ -535,15 +905,56 @@ db.exercises.insertMany(
       "name" : "Muscle-Up",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "upper back",
       "opposingMuscleGrp" : "chest",
       "muscleGrps" : ["back", "chest", "arms", "shoulders", "traps"],
       "category" : [
         "gymnastics",
         "crossfit"
       ],
-      "weighted" : "either",
+      "weightAmount" : "BW",
+      "weighted" : false,
+      "repScheme" : {
+        "any" : [3, 30],
+        "low" : [3, 10],
+        "mid" : [11, 19],
+        "high" : [20, 30]
+      },
+      "primaryMuscleTarget" : "latissimus dorsi",
+      "secondaryMuscleTarget" : [
+        "pectoralis major",
+        "triceps brachii",
+        "biceps brachii",
+        "deltoids",
+        "trapezius"
+      ],
+      "necessaryEquip" : [
+        "pull-up bar",
+        "rings"
+      ]
+    },
+    {
+      "name" : "Weighted Muscle-Up",
+      "level" : "gold",
+      "skillLevel" : "athlete",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "upper back",
+      "opposingMuscleGrp" : "chest",
+      "muscleGrps" : ["back", "chest", "arms", "shoulders", "traps"],
+      "category" : [
+        "gymnastics",
+        "crossfit"
+      ],
+      "weighted" : true,
       "percentOfMax" : 0.1,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [2, 20],
+        "low" : [2, 6],
+        "mid" : [7, 12],
+        "high" : [13, 20]
+      },
       "primaryMuscleTarget" : "latissimus dorsi",
       "secondaryMuscleTarget" : [
         "pectoralis major",
@@ -561,7 +972,8 @@ db.exercises.insertMany(
       "name" : "Back Extension",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "low back",
       "opposingMuscleGrp" : "abs",
       "muscleGrps" : ["back", "legs"],
       "category" : [
@@ -571,6 +983,13 @@ db.exercises.insertMany(
       ],
       "weighted" : "either",
       "percentOfMax" : 0.1,
+      "maxOfExercise" : "deadlift",
+      "repScheme" : {
+        "any" : [8, 50],
+        "low" : [8, 19],
+        "mid" : [20, 29],
+        "high" : [30, 50]
+      },
       "primaryMuscleTarget" : "erector spinae",
       "secondaryMuscleTarget" : [
         "glutes",
@@ -585,7 +1004,8 @@ db.exercises.insertMany(
       "name" : "Sit-Ups",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "abs",
+      "priMuscleGrpGeneral" : "abs",
+      "priMuscleGrpSpecific" : "abs",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["core"],
       "category" : [
@@ -593,8 +1013,43 @@ db.exercises.insertMany(
         "crossfit",
         "body building"
       ],
-      "weighted" : "either",
+      "weightAmount" : "BW",
+      "weighted" : false,
+      "repScheme" : {
+        "any" : [10, 100],
+        "low" : [10, 24],
+        "mid" : [25, 49],
+        "high" : [50, 100]
+      },
+      "primaryMuscleTarget" : "abdominals",
+      "secondaryMuscleTarget" : [
+        "obliques"
+      ],
+      "optionalEquip" : [
+        "abmat"
+      ]
+    },{
+      "name" : "Weighted Sit-Ups",
+      "level" : "silver",
+      "skillLevel" : "intermediate",
+      "priMuscleGrpGeneral" : "abs",
+      "priMuscleGrpSpecific" : "abs",
+      "opposingMuscleGrp" : "back",
+      "muscleGrps" : ["core"],
+      "category" : [
+        "gymnastics",
+        "crossfit",
+        "body building"
+      ],
+      "weighted" : true,
       "percentOfMax" : 0.1,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [10, 100],
+        "low" : [10, 24],
+        "mid" : [25, 49],
+        "high" : [50, 100]
+      },
       "primaryMuscleTarget" : "abdominals",
       "secondaryMuscleTarget" : [
         "obliques"
@@ -610,10 +1065,16 @@ db.exercises.insertMany(
       "category" : [
         "metabolic conditioning"
       ],
-      "weighted" : false
+      "weighted" : false,
+      "distance" : {
+        "any" : [0.5, 5],
+        "short" : [0.5, 1],
+        "med" : [2, 3],
+        "long" : [4, 5]
+      }
     },
     {
-      "name" : "Bike",
+      "name" : "Bicycle",
       "level" : "bronze",
       "skillLevel" : "beginner",
       "category" : [
@@ -621,9 +1082,32 @@ db.exercises.insertMany(
       ],
       "weighted" : false,
       "necessaryEquip" : [
-        "bicycle",
+        "bicycle"
+      ],
+      "distance" : {
+        "any" : [1, 10],
+        "short" : [1, 2],
+        "med" : [3, 4],
+        "long" : [5, 10]
+      }
+    },
+    {
+      "name" : "Air Bike",
+      "level" : "bronze",
+      "skillLevel" : "beginner",
+      "category" : [
+        "metabolic conditioning"
+      ],
+      "weighted" : false,
+      "necessaryEquip" : [
         "air bike"
-      ]
+      ],
+      "calories" : {
+        "any" : [10, 50],
+        "low" : [10, 20],
+        "mid" : [21, 39],
+        "high" : [40, 50]
+      }
     },
     {
       "name" : "Row",
@@ -635,7 +1119,19 @@ db.exercises.insertMany(
       "weighted" : false,
       "necessaryEquip" : [
         "rower"
-      ]
+      ],
+      "distance" : {
+        "any" : [250, 5000],
+        "short" : [250, 500],
+        "med" : [500, 1000],
+        "long" : [1000, 5000]
+      },
+      "calories" : {
+        "any" : [10, 50],
+        "low" : [10, 20],
+        "mid" : [21, 39],
+        "high" : [40, 50]
+      }
     },
     {
       "name" : "Jump Rope (Single Unders)",
@@ -645,6 +1141,12 @@ db.exercises.insertMany(
         "metabolic conditioning"
       ],
       "weighted" : false,
+      "repScheme" : {
+        "any" : [20, 100],
+        "low" : [20, 29],
+        "mid" : [30, 49],
+        "high" : [50, 100]
+      },
       "necessaryEquip" : [
         "jump rope"
       ]
@@ -657,6 +1159,12 @@ db.exercises.insertMany(
         "metabolic conditioning"
       ],
       "weighted" : false,
+      "repScheme" : {
+        "any" : [10, 50],
+        "low" : [10, 19],
+        "mid" : [20, 34],
+        "high" : [35, 50]
+      },
       "necessaryEquip" : [
         "jump rope"
       ]
@@ -665,7 +1173,8 @@ db.exercises.insertMany(
       "name" : "Squat Cleans",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders", "traps"],
       "category" : [
         "weightlifting",
@@ -673,6 +1182,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.7,
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
+      "maxOfExercise" : "squat",
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -682,7 +1198,7 @@ db.exercises.insertMany(
         "trapezius"
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -690,7 +1206,8 @@ db.exercises.insertMany(
       "name" : "Power Cleans",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders", "traps"],
       "category" : [
         "weightlifting",
@@ -698,6 +1215,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.65,
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
+      "maxOfExercise" : "squat",
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -707,7 +1231,7 @@ db.exercises.insertMany(
         "trapezius"
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -715,7 +1239,8 @@ db.exercises.insertMany(
       "name" : "Hang Cleans",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders", "traps"],
       "category" : [
         "weightlifting",
@@ -723,6 +1248,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.65,
+      "maxOfExercise" : "squat",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -732,7 +1264,7 @@ db.exercises.insertMany(
         "trapezius"
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -740,14 +1272,22 @@ db.exercises.insertMany(
       "name" : "Clean and Jerks",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders", "traps"],
       "category" : [
         "weightlifting",
         "crossfit"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.7,
+      "percentOfMax" : 0.5,
+      "maxOfExercise" : "deadlift",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -758,7 +1298,7 @@ db.exercises.insertMany(
         "triceps brachii"
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -766,14 +1306,22 @@ db.exercises.insertMany(
       "name" : "Power Snatches",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders", "traps"],
       "category" : [
         "weightlifting",
         "crossfit"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.6,
+      "percentOfMax" : 1,
+      "maxOfExercise" : "snatch",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -784,7 +1332,7 @@ db.exercises.insertMany(
         "triceps brachii"
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -792,14 +1340,22 @@ db.exercises.insertMany(
       "name" : "Squat Snatches",
       "level" : "gold",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "legs", "shoulders", "traps"],
       "category" : [
         "weightlifting",
         "crossfit"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.6,
+      "percentOfMax" : 1,
+      "maxOfExercise" : "snatch",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -810,7 +1366,7 @@ db.exercises.insertMany(
         "triceps brachii"
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -818,13 +1374,21 @@ db.exercises.insertMany(
       "name" : "Kettlebell Swings",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders"],
       "category" : [
         "crossfit"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.15,
+      "percentOfMax" : 0.125,
+      "maxOfExercise" : "deadlift",
+      "repScheme" : {
+        "any" : [5, 50],
+        "low" : [5, 14],
+        "mid" : [15, 24],
+        "high" : [25, 50]
+      },
       "primaryMuscleTarget" : "glutes",
       "secondaryMuscleTarget" : [
         "hamstrings",
@@ -839,14 +1403,22 @@ db.exercises.insertMany(
       "name" : "Dumbbell Swings",
       "level" : "bronze",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "back", "shoulders"],
       "category" : [
         "crossfit"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.15,
+      "percentOfMax" : 0.125,
+      "maxOfExercise" : "deadlift",
       "primaryMuscleTarget" : "glutes",
+      "repScheme" : {
+        "any" : [5, 50],
+        "low" : [5, 14],
+        "mid" : [15, 24],
+        "high" : [25, 50]
+      },
       "secondaryMuscleTarget" : [
         "hamstrings",
         "lower back",
@@ -860,7 +1432,8 @@ db.exercises.insertMany(
       "name" : "Wall Balls",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
+      "priMuscleGrpGeneral" : "legs",
+      "priMuscleGrpSpecific" : "quads",
       "opposingMuscleGrp" : "hamstrings",
       "muscleGrps" : ["legs", "shoulders"],
       "category" : [
@@ -870,6 +1443,12 @@ db.exercises.insertMany(
       "weight" : {
         "men" : 20,
         "women" : 14
+      },
+      "repScheme" : {
+        "any" : [10, 40],
+        "low" : [10, 19],
+        "mid" : [20, 29],
+        "high" : [30, 40]
       },
       "primaryMuscleTarget" : "quadriceps",
       "secondaryMuscleTarget" : [
@@ -885,13 +1464,21 @@ db.exercises.insertMany(
       "name" : "Turkish Get-Up",
       "level" : "bronze",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "multi",
+      "priMuscleGrpGeneral" : "multi",
+      "priMuscleGrpSpecific" : "multi",
       "muscleGrps" : ["legs", "shoulders", "core", "back", "chest"],
       "category" : [
         "crossfit"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.25,
+      "percentOfMax" : 0.175,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [5, 50],
+        "low" : [5, 12],
+        "mid" : [13, 19],
+        "high" : [20, 30]
+      },
       "primaryMuscleTarget" : "",
       "secondaryMuscleTarget" : [
         ""
@@ -905,20 +1492,28 @@ db.exercises.insertMany(
       "name" : "Barbell Row",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "upper back",
       "opposingMuscleGrp" : "chest",
       "muscleGrps" : ["back", "biceps", "arms"],
       "category" : [
         "body building"
       ],
       "weighted" : true,
-      "percentOfMax" : 0.4,
+      "percentOfMax" : 0.35,
+      "maxOfExercise" : "deadlift",
+      "repScheme" : {
+        "any" : [3, 20],
+        "low" : [3, 6],
+        "mid" : [7, 12],
+        "high" : [13, 20]
+      },
       "primaryMuscleTarget" : "",
       "secondaryMuscleTarget" : [
         ""
       ],
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -926,7 +1521,8 @@ db.exercises.insertMany(
       "name" : "Dumbbell Row",
       "level" : "silver",
       "skillLevel" : "beginner",
-      "priMuscleGrp" : "back",
+      "priMuscleGrpGeneral" : "back",
+      "priMuscleGrpSpecific" : "lats",
       "opposingMuscleGrp" : "chest",
       "muscleGrps" : ["back", "biceps", "arms"],
       "category" : [
@@ -934,6 +1530,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.25,
+      "maxOfExercise" : "deadlift",
+      "repScheme" : {
+        "any" : [5, 20],
+        "low" : [5, 8],
+        "mid" : [9, 12],
+        "high" : [13, 20]
+      },
       "necessaryEquip" : [
         "dumbbells"
       ]
@@ -942,7 +1545,8 @@ db.exercises.insertMany(
       "name" : "Dumbbell Flyes",
       "level" : "bronze",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "chest",
+      "priMuscleGrpGeneral" : "chest",
+      "priMuscleGrpSpecific" : "outer chest",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["chest", "shoulders", "triceps", "arms"],
       "category" : [
@@ -950,6 +1554,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.15,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 12],
+        "mid" : [13, 19],
+        "high" : [20, 30]
+      },
       "necessaryEquip" : [
         "bench",
         "dumbbells"
@@ -962,7 +1573,30 @@ db.exercises.insertMany(
       "category" : [
         "metabolic conditioning",
       ],
-      "weighted" : "either"
+      "weighted" : false,
+      "weightAmount" : "BW",
+      "repScheme" : {
+        "any" : [5, 30],
+        "low" : [5, 9],
+        "mid" : [10, 19],
+        "high" : [20, 30]
+      }
+    },
+    {
+      "name" : "Jumping Jacks",
+      "level" : "silver",
+      "skillLevel" : "beginner",
+      "category" : [
+        "metabolic conditioning",
+      ],
+      "weighted" : false,
+      "weightAmount" : "BW",
+      "repScheme" : {
+        "any" : [10, 50],
+        "low" : [10, 19],
+        "mid" : [20, 29],
+        "high" : [30, 50]
+      }
     },
     {
       "name" : "High Knees",
@@ -971,25 +1605,41 @@ db.exercises.insertMany(
       "category" : [
         "metabolic conditioning",
       ],
-      "weighted" : false
+      "weightAmount" : "BW",
+      "weighted" : false,
+      "repScheme" : {
+        "any" : [10, 50],
+        "low" : [10, 19],
+        "mid" : [20, 29],
+        "high" : [30, 50]
+      }
     },
     {
       "name" : "Toes-To-Bar",
       "level" : "silver",
       "skillLevel" : "advanced",
-      "priMuscleGrp" : "abs",
+      "priMuscleGrpGeneral" : "abs",
+      "priMuscleGrpSpecific" : "abs",
       "opposingMuscleGrp" : "back",
       "muscleGrps" : ["biceps", "shoulders", "core"],
       "category" : [
         "crossfit"
       ],
-      "weighted" : "either"
+      "weightAmount" : "BW",
+      "weighted" : "either",
+      "repScheme" : {
+        "any" : [5, 20],
+        "low" : [5, 9],
+        "mid" : [10, 14],
+        "high" : [15, 20]
+      }
     },
     {
       "name" : "Shoulders to Overhead (Barbell)",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "anterior deltoids",
+      "priMuscleGrpGeneral" : "shoulders",
+      "priMuscleGrpSpecific" : "anterior deltoids",
       "opposingMuscleGrp" : "posterior deltoids",
       "muscleGrps" : ["shoulders"],
       "category" : [
@@ -997,8 +1647,15 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.6,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "necessaryEquip" : [
-        "bar",
+        "barbell",
         "plates"
       ]
     },
@@ -1006,7 +1663,8 @@ db.exercises.insertMany(
       "name" : "Shoulders to Overhead (Dumbbells)",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "anterior deltoids",
+      "priMuscleGrpGeneral" : "shoulders",
+      "priMuscleGrpSpecific" : "anterior deltoids",
       "opposingMuscleGrp" : "posterior deltoids",
       "muscleGrps" : ["shoulders"],
       "category" : [
@@ -1014,6 +1672,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.3,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "necessaryEquip" : [
         "dumbbells"
       ]
@@ -1022,7 +1687,8 @@ db.exercises.insertMany(
       "name" : "Shoulders to Overhead (Kettlebells)",
       "level" : "silver",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "anterior deltoids",
+      "priMuscleGrpGeneral" : "shoulders",
+      "priMuscleGrpSpecific" : "anterior deltoids",
       "opposingMuscleGrp" : "posterior deltoids",
       "muscleGrps" : ["shoulders"],
       "category" : [
@@ -1030,6 +1696,13 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.3,
+      "maxOfExercise" : "bench",
+      "repScheme" : {
+        "any" : [1, 50],
+        "low" : [1, 6],
+        "mid" : [7, 19],
+        "high" : [20, 50]
+      },
       "necessaryEquip" : [
         "Kettlebells"
       ]
@@ -1038,9 +1711,12 @@ db.exercises.insertMany(
       "name" : "Sprints",
       "level" : "gold",
       "skillLevel" : "intermediate",
-      "priMuscleGrp" : "quads",
-      "opposingMuscleGrp" : "hamstrings",
-      "muscleGrps" : ["legs", "glutes"],
+      "distance" : {
+        "any" : [1, 10],
+        "short" : [1, 2],
+        "med" : [3, 6],
+        "long" : [7, 10]
+      },
       "category" : [
         "crossfit",
         "metabolic conditioning"
@@ -1054,7 +1730,14 @@ db.exercises.insertMany(
       "category" : [
         "metabolic conditioning"
       ],
-      "weighted" : false
+      "weighted" : false,
+      "weightAmount" : "BW",
+      "repScheme" : {
+        "any" : [10, 50],
+        "low" : [10, 19],
+        "mid" : [20, 34],
+        "high" : [35, 50]
+      }
     }
   ]
 );
@@ -1067,7 +1750,8 @@ db.exercises.insertMany(
       "name" : "",
       "level" : "",
       "skillLevel" : "",
-      "priMuscleGrp" : "",
+      "priMuscleGrpGeneral" : "",
+      "priMuscleGrpSpecific" : "",
       "opposingMuscleGrp" : "",
       "muscleGrps" : [
         ""
@@ -1077,6 +1761,7 @@ db.exercises.insertMany(
       ],
       "weighted" : ,
       "percentOfMax" : ,
+      "maxOfExercise" : "",
       "primaryMuscleTarget" : "",
       "secondaryMuscleTarget" : [
         ""
@@ -1087,15 +1772,15 @@ db.exercises.insertMany(
     }
  
 
-db.exercises.find({ skillLevel: "intermediate", $or:[{"priMuscleGrp" : "chest"},{"priMuscleGrp" : "back"}]},{_id:0}).pretty()
+db.exercises.find({ skillLevel: "intermediate", $or:[{"priMuscleGrpGeneral" : "chest"},{"priMuscleGrpGeneral" : "back"}]},{_id:0}).pretty()
 
 db.exercises.find(
   { $and: 
     [
       { skillLevel: "intermediate"},
       { $or:[
-          {"priMuscleGrp" : "chest"},
-          {"priMuscleGrp" : "back"}
+          {"priMuscleGrpGeneral" : "chest"},
+          {"priMuscleGrpGeneral" : "back"}
         ]
       }
     ]
@@ -1105,9 +1790,9 @@ db.exercises.find(
   }
 ).pretty()
 
-db.exercises.find({$or:[{"priMuscleGrp" : "chest"},{"priMuscleGrp" : "back"}]},{_id:0}).pretty()
+db.exercises.find({$or:[{"priMuscleGrpGeneral" : "chest"},{"priMuscleGrpGeneral" : "back"}]},{_id:0}).pretty()
 
-db.exercises.find({"priMuscleGrp" : "chest"}).pretty();
+db.exercises.find({"priMuscleGrpGeneral" : "chest"}).pretty();
 
 db.exercises.find({$and:[{"category" : "crossfit"},{"category" : "metabolic conditioning"}]}).pretty()
 

@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -26,11 +28,14 @@ import { GetUpdatesComponent } from './pages/get-updates/get-updates.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { HelpComponent } from './pages/help/help.component';
 import { DonateComponent } from './pages/donate/donate.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 // SERVICES
 import { NavService } from './services/nav.service';
 import { GetWodService } from './services/get-wod.service';
-import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { IndexHeaderFormService } from './services/index-header-form.service';
+import { IndexDemoFormService } from './services/index-demo-form.service';
+import { ContactFormService } from './services/contact-form.service';
 
 // ROUTES
 const appRoutes:Routes = [
@@ -77,12 +82,17 @@ const appRoutes:Routes = [
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     AngularFontAwesomeModule
   ],
   providers: [
     NavService,
-    GetWodService
+    GetWodService,
+    IndexHeaderFormService,
+    IndexDemoFormService,
+    ContactFormService
   ],
   bootstrap: [AppComponent]
 })

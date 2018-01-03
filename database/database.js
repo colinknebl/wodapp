@@ -1,9 +1,16 @@
-const MongoClient = require('mongodb').MongoClient,
-      assert      = require('assert'),
-      exerciseUrl = 'mongodb://localhost:27017/exercises',
-      userUrl     = 'mongodb://localhost:27017/users',
-      wodsUrl     = 'mongodb://localhost:27017/wods',
-      wodAppUrl   = 'mongodb://localhost:27017/wodapp';
+const MongoClient   = require('mongodb').MongoClient,
+      assert        = require('assert');
+      // wodAppUrl     = 'mongodb://localhost:27017/wodapp';
+      mongoAtlasUrl = 'mongodb://colinknebl:special25@wodapp-shard-00-00-ihelb.mongodb.net:27017,wodapp-shard-00-01-ihelb.mongodb.net:27017,wodapp-shard-00-02-ihelb.mongodb.net:27017/wodapp?ssl=true&replicaSet=wodapp-shard-0&authSource=admin';
+
+let userNum    = 0;
+let contactNum = 0;
+
+// var uri = "mongodb+srv://kay:myRealPassword@cluster0-wpeiv.mongodb.net/test";
+// MongoClient.connect(uri, function(err, db) {
+//   db.close();
+// });
+
 
 mongodb = {
   
@@ -17,8 +24,16 @@ mongodb = {
     });
   },
 
-  addUser: (userFirstName, userLastName, userEmail) => {
-    MongoClient.connect(wodAppUrl, (err, db) => {
+  testAtlasConnection: () => {
+    MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      assert.equal(null, err); 
+      console.log('MongoDB Atlas connection works.');
+      db.close();
+    });
+  },
+
+  addUser: (userFirstName, userLastName, userEmail, date) => {
+    MongoClient.connect(mongoAtlasUrl, (err, db) => {
       assert.equal(null, err); 
       console.log('adding user to user db...');
 
@@ -26,16 +41,37 @@ mongodb = {
         .insertOne({
           firstName: userFirstName,
           lastName: userLastName,
-          email: userEmail
+          email: userEmail,
+          dateAdded: date,
+          userNum: userNum
         });
+      db.close();      
+    });
+    userNum++;
+  },
+
+  addContactRequest: (contactData) => {
+    MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      assert.equal(null, err); 
+      console.log('adding contact request to contactFormRequests db...');
+      console.log(contactData, contactNum);
+      db.collection('contactFormRequests')
+        .insertOne({
+          firstName   : contactData.firstName,
+          lastName    : contactData.lastName,
+          email       : contactData.email,
+          requestType : contactData.requestType,
+          message     : contactData.message,
+          contactNum  : contactNum,
+          dateAdded   : contactData.dateAdded
+        });
+      contactNum++;
       db.close();
-      console.log('user added');
-      
     });
   },
 
   addWod: (wod) => {
-    MongoClient.connect(wodAppUrl, (err, db) => {
+    MongoClient.connect(mongoAtlasUrl, (err, db) => {
       assert.equal(null, err); 
 
       db.collection('wods').insertOne(wod);
@@ -48,7 +84,7 @@ mongodb = {
 
     return new Promise((resolve, reject) => {
 
-      MongoClient.connect(wodAppUrl, (err, db) => {
+      MongoClient.connect(mongoAtlasUrl, (err, db) => {
         assert.equal(null, err); 
 
         let wodArray = [];
@@ -68,30 +104,51 @@ mongodb = {
     });
   },
 
-  exerciseQuery: (user, queryType, categorySearchValue) => {
+  exerciseQuery: (data) => {
+    /*
+      exerciseQuery argument list. NOTE: if you add an argument to this method you must add the same argument to the "mongodb.queryBuilder" method.
+      
+      data = {
+      M     user: user,
+      M     queryTypes: [
+              'priMuscleGrpGeneral',
+              'secMuscleGrp',
+              'oppMuscleGrp',
+              'category'
+            ],
+      O     categorySearchValues: [
+              'metabolic conditioning',
+              'crossfit'
+            ],
+      O     skillLvlSearchValues: []
+      }
 
-    // exerciseQuery argument list. NOTE: if you add an argument to this method you must add the same argument to the "mongodb.queryBuilder" method.
-      // argument 1 = user object
-      // argument 2 = array of query types
-      //    - priMuscleGrp
-      //    - secMuscleGrp
-      //    - oppMuscleGrp
-      //    - category
-      //    - muscleGrp
-      // argument 3 = array of values for category type searches
-      //    - metabolic conditioning
-    
+      1. argument 1 = user object
+      2. argument 2 = array of query types
+          - muscleGrp
+          - priMuscleGrpGeneral
+          - secMuscleGrp
+          - oppMuscleGrp
+          - category
+          - skillLvl
+      3. argument 3 = array of arrays -- each query type has an associated query value array at the same array position.
+          Example: if queryType[2] = skillLvl, queryTypeArrayValues[2] will be an array with the user's skill level (i.e. 'intermediate').
+          - metabolic conditioning
+      4. argument 4 = array of values for muscleGrp searches
+
+    */
+
     // BUILD THE DATABASE QUERY
-    const query = mongodb.queryBuilder(user, queryType, categorySearchValue);
+    const query = mongodb.queryBuilder.v1(data);
     console.log('/*****************/');
-    console.log('The DB query is:');
-    console.log(query);
+    console.log('The DB query is: ', query);
     console.log('/*****************/');
     // ************************
 
+
     return new Promise((resolve, reject) => {
 
-      MongoClient.connect(wodAppUrl, (err, db) => {
+      MongoClient.connect(mongoAtlasUrl, (err, db) => {
 
         assert.equal(null, err);
 
@@ -118,172 +175,200 @@ mongodb = {
     });
   },
 
-  queryBuilder: (user, queryType, categorySearchValue) => {
+  queryBuilder: {
+    v1: (data) => {
 
-    // console.log('start queryBuilder');
-    // console.log(`categorySearchValue: ${categorySearchValue}`);
-
-    console.log(user);
-
-    let queryDetails = {};
-
-    let query = {
-      $and : [queryDetails]
-    };
-
-    for (var i = 0; i < queryType.length; i++) {
-
-      // console.log(`queryType: ${queryType[i]}`);
-
-      if (queryType[i] === 'muscleGrp') {
-
-        if ('muscleGrp' in user && user.muscleGrp !== 'any') {
-          console.log('test1');
-          queryDetails.muscleGrps = user.muscleGrp;
-        } 
-      }
-
-      if (queryType[i] === 'priMuscleGrp') {
-
-        if ('muscleGrp' in user && user.muscleGrp !== 'any') {
-          queryDetails.priMuscleGrp = user.muscleGrp;
-        } 
-      }
-
-      else if (queryType[i] === 'secMuscleGrp') {
-
-        if ('muscleGrp' in user && user.muscleGrp !== 'any') {
-          queryDetails.muscleGrps = user.muscleGrp;
-        } 
-      }
-
-      else if (queryType[i] === 'oppMuscleGrp') {
-
-        let oppMuscleGrp;
-
-        switch (user.muscleGrp) {
-          case "chest":
-            oppMuscleGrp = "back";
-            break;
-          case "back":
-            oppMuscleGrp = "chest";
-            break;
-          case "quads":
-            oppMuscleGrp = "hamstrings";
-            break;
-          case "hamstrings":
-            oppMuscleGrp = "quads";
-            break;
-          case "anterior deltoids":
-            oppMuscleGrp = "posterior deltoids";
-            break;
-          case "posterior deltoids":
-            oppMuscleGrp = "anterior deltoids";
-            break;
-          case "biceps":
-            oppMuscleGrp = "triceps";
-            break;
-          case "triceps":
-            oppMuscleGrp = "biceps";
-            break;
-        }
-
-        queryDetails.opposingMuscleGrp = oppMuscleGrp;
-      }
-
-      else if (queryType[i] === 'skillLevel') {
-        // skillLevel values in db
-        //  - beginner
-        //  - intermediate
-        //  - advanced
-
-        if ('skillLvl' in user) {
-          queryDetails.skillLevel = user.skillLvl;
-        }
-      }
-
-      else if (queryType[i] === 'category') {
-        // category values in db
-        //  - weightlifting
-        //  - gymnastics
-        //  - plyometric
-        //  - crossfit
-        //  - metabolic conditioning
-        //  - body building
+      console.log('==================');
+      console.log(data);
+      console.log('==================');
 
 
-        if (categorySearchValue) {
+      let queryDetails = [];
 
-          // console.log(`categorySearchValue: ${categorySearchValue}`);
-          // console.log(`categorySearchValue.length: ${categorySearchValue.length}`);
+      let query = {
+        $and : queryDetails
+      };
+      /*
+        db.exercises.find(
+          $and : [{  }]
+        )
+      */
 
-          if (categorySearchValue.length === 1) {
+      data.queryTypes.forEach((queryType) => {
 
-            queryDetails.category = categorySearchValue[0];
+        console.log('queryType: ', queryType);
 
+
+        if (queryType === 'skillLvl') {
+
+          if ('skillLvl' in data.user && data.user.skillLvl === 'beginner') {
+            queryDetails.push({'skillLevel' : 'beginner'});
           }
-
-          else if (categorySearchValue > 1) {
-
-            let categories = [];
-
-            queryDetails.category = {
-              $or : categories
-            };
-            
-            for (let i = 0; i < categorySearchValue.length; i++) {
-              let categoryInstance = {};
-              categoryInstance.category = categorySearchValue[i];
-              categories.push(categoryInstance);
-
-            }
+          else if ('skillLvl' in data.user && data.user.skillLvl === 'intermediate') {
+            queryDetails.push({$or : [
+                {'skillLevel' : 'beginner'},
+                {'skillLevel' : 'intermediate'}
+              ]
+            });
+          }
+          else if ('skillLvl' in data.user && data.user.skillLvl === 'advanced') {
+            queryDetails.push({$or : [
+                {'skillLevel' : 'beginner'},
+                {'skillLevel' : 'intermediate'},
+                {'skillLevel' : 'advanced'}
+              ]
+            });
+          }
+          else if ('skillLvl' in data.user && data.user.skillLvl === 'athlete') {
+            queryDetails.push({$or : [
+                {'skillLevel' : 'beginner'},
+                {'skillLevel' : 'intermediate'},
+                {'skillLevel' : 'advanced'},
+                {'skillLevel' : 'athlete'}
+              ]
+            });
           }
         }
 
-        else if (!categorySearchValue) {
 
-          if (
-            user.wodType === 'amrap'      ||
-            user.wodType === 'bodyweight' ||
-            user.wodType === 'chipper'    ||
-            user.wodType === 'couplet'    ||
-            user.wodType === 'emom'       ||
-            user.wodType === 'hybrid'     ||
-            user.wodType === 'singlet'    ||
-            user.wodType === 'tabata'     ||
-            user.wodType === 'timeCap'
-          ) {
-            queryDetails.category = 'crossfit';
+        else if (queryType === 'oppMuscleGrp') {
+
+          let muscleGrpInstance = {};
+          let oppMuscleGrp;
+
+          switch (data.user.muscleGrp) {
+            case "chest":
+              oppMuscleGrp = "back";
+              break;
+            case "back":
+              oppMuscleGrp = "chest";
+              break;
+            case "quads":
+              oppMuscleGrp = "hamstrings";
+              break;
+            case "hamstrings":
+              oppMuscleGrp = "quads";
+              break;
+            case "anterior deltoids":
+              oppMuscleGrp = "posterior deltoids";
+              break;
+            case "posterior deltoids":
+              oppMuscleGrp = "anterior deltoids";
+              break;
+            case "biceps":
+              oppMuscleGrp = "triceps";
+              break;
+            case "triceps":
+              oppMuscleGrp = "biceps";
+              break;
+            default:
+              console.log("error in opposing muscle group db query builder. tag: asdg/486-dsagg");
           }
-          else if (user.wodType === 'endurance') {
-            queryDetails.category = 'endurance';
+          console.log('oppMuscleGrp: ', oppMuscleGrp);
+          muscleGrpInstance.opposingMuscleGrp = oppMuscleGrp;
+          console.log('muscleGrpInstance: ', muscleGrpInstance);
+          queryDetails.push(muscleGrpInstance);
+        }
+
+        else if (queryType === 'secMuscleGrp') {
+          let muscleGrpInstance = {};
+          
+          if ('muscleGrp' in data.user && data.user.muscleGrp !== 'any') {
+            muscleGrpInstance.muscleGrps = data.user.muscleGrp;
+            queryDetails.push(muscleGrpInstance);
           }
-          else if (user.wodType === 'strength') {
-            queryDetails.category = 'strength'; 
+        }
+
+
+
+        else if (queryType === 'priMuscleGrpGeneral') {
+          let muscleGrpInstance = {};
+
+          if ('muscleGrp' in data.user && data.user.muscleGrp !== 'any') {
+            muscleGrpInstance.priMuscleGrpGeneral = data.user.muscleGrp;
+            queryDetails.push(muscleGrpInstance);
           }
-          else if (user.wodType === 'strongman') {
-            queryDetails.category = 'strongman'; 
+        }
+
+
+
+        else if (queryType === 'muscleGrp') {
+
+          let muscleGrpInstance = {};
+
+          if ('muscleGrp' in data.user && data.user.muscleGrp !== 'any') {
+            muscleGrpInstance.muscleGrps = data.user.muscleGrp;
+            queryDetails.push(muscleGrpInstance);
           }
-          else if (user.wodType === 'weightlifting') {
-            queryDetails.category = 'weightlifting'; 
-          }
-          else if (user.wodType === 'bodybuilding') {
-            queryDetails.category = 'bodybuilding'; 
+          else if ('muscleGrp' in data.user && data.user.muscleGrp === 'any' && data.muscleGroupSearchValue) {
+            muscleGrpInstance.muscleGrps = data.muscleGroupSearchValue;
+            queryDetails.push(muscleGrpInstance);
           }
           else {
-            console.error('invalid search category');
+            console.log('error in muscle group query builder. tag: 3132598ykjsdbkasdg');
           }
         }
 
-        else {
-          console.error('error with search category');
+
+
+        else if (queryType === 'category') {
+
+          let categoryInstance = {};
+
+          if (data.categorySearchValues) {
+
+            data.categorySearchValues.forEach((categorySearchValue) => {
+
+              categoryInstance.category = categorySearchValue;
+              queryDetails.push(categoryInstance);
+              
+            });
+          }
+          else {
+            console.log("categorySearchValues in query 'data' object did not exist--category search value will be generic. tag:9f]2jfae09g");
+
+            if (
+              data.user.wodType === 'amrap'      ||
+              data.user.wodType === 'bodyweight' ||
+              data.user.wodType === 'chipper'    ||
+              data.user.wodType === 'couplet'    ||
+              data.user.wodType === 'emom'       ||
+              data.user.wodType === 'hybrid'     ||
+              data.user.wodType === 'singlet'    ||
+              data.user.wodType === 'tabata'     ||
+              data.user.wodType === 'timeCap'
+            ) {
+              categoryInstance.category = 'crossfit';
+            }
+            else if (data.user.wodType === 'endurance') {
+              categoryInstance.category = 'endurance';
+            }
+            else if (data.user.wodType === 'strength') {
+              categoryInstance.category = 'strength'; 
+            }
+            else if (data.user.wodType === 'strongman') {
+              categoryInstance.category = 'strongman'; 
+            }
+            else if (data.user.wodType === 'weightlifting') {
+              categoryInstance.category = 'weightlifting'; 
+            }
+            else if (data.user.wodType === 'bodybuilding') {
+              categoryInstance.category = 'bodybuilding'; 
+            }
+            else {
+              console.error('invalid generic search category assignment. tag: &238adgnadsgl348');
+            }
+
+            queryDetails.push(categoryInstance);
+          }
+
         }
-      }
+
+      });
+
+      return query;
+
     }
-
-    // console.log(query);
-
-    return query;
   }
 
 };

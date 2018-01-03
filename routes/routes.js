@@ -4,9 +4,12 @@ const express       = require('express'),
       mongodb       = require('../database/database'),
       wodGenerator  = require('../workout_gen_software/wodGenerator');
 
+// mongodb.testConnection();
+mongodb.testAtlasConnection();
+
 
 // USER SCHEMA - THIS IS IN MONGOOSE; NEED TO RE-WRITE WITH MONGODB
-require('../models/User');
+// require('../models/User');
 
 // INDEX ROUTE
 router.get('/', (req, res) => {
@@ -16,12 +19,10 @@ router.get('/', (req, res) => {
 
 
 // POST DATA FROM FORM
-router.post('/workout-generator', (req, res) => {
+router.post('/workout-generator/', (req, res) => {
 
   const user     = new Object({}),
         wodConst = new Object({});
-
-  // console.log(req.body);
 
   // BUILD USER OBJECT
   user.firstName = req.body.firstName;
@@ -46,13 +47,17 @@ router.post('/workout-generator', (req, res) => {
   }
 
   // ADD USER TO THE USER DATABASE
-  // mongodb.addUser(userFirstName, userLastName, userEmail);
+  mongodb.addUser(user.firstName, user.lastName, user.email);
 
   wod = wodGenerator.generateWod(user, wodConst);
 
   wod
     .then((wod) => {
-      res.redirect('/workout-generator/' + wod._id);
+      if (wod) {
+        res.send({'result': 'success'});
+      } else {
+        res.send({'result': 'failure'});
+      }
     })
     .catch((err) => {
       console.error(err);

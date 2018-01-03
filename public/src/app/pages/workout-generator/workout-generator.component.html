@@ -7,9 +7,29 @@
     <div class="section-content">
       <div class="wod-display" *ngFor="let wod of wod">
         
-        <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes.</p>
-        <div *ngFor="let exercise of wod.exercises">
-          <p>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+        <p>Workout Type: {{ wod.type }}</p>
+
+        <div *ngIf="wod.type === 'AMRAP'">
+          <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes.</p>
+          <p>{{ wod.repScheme }} reps of each:</p>
+          <div *ngFor="let exercise of wod.exercises">
+            <p>{{ exercise.name }}, {{ exercise.weightAmount }}</p>
+          </div>
+        </div>
+        
+        <div *ngIf="wod.type === 'Singlet'">
+          <p>Instructions: {{ wod.instructions }}.</p>
+          <div *ngFor="let exercise of wod.exercises">
+            <p>{{ wod.repScheme }} reps</p>
+            <p>{{ exercise.name }}</p>
+          </div>
+        </div>
+        
+        <div *ngIf="wod.type === 'Couplet'">
+          <p>Instructions: Complete {{ wod.rounds }} rounds of {{ wod.reps }} reps within {{ wod.timeCap }} minutes.</p>
+          <div *ngFor="let exercise of wod.exercises">
+            <p><span *ngIf="exercise.reps">{{ exercise.reps }}</span>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+          </div>
         </div>
 
       </div>
@@ -19,6 +39,10 @@
   <section class="section notes-section">
     <div class="section-content">
       <h2 class="section-head text-color-gradient">Workout notes</h2>
+      <ul>
+        <li>Feel free to scale the workout however you see fit.</li>
+        <li>To avoid injury, don't forget to thoroughly warm up prior to starting your workout and cool down/stretch at the end.</li>
+      </ul>
     </div>
   </section>
   

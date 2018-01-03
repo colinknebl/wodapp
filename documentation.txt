@@ -1,0 +1,158 @@
+/*
+* WOD METHOD
+    Arguments: (user, wodConst) =>
+    1. user object
+      - firstName: string,
+      - lastName: string,
+      - email: string,
+      - skillLvl: string,
+      - wodType: string,
+      - muscleGrp: string,
+      - repScheme: string,
+      - timer: number,
+      - maxBench: number,
+      - maxSquat: number,
+      - maxSnatch: number,
+      - maxDead: number,
+      - equip: array
+    
+    2. wodConst
+      - _id: string
+
+*//* _________________________
+
+* VARIABLE DECLARATIONS
+    List of variables.
+      let priExercises;
+      let secExercises;
+      let conExercises;
+      let oppExercises;
+      let wodExercises;
+      let repScheme;
+      let percentOfMax;
+      let WOD = wodConst;
+
+*//* _________________________
+
+* SET TYPE
+    WOD.type = string;
+
+*//* _________________________
+
+* SET TIMER
+    WOD.timer = helpers.setTimer(user.timer);
+
+
+*//* _________________________
+
+* QUERY DATABASE - SEE ARGUMENT DOCS IN MONGODB.EXERCISEQUERY METHOD
+    let priExerciseQuery = mongodb.exerciseQuery(arguments);
+    let secExerciseQuery = mongodb.exerciseQuery(arguments);
+    let conExerciseQuery = mongodb.exerciseQuery(arguments);
+    let oppExerciseQuery = mongodb.exerciseQuery(arguments);
+
+
+*//* _________________________
+
+* RETRIEVE PRIMARY MUSCLE GROUP EXERCISES
+
+
+*//* _________________________
+
+* RETRIEVE SECONDARY MUSCLE GROUP EXERCISES
+
+
+*//* _________________________
+
+* RETRIEVE CONDITIONING EXERCISES
+
+
+*//* _________________________
+
+* OPPOSING MUSCLE GROUP EXERCISES ARE ONLY USED IF THE TIMER IS GREATER THAN 16
+* RETRIEVE OPPOSING MUSCLE EXERCISES
+
+
+*//* _________________________
+
+* FILTER EXERCISES BASED ON USER'S EQUIPMENT
+  
+  helpers.filterExercisesBasedOnEquipment(exerciseArray, userEquip)
+    Arguments:
+    1. exerciseArray: array, the exercises that need to be filtered
+    2. userEquip: array, the user's equipment
+    
+    Function:
+    There are three layers of loops. 
+    - loops through each exercise in the exerciseArray
+      - loops through each "necessaryEquip" of that exercise
+        - loops through each item in the "userEquip" array
+          - if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
+    Compares the 'necessaryEquip' array of each exercise returned from the database, to each piece of equipment the user has available. If the user has all the equipment needed for that exercise, that exercise is added to a 'validExercises' array. After all the exercises have been looped through, the 'validExercises' array is returned. 
+
+*//* _________________________
+
+* CHOOSE EXERCISE(S) TO ADD TO WOD
+  
+  helpers.compileAmrapExercises(userTimer, priExercises, secExercises, conExercises, oppExercises)
+  Arguments:
+  1. userTimer: number, the length of the workout in minutes
+  2. priExercises: array, the primary exercises
+  3. secExercises: array, the secondary exercises
+  4. conExercises: array, the conditioning exercises
+  5. oppExercises: array, the opposing muscle group exercises
+
+  Function:
+  There are two functions in the method:
+  checkExercises()
+  getExercises()
+
+  getExercises() chooses the number of exercises based on how long the workout will be. 
+  checkExercises() checks to make sure none of the exercises selected are the same exercise...no duplicates allowed. 
+
+
+*//* _________________________
+
+* GENERATE REP COUNT FOR WOD EXERCISES
+  
+  helpers.assignReps(desiredRepScheme, exerciseArray)
+  Arguments:
+  1. desiredRepScheme: string, the user's desired rep scheme
+  2. exerciseArray: array, the exercises that need rep number assignment
+
+  Function: 
+  If the exercise has 'repScheme' key/value pair, the reps are assigned to the exercise based on the user's desiredRepScheme (any, low, medium, high). If the exercise does not have a 'repScheme' key/value pair, the exercise is assigned reps of 'n/a'.
+
+
+*//* _________________________
+
+* ASSIGN WEIGHT TO EXERCISES
+
+
+*//* _________________________
+
+* SEQUENCE WOD
+
+
+*//* _________________________
+
+* ADD EXERCISES TO WOD OBJECT
+
+
+*//* _________________________
+
+* ADD WOD INSTRUCTIONS
+    WOD.instruction = string;
+
+*//* _________________________
+
+* ADD WOD TO DATABASE
+
+
+*//* _________________________
+
+* SEND WOD BACK TO ROUTE TO SEND BACK TO CLIENT
+
+
+
+*/

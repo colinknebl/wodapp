@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private router: Router) { }
+
+
+  ngOnInit() {
+      // This makes the page load at the top of the document when navigating between pages.
+      this.router.events.subscribe((evt) => {
+        if (!(evt instanceof NavigationEnd)) {
+            return;
+        }
+        window.scrollTo(0, 0)
+      });
+  }
 }

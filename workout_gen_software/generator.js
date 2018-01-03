@@ -124,8 +124,19 @@ module.exports = {
 
 helpers = {
 
-  numGenerator: function(min, max) {
+  numGenerator: function(min, max, bool) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+    // array = ['one', 'two', 'three'];
+    // min = 0; max = array.length (3); 
+    // return Math.floor(Math.random() * (3 - 0 + 1) + 0);
+    // return Math.floor(Math.random() * 4);
+
+    // if (bool) {
+    //   max = max - 1;
+    //   return Math.floor(Math.random() * (max - min + 1) + min);
+    // } else {
+    //   return Math.floor(Math.random() * (max - min + 1) + min);
+    // }
   },
 
   weightPercent: function(skillLvl, repScheme) {
