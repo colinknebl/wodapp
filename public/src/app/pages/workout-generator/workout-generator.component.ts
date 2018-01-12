@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GetWodService } from '../../services/get-wod.service';
+import { GetWodService } from '../../services/get-wod/get-wod.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Wod } from '../../models/wod';
 

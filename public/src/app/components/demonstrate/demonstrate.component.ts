@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IndexDemoFormService } from '../../services/index-demo-form.service';
+import { IndexDemoFormService } from '../../services/index-demo-form/index-demo-form.service';
 import { Router } from '@angular/router';
 
 @Component({

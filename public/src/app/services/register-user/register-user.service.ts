@@ -7,8 +7,8 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class RegisterUserService {
 
-  private apiUrl = 'http://localhost:4800/api/register-user';
-  // private apiUrl = 'http://forgdapp.com/api/register-user';
+  private apiUrl = 'http://localhost:4800/api/register-user/v2';
+  // private apiUrl = 'http://forgdapp.com/api/register-user/v2';
 
   constructor(
     private http:Http) { }

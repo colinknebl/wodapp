@@ -52,22 +52,169 @@ mongodb = {
   },
 
 
+  addRegisteredUser: {
+    v1: (user, today) => {
+      // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      MongoClient.connect(localhostUrl, (err, db) => {
+        assert.equal(null, err); 
+        // console.log('adding user  to user db...');
 
-  addRegisteredUser: (user, today) => {
-    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
-    MongoClient.connect(localhostUrl, (err, db) => {
-      assert.equal(null, err); 
-      // console.log('adding user  to user db...');
+        db.collection('registeredUsers')
+          .insertOne({
+            firstName : user.firstName,
+            lastName  : user.lastName,
+            email     : user.email,
+            dateAdded : today
+          });
+        db.close();
+      });
+    },
 
-      db.collection('registeredUsers')
-        .insertOne({
-          firstName : user.firstName,
-          lastName  : user.lastName,
-          email     : user.email,
-          dateAdded : today
+
+    v2: (user, today) => {
+
+      return new Promise((resolve, reject) => {
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err); 
+          console.log('adding user to user db...');
+
+          db.collection('registeredUsers')
+            .insertOne({
+              firstName : user.firstName,
+              lastName  : user.lastName,
+              email     : user.email,
+              username  : user.username,
+              password  : user.password,
+              dateAdded : today
+            });
+          db.close();
+          resolve({ 
+            'success': true,
+            'message': 'User added successfully.'
+          });
         });
-      db.close();
-    });
+
+      });
+    }
+  },
+
+  checkRegisteredUsers: {
+    checkUsername: (username) => {
+      return new Promise((resolve, reject) => {
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err);
+          let userArray = [];
+
+          const users = db.collection('registeredUsers')
+            .find({ 'username' : username });
+
+          users.forEach(user => {
+            userArray.push(user);
+          }, () => {
+            db.close();
+            if (userArray.length === 0) {
+              resolve({
+                'success': true,
+                'message': `No current users with username: ${username}`
+              });
+            } else {
+              reject({
+                'success': false,
+                'message': `Username ${username} already exists.`
+              });
+            }
+          });
+        });
+      });
+    },
+
+
+    checkEmail: (email) => {
+      return new Promise((resolve, reject) => {
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err);
+          let emailArray = [];
+          const emails = db.collection('registeredUsers')
+            .find({ 'email' : email } );
+
+          emails.forEach(email => {
+            emailArray.push(email);
+          }, () => {
+            db.close();
+            if (emailArray.length === 0) {
+              resolve({
+                'success': true,
+                'message': `No current users with email: ${email}`
+              });
+            } else {
+              reject({
+                'success': false,
+                'message': `Email ${email} already exists.`
+              });
+            }
+          });
+        });
+      });
+    },
+
+
+    v3: (username, email) => {
+      return new Promise((resolve, reject) => {
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err);
+
+          let resultsArray = [];
+
+          const results = db.collection('registeredUsers')
+            .find({
+              $or: [
+                {
+                  'username': username
+                },
+                {
+                  'email': email
+                }                
+              ]
+            });
+
+          results.forEach(user => {
+            if (username === user.username) {
+              user.usernameMatch = true;
+            }
+            if (email === user.email) {
+              user.emailMatch = true;
+            }
+            resultsArray.push(user);
+          }, () => {
+            db.close();
+            if (resultsArray.length === 0) {
+              resolve({
+                'success': true,
+                'message': `No current users with email: ${email}, or username ${username}`
+              });
+            } else {
+              let message = '';
+              resultsArray.forEach(result => {
+                if (result.emailMatch) {
+                  message += `The email ${email} is already in use. `;
+                }
+                if (result.usernameMatch) {
+                  message += `The username ${username} is already in use. `;
+                }
+              });
+              reject({
+                'success': false,
+                'message': message
+              });
+            }
+          });
+        });
+      });
+    }
   },
 
   addContactRequest: (contactData) => {

@@ -14,8 +14,10 @@ const UserSchema = new Schema({
   },
   email:{
     type: String,
-    required: true
+    required: true,
+    unique: true,
+    lowercase: true
   }
 });
 
-mongoose.model('user', UserSchema);
+module.exports = mongoose.model('user', UserSchema);

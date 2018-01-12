@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IndexHeaderFormService } from '../../services/index-header-form.service';
+import { IndexHeaderFormService } from '../../services/index-header-form/index-header-form.service';
 
 @Component({
   selector: 'app-index',
