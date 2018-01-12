@@ -14,23 +14,15 @@ import { FooterComponent } from './components/footer/footer.component';
 import { MobileNavComponent } from './components/mobile-nav/mobile-nav.component';
 import { DemonstrateComponent } from './components/demonstrate/demonstrate.component';
 import { CtaBarComponent } from './components/cta-bar/cta-bar.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { LoginComponent } from './pages/login/login.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 // PAGES
-import { HomeComponent } from './pages/home/home.component';
 import { FeaturesComponent } from './pages/features/features.component';
-import { PricingComponent } from './pages/pricing/pricing.component';
 import { WorkoutGeneratorComponent } from './pages/workout-generator/workout-generator.component';
 import { AboutComponent } from './pages/about/about.component';
-import { CheckStatusComponent } from './pages/check-status/check-status.component';
-import { BlogComponent } from './pages/blog/blog.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { GetUpdatesComponent } from './pages/get-updates/get-updates.component';
-import { FaqComponent } from './pages/faq/faq.component';
-import { HelpComponent } from './pages/help/help.component';
-import { DonateComponent } from './pages/donate/donate.component';
-import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 
 // SERVICES
 import { NavService } from './services/nav.service';
@@ -44,46 +36,31 @@ import { AuthService } from './services/auth.service';
 
 // ROUTES
 const appRoutes:Routes = [
-  // {path:'', component:DashboardComponent, canActivate:[AuthGuard]},
-  // {path:'register', component:RegisterComponent, canActivate:[RegisterGuard]},
   {path:'', component:IndexComponent},
-  {path:'home', component:HomeComponent},
   {path:'features', component:FeaturesComponent},
   {path:'about', component:AboutComponent},
   {path:'contact', component:ContactComponent},
-  {path:'donate', component:DonateComponent},
   {path:'workout-generator/:id', component:WorkoutGeneratorComponent},
-  {path:'check-status', component:CheckStatusComponent},
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
-  // {path:'pricing', component:PricingComponent},
-  // {path:'blog', component:BlogComponent},
-  // {path:'get-updates', component:GetUpdatesComponent},
-  // {path:'faq', component:FaqComponent},
-  // {path:'help', component:HelpComponent}
 ];
 
 @NgModule({
   declarations: [
+    // COMPONENTS
     AppComponent,
     IndexComponent,
     FeaturesComponent,
-    PricingComponent,
     HeaderComponent,
     FooterComponent,
     MobileNavComponent,
     DemonstrateComponent,
+
+    // PAGES
     WorkoutGeneratorComponent,
     CtaBarComponent,
     AboutComponent,
-    CheckStatusComponent,
-    BlogComponent,
     ContactComponent,
-    GetUpdatesComponent,
-    FaqComponent,
-    HelpComponent,
-    HomeComponent,
-    DonateComponent,
     ContactFormComponent,
     RegisterComponent,
     LoginComponent

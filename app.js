@@ -24,4 +24,6 @@ app.set('port', port);
 const server = http.createServer(app);
 
 // LISTEN ON SPECIFIED PORT FOR NETWORK REQUESTS
-server.listen(port, () => console.log(`API running on localhost:${port}`));
+server.listen(port, () => {
+  console.log(`API running on localhost:${port}`);
+});
