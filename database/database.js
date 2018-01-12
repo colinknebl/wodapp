@@ -1,6 +1,6 @@
 const MongoClient   = require('mongodb').MongoClient,
       assert        = require('assert');
-      // wodAppUrl     = 'mongodb://localhost:27017/wodapp';
+      localhostUrl  = 'mongodb://localhost:27017/wodapp';
       mongoAtlasUrl = 'mongodb://colinknebl:special25@wodapp-shard-00-00-ihelb.mongodb.net:27017,wodapp-shard-00-01-ihelb.mongodb.net:27017,wodapp-shard-00-02-ihelb.mongodb.net:27017/wodapp?ssl=true&replicaSet=wodapp-shard-0&authSource=admin';
 
 let userNum    = 0;
@@ -16,7 +16,7 @@ mongodb = {
   
   // CONNECT TO MONGODB DATABASE USING MONGODB
   testConnection: () => {
-    MongoClient.connect(wodAppUrl, (err, db) => {
+    MongoClient.connect(localhostUrl, (err, db) => {
       assert.equal(null, err); 
       // assert.notEqual(docs.length, 0);
       console.log('MongoDB connection works.');
@@ -32,29 +32,49 @@ mongodb = {
     });
   },
 
-  addUser: (userFirstName, userLastName, userEmail, date) => {
-    MongoClient.connect(mongoAtlasUrl, (err, db) => {
+  addUser: (user, date) => {
+    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+    MongoClient.connect(localhostUrl, (err, db) => {
       assert.equal(null, err); 
-      console.log('adding user to user db...');
+      // console.log('adding user  to user db...');
 
       db.collection('users')
         .insertOne({
-          firstName: userFirstName,
-          lastName: userLastName,
-          email: userEmail,
-          dateAdded: date,
-          userNum: userNum
+          firstName : user.firstName,
+          lastName  : user.lastName,
+          email     : user.email,
+          dateAdded : date,
+          userNum   : userNum
         });
       db.close();      
     });
     userNum++;
   },
 
+
+
+  addRegisteredUser: (user, today) => {
+    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+    MongoClient.connect(localhostUrl, (err, db) => {
+      assert.equal(null, err); 
+      // console.log('adding user  to user db...');
+
+      db.collection('registeredUsers')
+        .insertOne({
+          firstName : user.firstName,
+          lastName  : user.lastName,
+          email     : user.email,
+          dateAdded : today
+        });
+      db.close();
+    });
+  },
+
   addContactRequest: (contactData) => {
-    MongoClient.connect(mongoAtlasUrl, (err, db) => {
+    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+    MongoClient.connect(localhostUrl, (err, db) => {
       assert.equal(null, err); 
       console.log('adding contact request to contactFormRequests db...');
-      console.log(contactData, contactNum);
       db.collection('contactFormRequests')
         .insertOne({
           firstName   : contactData.firstName,
@@ -71,7 +91,8 @@ mongodb = {
   },
 
   addWod: (wod) => {
-    MongoClient.connect(mongoAtlasUrl, (err, db) => {
+    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+    MongoClient.connect(localhostUrl, (err, db) => {
       assert.equal(null, err); 
 
       db.collection('wods').insertOne(wod);
@@ -84,7 +105,8 @@ mongodb = {
 
     return new Promise((resolve, reject) => {
 
-      MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      MongoClient.connect(localhostUrl, (err, db) => {
         assert.equal(null, err); 
 
         let wodArray = [];
@@ -140,15 +162,16 @@ mongodb = {
 
     // BUILD THE DATABASE QUERY
     const query = mongodb.queryBuilder.v1(data);
-    console.log('/*****************/');
-    console.log('The DB query is: ', query);
-    console.log('/*****************/');
+    // console.log('/*****************/');
+    // console.log('The DB query is: ', query);
+    // console.log('/*****************/');
     // ************************
 
 
     return new Promise((resolve, reject) => {
 
-      MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      MongoClient.connect(localhostUrl, (err, db) => {
 
         assert.equal(null, err);
 
@@ -178,9 +201,9 @@ mongodb = {
   queryBuilder: {
     v1: (data) => {
 
-      console.log('==================');
-      console.log(data);
-      console.log('==================');
+      // console.log('==================');
+      // console.log(data);
+      // console.log('==================');
 
 
       let queryDetails = [];
@@ -196,7 +219,7 @@ mongodb = {
 
       data.queryTypes.forEach((queryType) => {
 
-        console.log('queryType: ', queryType);
+        // console.log('queryType: ', queryType);
 
 
         if (queryType === 'skillLvl') {
@@ -264,9 +287,7 @@ mongodb = {
             default:
               console.log("error in opposing muscle group db query builder. tag: asdg/486-dsagg");
           }
-          console.log('oppMuscleGrp: ', oppMuscleGrp);
           muscleGrpInstance.opposingMuscleGrp = oppMuscleGrp;
-          console.log('muscleGrpInstance: ', muscleGrpInstance);
           queryDetails.push(muscleGrpInstance);
         }
 

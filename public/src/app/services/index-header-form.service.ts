@@ -7,8 +7,8 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class IndexHeaderFormService {
 
-  // private apiUrl = 'http://localhost:4800/api/add-user';
-  private apiUrl = 'http://forgdapp.com/api/add-user';
+  private apiUrl = 'http://localhost:4800/api/add-user';
+  // private apiUrl = 'http://forgdapp.com/api/add-user';
 
   constructor(private http: Http) {}
 

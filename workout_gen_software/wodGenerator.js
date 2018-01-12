@@ -14,7 +14,25 @@ wodGenerator = {
   wod: {},
 
   generateWod: (user, wodConst) => {
+
     let wod;
+
+    if (user.wodType === 'any') {
+      let num = helpers.numGenerator(0, 2);
+      switch (num) {
+        case 0:
+          user.wodType = 'amrap';
+          break;
+        case 1:
+          user.wodType = 'singlet';
+          break;
+        case 2:
+          user.wodType = 'couplet';
+          break;
+        default:
+          console.log('error parsing `any` wodType. tag: 3^38gfdangliahsdg');
+      }
+    }
 
     switch (user.wodType) {
       case "amrap":
@@ -60,7 +78,7 @@ wodGenerator = {
       //   wodGenerator.(user, wodConst);
       //   break;
       default:
-        console.log('wod type unknown');
+        console.log('wod type parse error. tag: 398tngad02%39g#f');
 
     }
   },
@@ -109,7 +127,7 @@ wodGenerator = {
           priExercises = priExercisesQueryResults;
 
           // FILTER EXERCISES BASED ON USER'S EQUIPMENT
-          priExercises = helpers.filterExercisesBasedOnEquipment(priExercises, user.equip);
+          priExercises = helpers.filterExercisesBasedOnEquipment.v2(priExercises, user.equip);
 
           // CHOOSE EXERCISE(S) TO ADD TO WOD
           wodExercise = priExercises[helpers.numGenerator(0, priExercises.length - 1)];
@@ -207,7 +225,7 @@ wodGenerator = {
 
       // SET TIMER
       if (user.timer !== 'any') {
-        WOD.timeCap = user.timer;
+        WOD.timer = user.timer;
       }
       WOD.timer = helpers.setTimer(user.timer);
       // ***************************
@@ -259,7 +277,7 @@ wodGenerator = {
         .then((crossfitExercisesQueryResults) => {
 
           // FILTER EXERCISES BASED ON USER'S EQUIPMENT
-          let validExercises = helpers.filterExercisesBasedOnEquipment(crossfitExercisesQueryResults, user.equip);
+          let validExercises = helpers.filterExercisesBasedOnEquipment.v2(crossfitExercisesQueryResults, user.equip);
           // ***************************
 
 
@@ -303,7 +321,7 @@ wodGenerator = {
           
 
           // ASSIGN WEIGHT TO EXERCISES
-          exercises = helpers.assignRx(exercises, maxLifts, WOD.reps, WOD.rounds, user.repScheme);
+          exercises = helpers.assignRx(exercises, maxLifts, WOD.reps, WOD.rounds, user.repScheme, user.gender);
           // ***************************
 
 
@@ -311,15 +329,23 @@ wodGenerator = {
           WOD.exercises = exercises;
           // ***************************
 
+
+          // OPTIONAL: ADD RUN COMPONENT
+          let runNum = helpers.numGenerator(0, 10);
+          // I don't like running, so only add a run if the below criteria are met. 
+          if (runNum >= 7 && WOD.timer >= 15) {
+            WOD = helpers.addRun(WOD);
+          }
+          else {
+            WOD.run = false;
+          }
+          // ************************
+
+
           // ADD WOD TO DATABASE
           mongodb.addWod(WOD);
           // ***************************
 
-
-
-          console.log(' ~~~~~~~~~~~~~~~~~~ ');
-          console.log(WOD);
-          console.log(' ~~~~~~~~~~~~~~~~~~ ');
 
           // SEND WOD BACK TO ROUTE TO SEND BACK TO CLIENT
           resolve(WOD);
@@ -333,10 +359,6 @@ wodGenerator = {
 
 
   amrap: (user, wodConst) => {
-
-    console.log(user);
-    console.log('............');
-    console.log(wodConst);
 
     return new Promise((resolve, reject) => {
 
@@ -396,8 +418,10 @@ wodGenerator = {
       exerciseQuery
         .then((exerciseQueryResults) => {
 
+          // console.log('exerciseQueryResults: ', exerciseQueryResults);
+
           // FILTER EXERCISES BASED ON USER'S EQUIPMENT
-          exercises = helpers.filterExercisesBasedOnEquipment(exerciseQueryResults, user.equip);
+          exercises = helpers.filterExercisesBasedOnEquipment.v2(exerciseQueryResults, user.equip);
           // ************************
 
 
@@ -443,7 +467,7 @@ wodGenerator = {
           exerciseArray.forEach((exercise) => {
             exercise.reps = repScheme;
           });
-          wodExercises = helpers.assignRx(exerciseArray, maxLifts, null, WOD.rounds, WOD.repScheme);
+          wodExercises = helpers.assignRx(exerciseArray, maxLifts, null, WOD.rounds, WOD.repScheme, user.gender);
           // ************************
 
 
@@ -454,6 +478,18 @@ wodGenerator = {
 
           // ADD EXERCISES TO WOD OBJECT
           WOD.exercises = wodSequence;
+          // ************************
+
+
+          // OPTIONAL: ADD RUN COMPONENT
+          let runNum = helpers.numGenerator(0, 10);
+          // I don't like running, so only add a run if the below criteria are met. 
+          if (runNum >= 7 && WOD.timer >= 15) {
+            WOD = helpers.addRun(WOD);
+          }
+          else {
+            WOD.run = false;
+          }
           // ************************
 
 
@@ -483,6 +519,66 @@ module.exports = wodGenerator;
 
 
 helpers = {
+
+
+
+  addRun: (WOD) => {
+
+    const run = { 
+      name: 'Run',
+      level: 'bronze',
+      skillLevel: 'beginner',
+      category: [
+        "metabolic conditioning"
+      ],
+      "weighted" : false,
+      "distance" : {
+        "range" : [0.5, 5],
+        "short" : [0.5, 1],
+        "med" : [2, 2],
+        "long" : [3, 3],
+        "unit" : "mile(s)"
+      }
+    };
+
+    if ((WOD.timer / WOD.rounds) >= 8) {
+      WOD.rounds = WOD.rounds - 1;  
+      run.weightAmount = '1 mile';
+    }
+    else {
+      WOD.rounds = WOD.rounds - 2;
+      run.weightAmount = '2 miles';
+    }
+
+    WOD.exercises.forEach(exercise => {
+      let reps = exercise.reps * WOD.rounds;
+      reps = helpers.roundNum(reps);
+      exercise.reps = reps;
+    });
+
+    // add to beginning or end or both
+    let num = helpers.numGenerator(0, 2);
+    if (num === 0) {
+      WOD.exercises.unshift(run);
+    }
+    else if (num === 2 && run.weightAmount === '2 miles') {
+      run.weightAmount = '1 mile';
+      WOD.exercises.unshift(run);
+      WOD.exercises.push(run);
+    }
+    else {
+      WOD.exercises.push(run);
+    }
+
+    WOD.run = true;
+    WOD.instructions = `For time. ${WOD.timer} minute time cap.`;
+
+    return WOD;
+  },
+
+
+
+
 
 
   compileAmrapExercises: {
@@ -559,26 +655,6 @@ helpers = {
 
         }
       });
-
-      // console.log('priExercises: ', priExercises.length);
-      // priExercises.forEach((exercise) => {console.log(exercise.name);});
-      // console.log(' ***** end priExercises ***** ');
-
-      // console.log('conExercises: ', conExercises.length);
-      // conExercises.forEach((exercise) => {console.log(exercise.name);});
-      // console.log(' ***** end conExercises ***** ');
-
-      // console.log('secExercises: ', secExercises.length);
-      // secExercises.forEach((exercise) => {console.log(exercise.name);});
-      // console.log(' ***** end secExercises ***** ');
-
-      // console.log('oppExercises: ', oppExercises.length);
-      // oppExercises.forEach((exercise) => {console.log(exercise.name);});
-      // console.log(' ***** end oppExercises ***** ');
-
-      // console.log('leftOver: ', leftOver.length);
-      // leftOver.forEach((exercise) => {console.log(exercise.name);});
-      // console.log(' ***** end leftOver ***** ');
 
       return {
         priExercises: priExercises,
@@ -658,7 +734,7 @@ helpers = {
         }
 
         else {
-          console.log('error in checkExercises()');
+          console.log('error in checkExercises(). tag: 4309gn341tg+f0934');
         }
       }
 
@@ -714,7 +790,7 @@ helpers = {
             wodExercises.conExercises = helpers.chooseExercises(conExercises, 2);
           }
         }
-        checkExercises();
+        // checkExercises();
       }
 
       getExercises();
@@ -729,17 +805,15 @@ helpers = {
 
 
 
-  assignRx: (exerciseArray, maxLifts, reps, rounds, repScheme) => {
+  assignRx: (exerciseArray, maxLifts, reps, rounds, repScheme, gender) => {
     /*
       exerciseArray = array
       maxLifts = object
       reps = string <= optional, may be null or undefined
       rounds = number
       repScheme = string
+      gender = string
     */
-
-    console.log('rounds: ', rounds);
-    console.log('repScheme: ', repScheme);
 
     const newExerciseArray = [];
 
@@ -801,48 +875,60 @@ helpers = {
 
       // ASSIGN A VALUE TO "weightFactor"
       let weightFactor;
-      if (exercise.reps <= 2 || average <= 2) {
+      if (exercise.reps <= 2 || average <= 2 || repScheme <= 2) {
         weightFactor = 0.95;
       }
       else if (
         (exercise.reps > 2 && exercise.reps <= 4) 
         || 
-        (average > 2 && average <= 4)) 
+        (average > 2 && average <= 4)
+        ||
+        (repScheme > 2 && repScheme <= 4)) 
         {
           weightFactor = 0.9;
       }
       else if (
         (exercise.reps > 4 && exercise.reps <= 6) 
         || 
-        (average > 4 && average <= 6)) 
+        (average > 4 && average <= 6)
+        ||
+        (repScheme > 4 && repScheme <= 6)) 
         {
           weightFactor = 0.85;
       }
       else if (
         (exercise.reps > 6 && exercise.reps <= 11) 
         || 
-        (average > 6 && average <= 11)) 
+        (average > 6 && average <= 11)
+        ||
+        (repScheme > 6 && repScheme <= 11))
         {
           weightFactor = 0.8;
       }
       else if (
         (exercise.reps > 11 && exercise.reps <= 19) 
         || 
-        (average > 11 && average <= 19)) 
+        (average > 11 && average <= 19)
+        ||
+        (repScheme > 11 && repScheme <= 19))
         {
           weightFactor = 0.7;
       }
       else if (
         (exercise.reps > 19 && exercise.reps <= 29) 
         || 
-        (average > 19 && average <= 29)) 
+        (average > 19 && average <= 29)
+        ||
+        (repScheme > 19 && repScheme <= 29))
         {
           weightFactor = 0.5;
       }
       else if (
-        (exercise.reps >= 30) 
+        (exercise.reps >= 30)
         || 
-        (average >= 30)) 
+        (average >= 30)
+        ||
+        (repScheme >= 30)) 
         {
           weightFactor = 0.4;
       }
@@ -851,40 +937,12 @@ helpers = {
       }
 
       // ASSIGN THE EXERCISE weightAmount
-      // console.log(`${exercise.name}; maxLift: ${maxLift}`);
-      // console.log(`${exercise.name}; exercise.percentOfMax: ${exercise.percentOfMax}`);
-      // console.log(`${exercise.name}; weightFactor: ${weightFactor}`);
       let weightAmount = Math.floor(maxLift * exercise.percentOfMax * weightFactor);
-      // console.log(`${exercise.name}; weightAmount 1: ${weightAmount}`);
       weightAmount = helpers.roundNum(weightAmount);
-      // console.log(`${exercise.name}; weightAmount 2: ${weightAmount}`);
       exercise.weightAmount = weightAmount + ' lbs';
 
       // ADD THE EXERCISE WITH THE WEIGHT ASSIGNED TO newExerciseArray
       newExerciseArray.push(exercise);
-    }
-
-
-    // ASSIGN DISTANCE FOR SPRINTS
-    function assignSprintDistance(sprint) {
-
-      let dist = sprint.distance;
-      let distance;
-      let num;
-      if (rounds >= 1 && rounds <= 2) {
-        distance = helpers.numGenerator(dist.long[0], dist.long[1]);
-      }
-      else if (rounds >= 3 && rounds <= 5) {
-        distance = helpers.numGenerator(dist.med[0], dist.med[1]);
-      }
-      else if (rounds > 6) {
-        distance = helpers.numGenerator(dist.short[0], dist.short[1]);
-      }
-      else {
-        console.log('error in assigning sprint distance. tag: 57aa55g09dnt');
-      }
-      sprint.weightAmount = (distance * 100) + ' meters';
-      newExerciseArray.push(sprint);
     }
 
 
@@ -895,7 +953,7 @@ helpers = {
       let reps = climbers.repScheme;
 
       if (repScheme === 'any') {
-        count = helpers.numGenerator(reps.any[0], reps.any[1]);
+        count = helpers.numGenerator(reps.range[0], reps.range[1]);
       }
       else if (repScheme === 'lowRepHighWeight') {
         count = helpers.numGenerator(reps.low[0], reps.low[1]);
@@ -922,7 +980,7 @@ helpers = {
       let reps = exercise.repScheme;
 
       if (repScheme === 'any') {
-        count = helpers.numGenerator(reps.any[0], reps.any[1]);
+        count = helpers.numGenerator(reps.range[0], reps.range[1]);
       }
       else if (repScheme === 'lowRepHighWeight') {
         count = helpers.numGenerator(reps.low[0], reps.low[1]);
@@ -942,6 +1000,125 @@ helpers = {
     }
 
 
+    // ASSIGN DISTANCE FOR SPRINTS
+    function assignDistance(exercise) {
+      rounds = 1;
+
+      let dist = exercise.distance;
+      let distance;
+      if (rounds >= 1 && rounds <= 2) {
+        distance = helpers.numGenerator(dist.long[0], dist.long[1]);
+      }
+      else if (rounds > 2 && rounds <= 5) {
+        distance = helpers.numGenerator(dist.med[0], dist.med[1]);
+      }
+      else if (rounds > 5) {
+        distance = helpers.numGenerator(dist.short[0], dist.short[1]);
+      }
+      else {
+        console.error(`error in assigning ${exercise.name} distance. tag: 57aa55g09dnt`);
+      }
+
+      if(exercise.name === "Handstand Walk") {
+        distance = helpers.roundNum(distance);
+        exercise.weightAmount = `${distance} ${exercise.distance.unit}`;
+      }
+      else if (exercise.name === "Sprint") {
+        exercise.weightAmount = `${distance * 100} ${exercise.distance.unit}`;
+      }
+      else if (exercise.name !== "Handstand Walk" && exercise.name !== "Sprint") {
+        exercise.weightAmount = `${distance} ${exercise.distance.unit}`;
+      }
+      else {
+        console.error(`error in assigning ${exercise.name} weightAmount. tag: 849dfng-dadgne^f`);
+      }
+      newExerciseArray.push(exercise);
+    }
+
+
+
+    function distOrCal(exercise) {
+
+      // choose whether the weight amount will be distance or calories
+      let choice = helpers.numGenerator(0, 1);
+
+      if (choice === 1) {
+
+        let cal = exercise.calories;
+        let calories;
+        if (rounds >= 1 && rounds <= 2) {
+          calories = helpers.numGenerator(cal.high[0], cal.high[1]);
+        }
+        else if (rounds > 2 && rounds <= 5) {
+          calories = helpers.numGenerator(cal.mid[0], cal.mid[1]);
+        }
+        else if (rounds > 5) {
+          calories = helpers.numGenerator(cal.low[0], cal.low[1]);
+        }
+        else {
+          console.error(`error in assigning ${exercise.name} calories. tag: gbf38^3idjg77afn`);
+        }
+        calories = helpers.roundNum(calories);
+        exercise.weightAmount = `${calories} ${exercise.calories.unit}`;
+      }
+      else {
+
+        let dist = exercise.distance;
+        let distance;
+        if (rounds >= 1 && rounds <= 2) {
+          distance = helpers.numGenerator(dist.long[0], dist.long[1]);
+        }
+        else if (rounds > 2 && rounds <= 5) {
+          distance = helpers.numGenerator(dist.med[0], dist.med[1]);
+        }
+        else if (rounds > 5) {
+          distance = helpers.numGenerator(dist.short[0], dist.short[1]);
+        }
+        else {
+          console.error(`error in assigning ${exercise.name} distance. tag: 48g3j%^fugnq0v4g68/`);
+        }
+        exercise.weightAmount = `${distance * 100} ${exercise.distance.unit}`;
+      }
+      newExerciseArray.push(exercise);
+    }
+
+
+
+
+    function assignCalories(exercise) {
+
+      let cal = exercise.calories;
+      let calories;
+      if (rounds >= 1 && rounds <= 2) {
+        calories = helpers.numGenerator(cal.high[0], cal.high[1]);
+      }
+      else if (rounds > 2 && rounds <= 5) {
+        calories = helpers.numGenerator(cal.mid[0], cal.mid[1]);
+      }
+      else if (rounds > 5) {
+        calories = helpers.numGenerator(cal.low[0], cal.low[1]);
+      }
+      else {
+        console.error(`error in assigning ${exercise.name} calories. tag: 5fk40tb28&ak$e`);
+      }
+      calories = helpers.roundNum(calories);
+      exercise.weightAmount = `${calories} calories`;
+      newExerciseArray.push(exercise);
+    }
+
+
+
+    function assignWeightByGender(exercise) {
+      if (gender === 'female') {
+        exercise.weightAmount = `${exercise.weight.female} ${exercise.weight.unit}`;
+      }
+      else {
+        exercise.weightAmount = `${exercise.weight.male} ${exercise.weight.unit}`;
+      }
+      newExerciseArray.push(exercise);
+    }
+
+
     // ASSIGN WEIGHT TO EXERCISES IN WHICH THE VALUE OF "weighted" IS "either"
     function assignEither(exercise) {
       let ex;
@@ -953,6 +1130,14 @@ helpers = {
         assignWeight(exercise);
       }
     }
+
+
+    // console.log('rounds:', rounds);
+    // console.log('repScheme:', repScheme);
+    // console.log('average:',average);
+    // console.log('maxLifts:',maxLifts);
+    // console.log('reps:',reps);
+    // console.log('gender:',gender);
     
 
     // LOOP THROUGH EACH EXERCISE AND SEND IT TO A FUNCTION TO CALCULATE weightAmount
@@ -961,36 +1146,60 @@ helpers = {
       if (exercise.weightAmount) {
         newExerciseArray.push(exercise);
       }
+
       else if (exercise.weighted === true && 'percentOfMax' in exercise) {
         assignWeight(exercise);
       }
-      else if (exercise.name === 'Sprints') {
-        assignSprintDistance(exercise);
+
+      else if ('distance' in exercise && 'calories' in exercise) {
+        distOrCal(exercise);
       }
+
+      else if ('calories' in exercise) {
+        assignCalories(exercise);
+      }
+
+      else if ('distance' in exercise) {
+        assignDistance(exercise);
+      }
+
+      else if (exercise.weighted === "gender") {
+        assignWeightByGender(exercise);
+      }
+
       else if (exercise.name === 'Mountain Climbers' && reps === undefined) {
         assignMtClimbersCount(exercise);
       }
+
       else if (exercise.necessaryEquip == 'jump rope' && reps === undefined) {
         assignJumpRopeCount(exercise);
       }
+
       else if (exercise.weighted === false && reps !== undefined) {
         exercise.weightAmount = 'n/a';
         newExerciseArray.push(exercise);
       }
+
       else if (exercise.assisted === true) {
-        exercise.weightAmount = 'n/a';
+        exercise.weightAmount = 'assisted';
         newExerciseArray.push(exercise);
       }
+
       else if (exercise.weighted === 'either') {
         assignEither(exercise);
       }
+
       else {
-        console.log(`error parsing exercise: '${exercise.name}'. tag: 213554sdafasd`);
+        console.log(`error parsing exercise while assigning weight for: '${exercise.name}'. tag: 213554sdafasd`);
       }
 
     });
 
-    return newExerciseArray;   
+    // newExerciseArray.forEach((exercise, index) => {
+    //   console.log(`${index+1}. ${exercise.name} :: ${exercise.weightAmount}`);
+    // });
+
+    return newExerciseArray;
   },
 
 
@@ -1388,7 +1597,7 @@ helpers = {
           exercise.reps = reps;
         }
         else {
-          reps = helpers.numGenerator(exercise.repScheme.any[0], exercise.repScheme.any[1]);
+          reps = helpers.numGenerator(exercise.repScheme.range[0], exercise.repScheme.range[1]);
           if (reps >= 25) {reps = helpers.roundNum(reps); }
           exercise.reps = reps;
         }
@@ -1761,39 +1970,153 @@ helpers = {
 
 
 
-  filterExercisesBasedOnEquipment: (exerciseArray, userEquip) => {
+  filterExercisesBasedOnEquipment: {
+    v1: (exerciseArray, userEquip) => {
 
-    let validExercises = [];
+      let validExercises = [];
 
-    // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
+      // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
 
-    // loop through each exercise in the exerciseArray
-    for (let i = 0; i < exerciseArray.length; i++) {
-      if (exerciseArray[i].necessaryEquip !== undefined) {
-        let matches = 0;       
-        // loop through each "necessaryEquip" of that exercise 
-        let equipNum = exerciseArray[i].necessaryEquip;
-        for (let a = 0; a < equipNum.length; a++) {
-          // loop through each item in the "userEquip" array
-          for (let t = 0; t < userEquip.length; t++) {
-            // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
-            if (equipNum[a] === userEquip[t]) {
-              matches++;
+      // loop through each exercise in the exerciseArray
+      for (let i = 0; i < exerciseArray.length; i++) {
+        if (exerciseArray[i].necessaryEquip !== undefined) {
+          let matches = 0;
+
+          // loop through each "necessaryEquip" of that exercise 
+          let equipNum = exerciseArray[i].necessaryEquip;
+          for (let a = 0; a < equipNum.length; a++) {
+            
+            // loop through each item in the "userEquip" array
+            for (let t = 0; t < userEquip.length; t++) {
+              
+              // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
+              if (equipNum[a] === userEquip[t]) {
+                matches++;
+              }
+            }
+            if (equipNum.length === matches) {
+              // if the value of matches is equal to the amount of the number of equipment needed in the "necessaryEquip" array, add the exercise to the "validExercises" array.
+              validExercises.push(exerciseArray[i]);
             }
           }
-          if (equipNum.length === matches) {
-            validExercises.push(exerciseArray[i]);
-          }
+        } 
+        else {
+          validExercises.push(exerciseArray[i]);
         }
       } 
-      else {
-        validExercises.push(exerciseArray[i]);
-      }
-    } 
-    return validExercises;
-  },
+      return validExercises;
+    },
 
-  
+
+
+
+
+    v2: (exerciseArray, userEquip) => {
+
+      let validExercises = [];
+
+      // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
+
+      function needOneEquipConfig(exercise) {
+
+        let arrayMatch = 0;
+        let added = false;
+        userEquip.forEach((userEquipItem) => {
+          if (added === true) { return; }
+
+          exercise.needOneEquipConfig.forEach((needOneEquipConfigItem) => {
+
+            if (added === true) { return; }
+
+
+            if (Array.isArray(needOneEquipConfigItem)) {
+              
+              needOneEquipConfigItem.forEach((needOneEquipconfigSubItem, index1) => {
+
+                userEquip.forEach((userEquipItemX, index2) => {
+
+                  if (index1 >= 0 && arrayMatch !== index1) { return; }
+
+                  if (needOneEquipconfigSubItem === userEquipItemX) {
+                    arrayMatch++;
+                  }
+
+                });
+
+                if (needOneEquipConfigItem.length === arrayMatch) {
+                  added = true;
+                  validExercises.push(exercise);
+                }
+              else {
+                console.log(`user does not have necessary optional equipment configurations for ${exercise.name}. tag: 2/3tewaf5asdf63h`);
+              }
+
+              });
+            }
+            else {
+              if (needOneEquipConfigItem === userEquipItem) {
+                added = true;
+                validExercises.push(exercise);
+              }
+              else {
+                console.log(`user does not have necessary optional equipment configurations for ${exercise.name}. tag: 20abcagre654erwg`);
+              }
+            }
+          });
+
+        });
+      }
+
+
+
+
+      // loop through each exercise in the exerciseArray
+      exerciseArray.forEach((exercise) => {
+
+        // if the exercise contains a "necessaryEquip" key/value pair
+        if (exercise.necessaryEquip) {
+          let matches = 0;
+
+          // loop through each "necessaryEquip" of that exercise 
+          exercise.necessaryEquip.forEach((necessaryEquipItem, neindex) => {
+
+
+            // loop through each item in the "userEquip" array
+            userEquip.forEach((userEquipItem) => {
+
+              if (matches === neindex + 1) {return;}
+
+              // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
+              if (necessaryEquipItem === userEquipItem) {
+                matches++;
+              }
+
+              // if the value of matches is equal to the amount of the number of equipment needed in the "necessaryEquip" array, add the exercise to the "validExercises" array.
+              if (exercise.necessaryEquip.length === matches) {
+
+                if (exercise.needOneEquipConfig) {
+                  needOneEquipConfig(exercise);
+                }
+                else {
+                  validExercises.push(exercise);
+                }
+              }
+            });
+          });
+        }
+        else if (exercise.needOneEquipConfig) {
+          needOneEquipConfig(exercise);
+        }
+        else {
+          // if the exercise does not require any equipment (does not contain the "necessaryEquip" key/value pair), add the exercise to the "validExercises" array
+          validExercises.push(exercise);
+        }
+
+      });
+
+      return validExercises;
+    }
+  },
 
 
 

@@ -15,7 +15,6 @@ export class NavService {
   }
 
   navAction(action) {
-    console.log(action);
 
     let navMenuType = 'push-right';
     
@@ -27,7 +26,6 @@ export class NavService {
     
 
     if (action === "open nav") {
-      console.log('open sesame');
       document.body.classList.add('has-active-menu');
       document.getElementById('content-wrapper').classList.add('has-' + navMenuType);
       document.getElementById('nav-menu-' + navMenuType).classList.add('is-active');
@@ -35,7 +33,6 @@ export class NavService {
     }
 
     if (action === 'close nav') {
-      console.log('bye bye');
       document.body.classList.remove('has-active-menu');
       document.getElementById('content-wrapper').classList.remove('has-' + navMenuType);
       document.getElementById('nav-menu-' + navMenuType).classList.remove('is-active');

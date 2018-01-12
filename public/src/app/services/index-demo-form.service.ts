@@ -9,8 +9,8 @@ export class IndexDemoFormService {
 
   submit(object:any) {
 
-    // let apiUrl = 'http://localhost:4800/workout-generator/';
-    let apiUrl = 'http://forgdapp.com/workout-generator/';
+    let apiUrl = 'http://localhost:4800/workout-generator/';
+    // let apiUrl = 'http://forgdapp.com/workout-generator/';
 
     return this.http.post(apiUrl, object.data, {observe: 'response'})
       .subscribe(res => {

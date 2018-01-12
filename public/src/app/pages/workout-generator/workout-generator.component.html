@@ -10,12 +10,22 @@
         <p>Workout Type: {{ wod.type }}</p>
 
         <div *ngIf="wod.type === 'AMRAP'">
-          <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes.</p>
-          <p>{{ wod.repScheme }} reps of each:</p>
-          <div *ngFor="let exercise of wod.exercises">
-            <p>{{ exercise.name }}, {{ exercise.weightAmount }}</p>
+          <div *ngIf="wod.run === true">
+            <p>Instructions: {{ wod.instructions }}</p>
+            <div *ngFor="let exercise of wod.exercises">
+              <p>{{ exercise.reps }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+            </div>
+          </div>
+          <div *ngIf="wod.run === false">
+            <p>Instructions: {{ wod.instructions }} in {{ wod.timer }} minutes</p>
+            <p>{{ wod.repScheme }} reps of each:</p>
+            <div *ngFor="let exercise of wod.exercises">
+              <p>{{ exercise.name }}, {{ exercise.weightAmount }}</p>
+            </div>
           </div>
         </div>
+
+
         
         <div *ngIf="wod.type === 'Singlet'">
           <p>Instructions: {{ wod.instructions }}.</p>
@@ -25,10 +35,20 @@
           </div>
         </div>
         
+
+
         <div *ngIf="wod.type === 'Couplet'">
-          <p>Instructions: Complete {{ wod.rounds }} rounds of {{ wod.reps }} reps within {{ wod.timeCap }} minutes.</p>
-          <div *ngFor="let exercise of wod.exercises">
-            <p><span *ngIf="exercise.reps">{{ exercise.reps }}</span>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+          <div *ngIf="wod.run === true">
+            <p>Instructions: {{ wod.instructions }}</p>
+            <div *ngFor="let exercise of wod.exercises">
+              <p>{{ exercise.reps }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+            </div>
+          </div>
+          <div *ngIf="wod.run === false">
+            <p>Instructions: Complete {{ wod.rounds }} rounds of {{ wod.reps }} reps within {{ wod.timer }} minutes.</p>
+            <div *ngFor="let exercise of wod.exercises">
+              <p><span *ngIf="exercise.reps">{{ exercise.reps }}</span>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
+            </div>
           </div>
         </div>
 

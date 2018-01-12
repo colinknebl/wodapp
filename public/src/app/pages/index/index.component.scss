@@ -6,7 +6,7 @@ $form-bg: #2D2D2D;
 .router-section-jumbotron {
   // border: 4px solid aqua;
   height: 80vh;
-  min-height: 600px;
+  min-height: 800px;
   background: {
     image: url('https://www.rogueeurope.eu/media/catalog/product/cache/5/rogue_header_2015/472321edac810f9b2465a359d8cdc0b5/x/x/xx3943-lg_1.jpg');
     attachment: fixed;
@@ -93,6 +93,26 @@ $form-bg: #2D2D2D;
   }
 }
 .header-btn {
+  border: 2px solid $pri-color;
+  border-radius: 50px;
+  background: $form-bg;
+  margin-bottom: .5rem;
+  display: inline-block;
+  width: 40%;
+  text-align: center;
+  padding: 1rem 2rem;
+  color: $pri-color;
+  text-decoration: none;
+  align-self: flex-end;
+  transition: background .25s, color .25s, border-color .25s;
+  &:hover, &:active {
+    background: $pri-color;
+    color: $form-bg;
+    border-color: $form-bg;
+  }
+}
+
+.header-btn-cta {
   border: 2px solid $pri-color;
   border-radius: 50px;
   background: $pri-color;
@@ -234,7 +254,7 @@ $form-bg: #2D2D2D;
 @media screen and (max-width: $break-point) {
   .header-section-content {
     // border: 5px solid red;
-    top: 30px;
+    top: 50px;
     flex-direction: column;
   }
   .msg-form {
@@ -248,7 +268,7 @@ $form-bg: #2D2D2D;
   .header-form-aside {
     width: 100%;
   }
-  .header-btn {
+  .header-btn, .header-btn-cta {
     width: 100%;
   }
 }

@@ -1,4 +1,10 @@
 /*
+
+* PREP FOR DEPLOYMENT
+  zip ../wodappProd.zip -r * .[^.]*
+
+*//* _________________________
+
 * WOD METHOD
     Arguments: (user, wodConst) =>
     1. user object

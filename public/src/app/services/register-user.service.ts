@@ -5,16 +5,16 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class ContactFormService {
+export class RegisterUserService {
 
-  private apiUrl = 'http://localhost:4800/api/contact-form';
-  // private apiUrl = 'http://forgdapp.com/api/contact-form';
+  private apiUrl = 'http://localhost:4800/api/register-user';
+  // private apiUrl = 'http://forgdapp.com/api/register-user';
 
   constructor(
     private http:Http) { }
 
   submit(data:any) {
-
+  
     return this.http.post(this.apiUrl, data)
       .map(data => data.json())
       .catch((error:any) => Observable.throw(error || 'Server error'));

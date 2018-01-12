@@ -14,6 +14,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { MobileNavComponent } from './components/mobile-nav/mobile-nav.component';
 import { DemonstrateComponent } from './components/demonstrate/demonstrate.component';
 import { CtaBarComponent } from './components/cta-bar/cta-bar.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
 
 // PAGES
 import { HomeComponent } from './pages/home/home.component';
@@ -36,6 +38,9 @@ import { GetWodService } from './services/get-wod.service';
 import { IndexHeaderFormService } from './services/index-header-form.service';
 import { IndexDemoFormService } from './services/index-demo-form.service';
 import { ContactFormService } from './services/contact-form.service';
+import { RegisterUserService } from './services/register-user.service';
+import { LoginService } from './services/login.service';
+import { AuthService } from './services/auth.service';
 
 // ROUTES
 const appRoutes:Routes = [
@@ -49,6 +54,8 @@ const appRoutes:Routes = [
   {path:'donate', component:DonateComponent},
   {path:'workout-generator/:id', component:WorkoutGeneratorComponent},
   {path:'check-status', component:CheckStatusComponent},
+  {path:'register', component:RegisterComponent},
+  {path:'login', component:LoginComponent},
   // {path:'pricing', component:PricingComponent},
   // {path:'blog', component:BlogComponent},
   // {path:'get-updates', component:GetUpdatesComponent},
@@ -77,7 +84,9 @@ const appRoutes:Routes = [
     HelpComponent,
     HomeComponent,
     DonateComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +101,10 @@ const appRoutes:Routes = [
     GetWodService,
     IndexHeaderFormService,
     IndexDemoFormService,
-    ContactFormService
+    ContactFormService,
+    RegisterUserService,
+    LoginService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

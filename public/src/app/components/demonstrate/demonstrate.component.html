@@ -2,7 +2,7 @@
 <form [formGroup]="demoForm" (submit)="submit()">
   
   <div class="lg-form-st">
-    <label class="main-label">First Name*
+    <label class="main-label">First Name <span class="star">*</span>
       <input  type="text" 
               name="firstName" 
               class="input-text" 
@@ -11,7 +11,7 @@
               formControlName="firstName">
     </label>
 
-    <label class="main-label">Last Name*
+    <label class="main-label">Last Name <span class="star">*</span>
       <input  type="text" 
               name="lastName" 
               class="input-text" 
@@ -22,7 +22,7 @@
   </div>
   
   <div class="lg-form-st">
-    <label class="main-label">Email*
+    <label class="main-label">Email <span class="star">*</span>
       <input  type="email" 
               name="email" 
               class="input-text" 
@@ -31,6 +31,16 @@
               formControlName="email">
     </label>
 
+    <label class="main-label">Phone
+      <input  type="tel" 
+              name="tel" 
+              class="input-text" 
+              required
+              formControlName="tel">
+    </label>
+  </div>
+  
+  <div class="lg-form-st">
     <label class="main-label">Skill Level
       <select name="skillLvl" formControlName="skillLvl">
         <option value="beginner">Beginner</option>
@@ -39,17 +49,24 @@
         <option value="athlete">Athlete</option>
       </select>
     </label>
+
+    <label class="main-label">Gender
+      <select name="gender" formControlName="gender">
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+      </select>
+    </label>
   </div>
   
   <div class="lg-form-st">
     <label class="main-label">Desired WOD Type
       <select name="wodType" formControlName="wodType">
-        <option value="singlet">Singlet</option>
         <option value="any">Any</option>
         <option value="amrap">AMRAP</option>
+        <option value="singlet">Singlet</option>
         <option value="couplet">Couplet</option>
-        <option value="triplet">Triplet</option>
-        <option value="chipper">Chipper</option>
+        <!-- <option value="triplet">Triplet</option> -->
+        <!-- <option value="chipper">Chipper</option> -->
         <!-- <option value="bodyweight">Bodyweight</option> -->
         <!-- <option value="emom">EMOM</option> -->
         <!-- <option value="endurance">Endurance</option> -->
@@ -85,7 +102,7 @@
       </select> 
     </label>
 
-    <label class="main-label">WOD Timer <span class="wod-span">*in minutes*</span>
+    <label class="main-label">Workout Length <span class="wod-span">*in minutes*</span>
       <select name="wodTimer" formControlName="wodTimer">
         <option value="any">5 - 60</option>
         <option value="noTimer">No Timer</option>
@@ -209,6 +226,28 @@
         <input  type="checkbox"
                 class="input-equip"
                 name="equipment"
+                value="plates"
+                formControlName="equipment"> Weight Plates
+      </label>
+      <label>
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="rack"
+                formControlName="equipment"> Squat Rack
+      </label>
+      <label>
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="bench"
+                formControlName="equipment"
+                checked="checked"> Bench
+      </label>
+      <label>
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
                 value="jumpRope"
                 formControlName="equipment"> Jump Rope
       </label>
@@ -239,13 +278,6 @@
                 name="equipment"
                 value="pullUpBar"
                 formControlName="equipment"> Pull-Up Bar
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="equipment"
-                value="plates"
-                formControlName="equipment"> Weight Plates
       </label>
       <label>
         <input  type="checkbox"
@@ -286,21 +318,6 @@
         <input  type="checkbox"
                 class="input-equip"
                 name="equipment"
-                value="rack"
-                formControlName="equipment"> Rack
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="equipment"
-                value="bench"
-                formControlName="equipment"
-                checked="checked"> Bench
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="equipment"
                 value="sledgeHammer"
                 formControlName="equipment"> Sledge Hammer
       </label>
@@ -324,6 +341,13 @@
                 name="equipment"
                 value="tire"
                 formControlName="equipment"> Tire
+      </label>
+      <label>
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="sandbag"
+                formControlName="equipment"> Sandbag
       </label>
       <label>
         <input  type="checkbox"
@@ -371,8 +395,15 @@
         <input  type="checkbox"
                 class="input-equip"
                 name="equipment"
-                value="Treadmill"
+                value="treadmill"
                 formControlName="equipment"> Treadmill
+      </label>
+      <label>
+        <input  type="checkbox"
+                class="input-equip"
+                name="equipment"
+                value="outdoorRun"
+                formControlName="equipment"> Outdoor Running Available
       </label>
     </div>
   </fieldset>

@@ -1,0 +1,37 @@
+<main class="router-section">
+
+  <div class="page-title">
+    <h1>Login</h1>
+  </div>
+
+  <section class="section">
+    <div class="section-content">
+      <h3>Welcome Back!</h3>
+      <form [formGroup]="loginForm" (submit)="submit()">
+     
+        <label class="form-user-name">User Name
+          <input
+            class="input-text"
+            type="text"
+            name="userName"
+            required
+            formControlName="userName">
+        </label>
+
+        <label class="form-email">Password
+          <input
+            class="input-text"
+            type="password"
+            name="password"
+            required
+            formControlName="password">
+        </label>
+
+        <input class="btn submit btn-gradient-right" type="submit" name="submit" value="Submit">
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<app-cta-bar></app-cta-bar>
