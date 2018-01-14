@@ -123,6 +123,19 @@
   border: none;
   border-bottom: 2px solid $pri-color;
 }
+.form-has-error {
+  ul li {
+    color: red;
+  }
+}
+.form-has-success {
+  ul li {
+    color: green;
+  }
+}
+.required-ul {
+  list-style-type: none;
+}
 
 
 

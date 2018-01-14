@@ -7,15 +7,25 @@
   <section class="section">
     <div class="section-content">
       <h3>Welcome Back!</h3>
-      <form [formGroup]="loginForm" (submit)="submit()">
-     
-        <label class="form-user-name">User Name
+      <form [formGroup]="form" (submit)="submit()">
+
+        <label class="form-user-name">Username
           <input
             class="input-text"
             type="text"
-            name="userName"
-            required
-            formControlName="userName">
+            name="username"
+            formControlName="username"
+            (blur)="usernameValidator()"
+            >
+            <div [ngClass]="{ 
+                  'form-has-error': (form.controls.username.errors && form.controls.username.dirty), 
+                  'form-has-success': (!form.controls.username.errors)
+                 }">
+              <ul class="required-ul">
+                <li *ngIf="form.controls.username.errors?.required && form.controls.username.dirty">Username is required</li>
+                <li>{{ usernameErrorMessage }}</li>
+              </ul>
+            </div>
         </label>
 
         <label class="form-email">Password
@@ -23,12 +33,29 @@
             class="input-text"
             type="password"
             name="password"
-            required
-            formControlName="password">
+            formControlName="password"
+            (blur)="passwordValidator()"
+            >
+            <div [ngClass]="{ 
+                  'form-has-error': (form.controls.password.errors && form.controls.password.dirty), 
+                  'form-has-success': !form.controls.password.errors}">
+              <ul class="required-ul">
+                <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty">Password is required</li>
+                <li>{{ passwordErrorMessage }}</li>
+              </ul>
+            </div>
         </label>
 
-        <input class="btn submit btn-gradient-right" type="submit" name="submit" value="Submit">
+        <input 
+          class="btn submit btn-gradient-right" 
+          type="submit" 
+          name="submit" 
+          value="Submit"
+          [disabled]="!form.valid || processing"
+        />
       </form>
+
+      <h3>{{ message }}</h3>
     </div>
   </section>
 

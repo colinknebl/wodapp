@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterUserService } from '../../services/register-user/register-user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,9 +11,13 @@ import { RegisterUserService } from '../../services/register-user/register-user.
 export class RegisterComponent implements OnInit {
 
   public form: FormGroup;
+  message: any[] = [];
+  usernameAvailable: boolean = false;
+  emailAvailable: boolean = false;
 
   constructor
     (
+      private router:Router,
       private RegisterUser: RegisterUserService,
       private fb: FormBuilder
     ) 
@@ -20,13 +25,13 @@ export class RegisterComponent implements OnInit {
       this.form = fb.group({
         firstName   : [null, Validators.compose([
             Validators.required,
-            Validators.minLength(5),
+            Validators.minLength(1),
             Validators.maxLength(20)
           ])],
 
         lastName    : [null, Validators.compose([
             Validators.required,
-            Validators.minLength(5),
+            Validators.minLength(1),
             Validators.maxLength(20)
           ])],
 
@@ -46,7 +51,7 @@ export class RegisterComponent implements OnInit {
             Validators.required,
             Validators.minLength(8),
             Validators.maxLength(35),
-            // this.validatePassword
+            this.validatePassword
           ])],
 
         confirm     : [null, Validators.compose([
@@ -102,12 +107,53 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  checkUsername() {
+    if (this.form.get('username').valid) {
+
+      let username = this.form.get('username').value;
+      
+      this.RegisterUser.checkUsername(username)
+        .subscribe(data => {
+          this.usernameAvailable = data.success;
+        });
+    }
+    else {
+      console.log('username is not valid');
+    }
+  }
+
+  checkEmail() {
+    if (this.form.get('email').valid) {
+
+      let email = this.form.get('email').value;
+      
+      this.RegisterUser.checkEmail(email)
+        .subscribe(data => {
+          console.log('checkEmail() subscribed data:', data);
+          this.emailAvailable = data.success;
+        });
+    }
+    else {
+      console.log('email is not valid');
+    }
+  }
+
 
   submit() {
     let form = this.form.value;
 
     this.RegisterUser.submit(form)
-      .subscribe();
+      .subscribe(
+        (res: any) => {
+          this.message = res.message;
+          console.log(res);
+          if (res.success) {
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 3500)
+          };
+        },
+        err => console.log(err));
   }
 
 }

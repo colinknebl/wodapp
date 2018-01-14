@@ -1,4 +1,5 @@
 const MongoClient   = require('mongodb').MongoClient,
+      ObjectId      = require('mongodb').ObjectId;
       assert        = require('assert');
       localhostUrl  = 'mongodb://localhost:27017/wodapp';
       mongoAtlasUrl = 'mongodb://colinknebl:special25@wodapp-shard-00-00-ihelb.mongodb.net:27017,wodapp-shard-00-01-ihelb.mongodb.net:27017,wodapp-shard-00-02-ihelb.mongodb.net:27017/wodapp?ssl=true&replicaSet=wodapp-shard-0&authSource=admin';
@@ -90,8 +91,8 @@ mongodb = {
             });
           db.close();
           resolve({ 
-            'success': true,
-            'message': 'User added successfully.'
+            success: true,
+            message: 'User added successfully.'
           });
         });
 
@@ -100,73 +101,12 @@ mongodb = {
   },
 
   checkRegisteredUsers: {
-    checkUsername: (username) => {
-      return new Promise((resolve, reject) => {
-        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
-        MongoClient.connect(localhostUrl, (err, db) => {
-          assert.equal(null, err);
-          let userArray = [];
-
-          const users = db.collection('registeredUsers')
-            .find({ 'username' : username });
-
-          users.forEach(user => {
-            userArray.push(user);
-          }, () => {
-            db.close();
-            if (userArray.length === 0) {
-              resolve({
-                'success': true,
-                'message': `No current users with username: ${username}`
-              });
-            } else {
-              reject({
-                'success': false,
-                'message': `Username ${username} already exists.`
-              });
-            }
-          });
-        });
-      });
-    },
-
-
-    checkEmail: (email) => {
-      return new Promise((resolve, reject) => {
-        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
-        MongoClient.connect(localhostUrl, (err, db) => {
-          assert.equal(null, err);
-          let emailArray = [];
-          const emails = db.collection('registeredUsers')
-            .find({ 'email' : email } );
-
-          emails.forEach(email => {
-            emailArray.push(email);
-          }, () => {
-            db.close();
-            if (emailArray.length === 0) {
-              resolve({
-                'success': true,
-                'message': `No current users with email: ${email}`
-              });
-            } else {
-              reject({
-                'success': false,
-                'message': `Email ${email} already exists.`
-              });
-            }
-          });
-        });
-      });
-    },
-
-
     v3: (username, email) => {
+
       return new Promise((resolve, reject) => {
         // MongoClient.connect(mongoAtlasUrl, (err, db) => {
         MongoClient.connect(localhostUrl, (err, db) => {
           assert.equal(null, err);
-
           let resultsArray = [];
 
           const results = db.collection('registeredUsers')
@@ -193,8 +133,8 @@ mongodb = {
             db.close();
             if (resultsArray.length === 0) {
               resolve({
-                'success': true,
-                'message': `No current users with email: ${email}, or username ${username}`
+                success: true,
+                message: `No current users with email: ${email}, or username ${username}`
               });
             } else {
               let message = '';
@@ -207,11 +147,76 @@ mongodb = {
                 }
               });
               reject({
-                'success': false,
-                'message': message
+                success: false,
+                message: message
               });
             }
           });
+        });
+      });
+    }
+  },
+
+  login: {
+    v1: (username) => {
+      return new Promise((resolve, reject) => {
+
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err);
+
+          const query = { 'username' : username };
+
+          const registeredUser = db.collection('registeredUsers')
+            .find(query)
+            .toArray((err, user) => {
+              if (user.length === 0) {
+                reject({
+                  success : false,
+                  message : 'User not found in database.'
+                });
+              }
+              else {
+                resolve({
+                  success : true,
+                  message : 'User located in database.',
+                  user : user[0]
+                });
+              }
+            });
+        });
+      });
+    }
+  },
+
+  accountLookup: {
+    v1: (_id) => {
+      return new Promise((resolve, reject) => {
+
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err);
+
+          _id = new ObjectId(_id);
+          const query = { _id : _id };
+
+          const registeredUser = db.collection('registeredUsers')
+            .find(query)
+            .toArray((err, user) => {
+              if (user.length === 0) {
+                reject({
+                  success : false,
+                  message : 'User account not found.'
+                });
+              }
+              else {
+                resolve({
+                  success : true,
+                  message : 'User account found!',
+                  user : user[0]
+                });
+              }
+            });
         });
       });
     }
@@ -221,7 +226,7 @@ mongodb = {
     // MongoClient.connect(mongoAtlasUrl, (err, db) => {
     MongoClient.connect(localhostUrl, (err, db) => {
       assert.equal(null, err); 
-      console.log('adding contact request to contactFormRequests db...');
+
       db.collection('contactFormRequests')
         .insertOne({
           firstName   : contactData.firstName,

@@ -16,10 +16,11 @@
             formControlName="firstName"required
             >
             <div [ngClass]="{ 
-                  'has-error': (form.controls.firstName.errors && form.controls.firstName.dirty), 
-                  'has-success': !form.controls.firstName.errors}">
+                  'form-has-error': (form.controls.firstName.errors && form.controls.firstName.dirty), 
+                  'form-has-success': !form.controls.firstName.errors}">
               <ul class="required-ul">
                 <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
+                <li *ngIf="form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty">This field can be no more than 20 characters long</li>
               </ul>
             </div>
         </label>
@@ -32,10 +33,11 @@
             formControlName="lastName"
             >
             <div [ngClass]="{ 
-                  'has-error': (form.controls.lastName.errors && form.controls.lastName.dirty), 
-                  'has-success': !form.controls.lastName.errors}">
+                  'form-has-error': (form.controls.lastName.errors && form.controls.lastName.dirty), 
+                  'form-has-success': !form.controls.lastName.errors}">
               <ul class="required-ul">
                 <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
+                <li *ngIf="form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty">This field can be no more than 20 characters long</li>
               </ul>
             </div>
         </label>
@@ -46,13 +48,28 @@
             type="email"
             name="email"
             formControlName="email"
+            (blur)="checkEmail()"
             >
             <div [ngClass]="{ 
-                  'has-error': (form.controls.email.errors && form.controls.email.dirty), 
-                  'has-success': !form.controls.email.errors}">
+                  'form-has-error': (form.controls.email.errors && form.controls.email.dirty) ||
+                               (emailAvailable === false && form.controls.email.dirty), 
+                  'form-has-success': (!form.controls.email.errors && emailAvailable === true)
+                }">
               <ul class="required-ul">
                 <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
                 <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid email</li>
+              </ul>
+              <ul class="required-ul">
+                <li *ngIf="form.controls.email.dirty && 
+                    form.controls.email.valid && 
+                    emailAvailable === true">
+                  Email is available.
+                </li>
+                <li *ngIf="form.controls.email.dirty && 
+                    form.controls.email.valid && 
+                    emailAvailable === false">
+                  Email is already in use.
+                </li>
               </ul>
             </div>
         </label>
@@ -63,13 +80,30 @@
             type="text"
             name="username"
             formControlName="username"
+            (keyup)="checkUsername()"
             >
             <div [ngClass]="{ 
-                  'has-error': (form.controls.username.errors && form.controls.username.dirty), 
-                  'has-success': !form.controls.username.errors}">
+                  'form-has-error': (form.controls.username.errors && form.controls.username.dirty) || 
+                               (usernameAvailable === false && form.controls.username.dirty), 
+                  'form-has-success': (!form.controls.username.errors && usernameAvailable === true)
+                 }">
               <ul class="required-ul">
                 <li *ngIf="form.controls.username.errors?.required && form.controls.username.dirty">This field is required</li>
                 <li *ngIf="form.controls.username.errors?.validateUsername && form.controls.username.dirty">Username may not have any special characters</li>
+                <li *ngIf="form.controls.username.errors?.minlength && form.controls.username.dirty">Username must be at least 5 characters</li>
+                <li *ngIf="form.controls.username.errors?.maxlength && form.controls.username.dirty">Username cannot be greater than 20 characters</li>
+              </ul>
+              <ul class="required-ul">
+                <li *ngIf="form.controls.username.dirty && 
+                    form.controls.username.valid && 
+                    usernameAvailable === true">
+                  Username is available.
+                </li>
+                <li *ngIf="form.controls.username.dirty && 
+                    form.controls.username.valid && 
+                    usernameAvailable === false">
+                  Username is already in use.
+                </li>
               </ul>
             </div>
         </label>
@@ -82,12 +116,12 @@
             formControlName="password"
             >
             <div [ngClass]="{ 
-                  'has-error': (form.controls.password.errors && form.controls.password.dirty), 
-                  'has-success': !form.controls.password.errors}">
+                  'form-has-error': (form.controls.password.errors && form.controls.password.dirty), 
+                  'form-has-success': !form.controls.password.errors}">
               <ul class="required-ul">
                 <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty">This field is required</li>
                 <li *ngIf="form.controls.password.errors?.minlength && form.controls.password.dirty || form.controls.password.errors?.maxlength && form.controls.password.dirty">Password must be at least 8 characters, but no more than 35 characters</li>
-                <!-- <li *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty">2Password must be at least 8 characters, but no more than 35 characters</li> -->
+                <li *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty">Password must have at least one uppercase letter, one lowercase letter, one number, and one special characher.</li>
               </ul>
             </div>
         </label>
@@ -100,8 +134,8 @@
             formControlName="confirm"
             >
             <div [ngClass]="{
-              'has-error': (form.controls.confirm.errors && form.controls.confirm.dirty) || (form.errors?.matchingPasswords && form.controls.confirm.dirty), 
-              'has-success': !form.controls.confirm.errors && !form.errors?.matchingPasswords}">
+              'form-has-error': (form.controls.confirm.errors && form.controls.confirm.dirty) || (form.errors?.matchingPasswords && form.controls.confirm.dirty), 
+              'form-has-success': !form.controls.confirm.errors && !form.errors?.matchingPasswords}">
               <ul class="required-ul">
                 <li *ngIf="form.controls.confirm.errors?.required && form.controls.confirm.dirty">This field is required</li>
                 <li *ngIf="form.errors?.matchingPasswords && form.controls.confirm.dirty">Passwords do not match</li>
@@ -109,12 +143,17 @@
             </div>
         </label>
 
-        <input [disabled]="!form.valid" class="btn submit btn-gradient-right" type="submit" name="submit" value="Submit">
+        <input 
+          class="btn submit btn-gradient-right" 
+          type="submit" 
+          name="submit" 
+          value="Submit"
+          [disabled]="!form.valid && emailAvailable === false && usernameAvailable === false"
+        />
         
-         <!-- <input class="btn submit btn-gradient-right" type="submit" name="submit" value="Submit"> -->
       </form>
 
-      <!-- <p>first name: {{ form.controls.firstName.value }}</p> -->
+      <h3 style="text-align: center;">{{ message }}</h3>
     </div>
 
   </section>

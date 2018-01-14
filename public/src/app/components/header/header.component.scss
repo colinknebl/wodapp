@@ -1,5 +1,12 @@
 @import '../../../assets/scss/variables';
 
+.nav-menu-item {
+  border-right: 2px solid $pri-color;
+  &:last-of-type {
+    border-right: none;
+  }
+}
+
 #nav-bar {
   // border: 2px solid red;
   // background: rgba(0, 0, 0, 0.25);

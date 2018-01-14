@@ -1,17 +1,6 @@
 @import '../../../assets/scss/variables',
         '../../../assets/scss/main-classes';
 
-.has-error {
-  ul li {
-    color: red;
-  }
-}
-.has-success {
-  color: green;
-}
-.required-ul {
-  list-style-type: none;
-}
 
 .star {
   color: red;

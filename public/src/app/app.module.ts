@@ -20,6 +20,7 @@ import { MobileNavComponent           } from './components/mobile-nav/mobile-nav
 
 // PAGES
 import { AboutComponent               } from './pages/about/about.component';
+import { AccountComponent             } from './pages/account/account.component';
 import { ContactComponent             } from './pages/contact/contact.component';
 import { FeaturesComponent            } from './pages/features/features.component';
 import { IndexComponent               } from './pages/index/index.component';
@@ -34,9 +35,12 @@ import { ContactFormService           } from './services/contact-form/contact-fo
 import { GetWodService                } from './services/get-wod/get-wod.service';
 import { IndexDemoFormService         } from './services/index-demo-form/index-demo-form.service';
 import { IndexHeaderFormService       } from './services/index-header-form/index-header-form.service';
-import { LoginService                 } from './services/login/login.service';
 import { NavService                   } from './services/nav/nav.service';
 import { RegisterUserService          } from './services/register-user/register-user.service';
+
+// GUARDS
+import { AuthGuard                    } from './guards/auth.guard';
+// import { NotAuthGuard                 } from './guards/notAuth.guard';
 
 
 @NgModule({
@@ -57,7 +61,8 @@ import { RegisterUserService          } from './services/register-user/register-
     ContactComponent,
     ContactFormComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -74,8 +79,9 @@ import { RegisterUserService          } from './services/register-user/register-
     IndexDemoFormService,
     ContactFormService,
     RegisterUserService,
-    LoginService,
-    AuthService
+    AuthService,
+    AuthGuard,
+    // NotAuthGuard
   ],
   bootstrap: [AppComponent]
 })
