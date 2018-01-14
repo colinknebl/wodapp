@@ -62,6 +62,7 @@ export class AuthService {
     localStorage.clear();
   }
 
+  // Checks to see if there is a valid token; if user is logged in and the token is valid, it will return true. If the user token is not valid, it will return false.
   tokenCheck() {
     return tokenNotExpired();
   }

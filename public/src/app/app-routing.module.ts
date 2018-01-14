@@ -13,7 +13,7 @@ import { WorkoutGeneratorComponent    } from './pages/workout-generator/workout-
 
 // GUARDS
 import { AuthGuard                    } from './guards/auth.guard';
-// import { NotAuthGuard                 } from './guards/notAuth.guard';
+import { NotAuthGuard                 } from './guards/notAuth.guard';
 
 // ROUTES
 const appRoutes:Routes = [
@@ -40,11 +40,13 @@ const appRoutes:Routes = [
   },
   {
     path        : 'login',
-    component   : LoginComponent
+    component   : LoginComponent,
+    canActivate : [NotAuthGuard]
   },
   {
     path        : 'register',
-    component   : RegisterComponent
+    component   : RegisterComponent,
+    canActivate : [NotAuthGuard]
   },
   {
     path        : 'workout-generator/:id',

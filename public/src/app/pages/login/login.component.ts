@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { 
+  FormControl, 
+  FormGroup, 
+  FormBuilder, 
+  Validators }               from '@angular/forms';
+import { AuthService }       from '../../services/auth/auth.service';
+import { Router }            from '@angular/router';
+import { AuthGuard }         from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -15,11 +20,14 @@ export class LoginComponent implements OnInit {
   private passwordErrorMessage: string;
   private processing: boolean = false;
   public message: string;
+  public previousUrl: string;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private authGuard: AuthGuard
+  ) {
     this.form = fb.group({
       username : [null, Validators.compose([
         Validators.required,
@@ -34,7 +42,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authGuard.redirectUrl) {
+      this.previousUrl = this.authGuard.redirectUrl;
+      this.authGuard.redirectUrl = null;
+    }
+  }
 
   disableForm() {
     this.form.controls['username'].disable();
@@ -88,10 +101,30 @@ export class LoginComponent implements OnInit {
         
         if (data.success) {
           this.authService.storeUserData(data.token, data.user);
+          console.log(this.previousUrl);
           setTimeout(() => {
-            this.router.navigate(['/account']);
+            /*
+              If the user was not logged in and tried to access a page that was restricted, they will be redirected to the page they tried to access after they log in.
+              NOTE: See this.ngOnInit for more
+            */
+            if (this.previousUrl) {
+              this.router.navigate([this.previousUrl]);
+            }
+            else {
+              this.router.navigate(['/account']);
+            }
           }, 2000)
         }
       });
   }
 }
+
+
+
+
+
+
+
+
+
+

@@ -9,23 +9,29 @@ import { AuthService }      from '../services/auth/auth.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
+  /*
+    If the user IS NOT logged in and you want to restrict routes, use this guard.
+  */
+
+  redirectUrl: string;
+
   constructor( 
     private authService: AuthService,
     private router: Router
   ) {}
 
-  canActivate() {
+  canActivate(
+    router: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ) {
     if (this.authService.tokenCheck()) {
-      console.log('false');
-
-      return false;
-    }
-    else {
-      console.log('true');
-      this.router.navigate(['/login']);
       return true;
     }
-  
+    else {
+      this.redirectUrl = state.url;
+      console.log(this.redirectUrl, state.url);
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
-
 }

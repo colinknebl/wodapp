@@ -13,6 +13,7 @@ import { AppComponent                 } from './app.component';
 import { ContactFormComponent         } from './components/contact-form/contact-form.component';
 import { CtaBarComponent              } from './components/cta-bar/cta-bar.component';
 import { DemonstrateComponent         } from './components/demonstrate/demonstrate.component';
+import { FlashMessagesComponent       } from './components/flash-messages/flash-messages.component';
 import { FooterComponent              } from './components/footer/footer.component';
 import { HeaderComponent              } from './components/header/header.component';
 import { MobileNavComponent           } from './components/mobile-nav/mobile-nav.component';
@@ -40,7 +41,7 @@ import { RegisterUserService          } from './services/register-user/register-
 
 // GUARDS
 import { AuthGuard                    } from './guards/auth.guard';
-// import { NotAuthGuard                 } from './guards/notAuth.guard';
+import { NotAuthGuard                 } from './guards/notAuth.guard';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { AuthGuard                    } from './guards/auth.guard';
     FooterComponent,
     MobileNavComponent,
     DemonstrateComponent,
+    FlashMessagesComponent,
 
     // PAGES
     FeaturesComponent,
@@ -81,7 +83,7 @@ import { AuthGuard                    } from './guards/auth.guard';
     RegisterUserService,
     AuthService,
     AuthGuard,
-    // NotAuthGuard
+    NotAuthGuard
   ],
   bootstrap: [AppComponent]
 })
