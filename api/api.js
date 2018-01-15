@@ -256,6 +256,42 @@ api.get('/api/auth/get-account-info/v1/', (req, res) => {
 
 });
 
+api.get('/api/auth/get-account-info/testing/', (req, res) => {
+
+  let getUserQuery = mongodb.accountLookup.v1(req.decoded.userId);
+
+  getUserQuery
+    .then(userData => {
+      console.log(userData);
+      if (userData.success) {
+        res.json({
+          user: {
+            image: 'https://profilepicsbucket.crossfit.com/35d67-P11435_11-184.jpg',
+            firstName: 'Rich',
+            lastName: 'Froning',
+            email: 'rich.froning@gmail.com',
+            username: 'rich007',
+            affiliate: 'Crossfit Mayhem',
+            max: {
+              squat: 425,
+              dead: 475,
+              snatch: 295,
+              bench: 385
+            }
+          }
+        });
+      }
+      else {
+        res.json({
+          success: false,
+          message: 'User account info not found.'
+        });
+      }
+    })
+    .catch(err => res.json(err));
+
+});
+
 module.exports = api;
 
 

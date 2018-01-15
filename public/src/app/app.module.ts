@@ -33,6 +33,7 @@ import { WorkoutGeneratorComponent    } from './pages/workout-generator/workout-
 // SERVICES
 import { AuthService                  } from './services/auth/auth.service';
 import { ContactFormService           } from './services/contact-form/contact-form.service';
+import { FlashMessagesService         } from './services/flash-messages/flash-messages.service';
 import { GetWodService                } from './services/get-wod/get-wod.service';
 import { IndexDemoFormService         } from './services/index-demo-form/index-demo-form.service';
 import { IndexHeaderFormService       } from './services/index-header-form/index-header-form.service';
@@ -42,6 +43,9 @@ import { RegisterUserService          } from './services/register-user/register-
 // GUARDS
 import { AuthGuard                    } from './guards/auth.guard';
 import { NotAuthGuard                 } from './guards/notAuth.guard';
+
+// MODELS
+import { UserModel                    } from './models/user';
 
 
 @NgModule({
@@ -83,7 +87,9 @@ import { NotAuthGuard                 } from './guards/notAuth.guard';
     RegisterUserService,
     AuthService,
     AuthGuard,
-    NotAuthGuard
+    NotAuthGuard,
+    FlashMessagesService,
+    UserModel
   ],
   bootstrap: [AppComponent]
 })

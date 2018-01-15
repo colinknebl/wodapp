@@ -3,19 +3,127 @@
   <div class="page-title">
     <h1>Account</h1>
   </div>
-
+  
   <div class="section-content">
-    <h4>{{ firstName }} {{ lastName }}</h4>
-    <p>Email: {{ email }}</p>
-    <p>Username: {{ username }}</p>
-    <fieldset>
-      <legend>{{ firstName }}'s Stats</legend>
-      <p>Max Squat:</p>
-      <p>Max Deadlift:</p>
-      <p>Max Snatch:</p>
-      <p>Max Bench Press:</p>
-      <p>Murph time:</p>
-    </fieldset>
+
+    <aside class="user-info">
+      <img class="user-image" src="{{user.image}}">
+      
+      <div class="user-info-text">
+        <h4>{{ user.firstName }} {{ user.lastName }}</h4>
+        <div>
+          <p>Username: {{ user.username }}</p>
+          <p>Email: {{ user.email }}</p>
+          <p>Affiliate: {{ user.affiliate }}</p>
+        </div>
+      </div>
+    </aside>
+  
+    <section class="user-stats">
+
+      <form [formGroup]="form"  (submit)="submit()">
+        <fieldset>
+          <legend>{{ user.firstName }}'s PRs</legend>
+
+          <label class="form-field">
+            <span class="input-discription">Max Squat:</span>
+            <input 
+              class="input-field" 
+              type="number" 
+              name="maxSquat"
+              formControlName="maxSquat">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Max Deadlift:</span>
+            <input 
+              class="input-field" 
+              type="number" 
+              name="maxDead"
+              formControlName="maxDead">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Max Snatch:</span>
+            <input 
+              class="input-field" 
+              type="number" 
+              name="maxSnatch"
+              formControlName="maxSnatch">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Max Bench Press:</span>
+            <input 
+              class="input-field" 
+              type="number" 
+              name="maxBench"
+              formControlName="maxBench">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>{{ user.firstName }}'s Best Times</legend>
+
+          <label class="form-field">
+            <span class="input-discription">Murph Time:</span>
+            <input 
+              class="input-field" 
+              type="time" 
+              name="murphTime"
+              formControlName="murphTime">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Diane Time:</span>
+            <input 
+              class="input-field" 
+              type="time" 
+              name="dianeTime"
+              formControlName="dianeTime">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">DT Time:</span>
+            <input 
+              class="input-field" 
+              type="time" 
+              name="dtTime"
+              formControlName="dtTime">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Badger Time:</span>
+            <input 
+              class="input-field" 
+              type="time" 
+              name="badgerTime"
+              formControlName="badgerTime">
+          </label>
+
+        </fieldset>
+
+        <button 
+          class="btn btn-info"
+          type="button"
+          (click)="editForm()">Edit Form
+        </button>
+
+        <button 
+          class="btn btn-submit"
+          type="submit"
+          *ngIf="editFormBool === true">Submit Form
+        </button>
+
+        <button 
+          class="btn btn-cancel"
+          type="reset"
+          *ngIf="editFormBool === true" 
+          (click)="cancelEdit()">Cancel Form Edit
+        </button>
+      </form>
+      
+    </section>
   </div>
 
 </main>

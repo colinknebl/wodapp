@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit }    from '@angular/core';
 import { 
   FormControl, 
   FormGroup, 
   FormBuilder, 
-  Validators }               from '@angular/forms';
-import { AuthService }       from '../../services/auth/auth.service';
-import { Router }            from '@angular/router';
-import { AuthGuard }         from '../../guards/auth.guard';
+  Validators }                  from '@angular/forms';
+import { AuthService }          from '../../services/auth/auth.service';
+import { Router }               from '@angular/router';
+import { AuthGuard }            from '../../guards/auth.guard';
+import { FlashMessagesService } from '../../services/flash-messages/flash-messages.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private fb: FormBuilder,
-    private authGuard: AuthGuard
+    private authGuard: AuthGuard,
+    private flashMessagesService: FlashMessagesService
   ) {
     this.form = fb.group({
       username : [null, Validators.compose([
@@ -50,13 +52,11 @@ export class LoginComponent implements OnInit {
   }
 
   disableForm() {
-    this.form.controls['username'].disable();
-    this.form.controls['password'].disable();
+    this.form.disable();
   }
 
   enableForm() {
-    this.form.controls['username'].enable();
-    this.form.controls['password'].enable();
+    this.form.enable();
   }
 
   usernameValidator() {
@@ -95,13 +95,18 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(form)
       .subscribe(data => {
-        this.message = data.message;
         this.enableForm();
         this.processing = false;
         
         if (data.success) {
+          this.flashMessagesService.sendMessage({
+            message: 'Login successful!',
+            messageClass: 'success',
+            showMessageBool: true,
+            messageDuration: 4000
+          });
+
           this.authService.storeUserData(data.token, data.user);
-          console.log(this.previousUrl);
           setTimeout(() => {
             /*
               If the user was not logged in and tried to access a page that was restricted, they will be redirected to the page they tried to access after they log in.

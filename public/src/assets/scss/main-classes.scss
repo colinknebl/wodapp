@@ -7,22 +7,15 @@
 
 // PAGE LAYOUT
 .router-section {
-  // border: 5px solid black;
   background: white;
   min-height: 100vh;
 }
 .page-title {
   h1 {
-    border-bottom: 4px solid $pri-color;
+    border-bottom: 4px solid $teal;
     width: 90%;
     max-width: $max-width;
     margin: 2rem auto;
-  }
-  &::before {
-    content: '';
-    height: 100px;
-    width: 100%;
-    display: block;
   }
 }
 .page-intro-article {
@@ -121,7 +114,7 @@
 }
 .input-border {
   border: none;
-  border-bottom: 2px solid $pri-color;
+  border-bottom: 2px solid $teal;
 }
 .form-has-error {
   ul li {
@@ -142,8 +135,8 @@
 
 // COLOR GRADIENTS
 .text-color-gradient {
-  color: $pri-color;
-  background: linear-gradient(to right, #1EF3A7, $pri-color);
+  color: $teal;
+  background: linear-gradient(to right, #1EF3A7, $teal);
   background-clip: text;
   -webkit-background-clip: text;
   text-fill-color: transparent;
@@ -151,11 +144,11 @@
 }
 .btn-gradient-right {
   color: whitesmoke;
-  background: linear-gradient(to right, #1EF3A7, $pri-color);
+  background: linear-gradient(to right, #1EF3A7, $teal);
 }
 .btn-gradient-left {
   color: whitesmoke;
-  background: linear-gradient(to left, #1EF3A7, $pri-color);
+  background: linear-gradient(to left, #1EF3A7, $teal);
 }
 
 
@@ -187,14 +180,14 @@
 //   padding: 1rem 3rem;
 //   background: rgba(70,224,188,0.6);
 //   color:whitesmoke;
-//   border: 3px solid $pri-color;
+//   border: 3px solid $teal;
 //   border-radius: 4px;
 //   font-size: 1.2rem;
 //   cursor: pointer;
 //   outline: 0;
 //   transition: background .25s, color .25s;
 //   &:active, &:hover {
-//     background: $pri-color;
+//     background: $teal;
 //     color: whitesmoke;
 //   }
 // }
@@ -230,7 +223,7 @@
 //   margin: auto;
 // }
 // .content-container {
-//   border-bottom: 5px solid $pri-color;
+//   border-bottom: 5px solid $teal;
 //   width: 90%;
 //   max-width: $max-width;
 //   padding: 4rem 0 4rem 0;

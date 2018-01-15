@@ -1,2 +1,119 @@
 @import '../../../assets/scss/variables',
         '../../../assets/scss/main-classes';
+
+.section-content {
+  // border: 2px solid red;
+}
+.user-info {
+  // border: 2px solid black;
+  margin-bottom: 2rem;
+}
+.user-info-text {
+  text-align: center;
+}
+.user-image {
+  border-radius: 50%;
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: auto;
+  height: auto;
+}
+.user-stats {
+  // border: 2px solid blue;
+  flex-grow: 1;
+}
+
+fieldset {
+  border-color: $teal;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+  legend {
+    margin: 0 1rem;
+    padding: 0 5px;
+    font: {
+      weight: 900;
+      size: 1.2rem;
+    }
+  }
+}
+.stat, .form-field {
+  // border: 2px solid coral;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  // overflow: hidden;
+  display: flex;
+}
+.input-discription {
+  // border: 2px solid hotpink;
+  padding-right: 5px;
+  box-sizing: border-box;
+  display: inline-block;
+  // min-width: 152px;
+  min-width: 50%;
+  text-align: right;
+}
+.input-field {
+  // border: 2px solid green;
+  box-sizing: border-box;
+  padding: .1rem;
+  font-size: .9rem;
+  color: $text-color;
+  min-width: 50%;
+  flex-grow: 1;
+  &:focus {
+    outline: none;
+  }
+}
+.btn {
+  border-radius: 5px;
+  padding: .5rem;
+  margin: .5rem .5rem 0 0;
+  font-size: 1rem;
+}
+.btn-info {
+  background: $blue;
+}
+.btn-submit {
+  background: $green;
+}
+.btn-cancel {
+  background: $orange;
+}
+
+@media screen and (min-width: $break-point) {
+  .section-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .user-info {
+    margin-right: 2rem;
+  }
+  .user-info-text {
+    text-align: left;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

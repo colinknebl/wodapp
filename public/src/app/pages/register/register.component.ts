@@ -19,10 +19,10 @@ export class RegisterComponent implements OnInit {
     (
       private router:Router,
       private RegisterUser: RegisterUserService,
-      private fb: FormBuilder
+      private formBuilder: FormBuilder
     ) 
     {
-      this.form = fb.group({
+      this.form = formBuilder.group({
         firstName   : [null, Validators.compose([
             Validators.required,
             Validators.minLength(1),

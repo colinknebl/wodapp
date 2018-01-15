@@ -27,7 +27,7 @@ select {
   background: white;
 }
 fieldset {
-  border: 2px solid $pri-color;
+  border: 2px solid $teal;
   margin-bottom: 1rem;
   legend {
     padding: 0 .5rem;
@@ -64,7 +64,7 @@ fieldset {
     size: .8rem;
     style: italic;
   }
-  color: $pri-color;
+  color: $teal;
 }
 
 @media screen and (min-width: 580px) {

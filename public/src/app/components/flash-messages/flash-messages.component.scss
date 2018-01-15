@@ -1,6 +1,36 @@
 @import '../../../assets/scss/variables',
         '../../../assets/scss/main-classes';
 
-.flash-message-section {
-  border: 3px solid aqua;
+.message-content {
+  border-radius: 15px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.close {
+  svg {
+    cursor: pointer;
+    vertical-align: middle;
+    line {
+      stroke: $text-color;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+  }
+}
+.alert {
+  background-color: $red;
+  p {
+    color: white;
+  }
+  div svg line {
+    stroke: white;
+  }
+}
+.info {
+  background-color: $blue;
+}
+.success {
+  background-color: $green;
 }
