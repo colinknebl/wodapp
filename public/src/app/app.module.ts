@@ -39,6 +39,7 @@ import { IndexDemoFormService         } from './services/index-demo-form/index-d
 import { IndexHeaderFormService       } from './services/index-header-form/index-header-form.service';
 import { NavService                   } from './services/nav/nav.service';
 import { RegisterUserService          } from './services/register-user/register-user.service';
+import { UpdateUserService            } from './services/update-user/update-user.service';
 
 // GUARDS
 import { AuthGuard                    } from './guards/auth.guard';
@@ -85,6 +86,7 @@ import { UserModel                    } from './models/user';
     IndexDemoFormService,
     ContactFormService,
     RegisterUserService,
+    UpdateUserService,
     AuthService,
     AuthGuard,
     NotAuthGuard,

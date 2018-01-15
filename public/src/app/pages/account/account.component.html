@@ -4,8 +4,8 @@
     <h1>Account</h1>
   </div>
   
-  <div class="section-content">
-
+  <div *ngIf="accountLoaded" class="section-content">
+    
     <aside class="user-info">
       <img class="user-image" src="{{user.image}}">
       
@@ -53,7 +53,7 @@
           </label>
 
           <label class="form-field">
-            <span class="input-discription">Max Bench Press:</span>
+            <span class="input-discription">Max Bench:</span>
             <input 
               class="input-field" 
               type="number" 
@@ -67,60 +67,159 @@
 
           <label class="form-field">
             <span class="input-discription">Murph Time:</span>
-            <input 
-              class="input-field" 
-              type="time" 
-              name="murphTime"
-              formControlName="murphTime">
+            <div class="time-input">
+              <span class="time-discription">Hr:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="murphHrs"
+                formControlName="murphHrs">
+             <span class="time-discription">Min:</span>
+             <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="murphMin"
+                formControlName="murphMin">
+              <span class="time-discription">Sec:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="murphSec"
+                formControlName="murphSec">
+            </div>
           </label>
 
           <label class="form-field">
             <span class="input-discription">Diane Time:</span>
-            <input 
-              class="input-field" 
-              type="time" 
-              name="dianeTime"
-              formControlName="dianeTime">
+            <div class="time-input">
+              <span class="time-discription">Hr:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="dianeHrs"
+                formControlName="dianeHrs">
+              <span class="time-discription">Min:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="dianeMin"
+                formControlName="dianeMin">
+              <span class="time-discription">Sec:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="dianeSec"
+                formControlName="dianeSec">
+            </div>
           </label>
 
           <label class="form-field">
             <span class="input-discription">DT Time:</span>
-            <input 
-              class="input-field" 
-              type="time" 
-              name="dtTime"
-              formControlName="dtTime">
+            <div class="time-input">
+              <span class="time-discription">Hr:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="dtHrs"
+                formControlName="dtHrs">
+              <span class="time-discription">Min:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="dtMin"
+                formControlName="dtMin">
+              <span class="time-discription">Sec:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="dtSec"
+                formControlName="dtSec">
+            </div>
           </label>
 
           <label class="form-field">
             <span class="input-discription">Badger Time:</span>
-            <input 
-              class="input-field" 
-              type="time" 
-              name="badgerTime"
-              formControlName="badgerTime">
+            <div class="time-input">
+              <span class="time-discription">Hr:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="badgerHrs"
+                formControlName="badgerHrs">
+              <span class="time-discription">Min:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="badgerMin"
+                formControlName="badgerMin">
+              <span class="time-discription">Sec:</span>
+              <input 
+                class="time-input-field" 
+                type="number"
+                step="1"
+                min="0"
+                max="59"
+                name="badgerSec"
+                formControlName="badgerSec">
+            </div>
           </label>
 
         </fieldset>
+        
+        <div class="btn-grp">
+          <button 
+            class="btn btn-info"
+            type="button"
+            (click)="editForm()">Edit Form
+          </button>
 
-        <button 
-          class="btn btn-info"
-          type="button"
-          (click)="editForm()">Edit Form
-        </button>
+          <button 
+            class="btn btn-submit"
+            type="submit"
+            *ngIf="editFormBool === true">Submit Form
+          </button>
 
-        <button 
-          class="btn btn-submit"
-          type="submit"
-          *ngIf="editFormBool === true">Submit Form
-        </button>
-
-        <button 
-          class="btn btn-cancel"
-          type="reset"
-          *ngIf="editFormBool === true" 
-          (click)="cancelEdit()">Cancel Form Edit
-        </button>
+          <button 
+            class="btn btn-cancel"
+            type="reset"
+            *ngIf="editFormBool === true" 
+            (click)="cancelEdit()">Cancel Form Edit
+          </button>
+          
+        </div>
       </form>
       
     </section>

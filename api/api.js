@@ -197,6 +197,49 @@ api.post('/api/auth/login/v1', (req, res) => {
    
 });
 
+api.get('/api/auth/get-account-info/testing/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'User account info found',
+    user: {
+      // image: 'https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAruAAAAJGU0YmZlMWFiLWI5ZTUtNGQxOC04NmZlLWZlYjg1ODk5NmNiOA.jpg',
+      firstName: 'Colin',
+      lastName: 'Knebl',
+      email: 'colin.knebl@outlook.com',
+      username: 'colinknebl',
+      // affiliate: 'home gym',
+      max: {
+        squat: 275,
+        dead: 315,
+        snatch: 185,
+        bench: 285
+      },
+      // time: {
+      //   murph: {
+      //     hours: 1,
+      //     minutes: 5,
+      //     seconds: 14
+      //   },
+      //   diane: {
+      //     hours: 0,
+      //     minutes: 25,
+      //     seconds: 14
+      //   },
+      //   dt: {
+      //     hours: 0,
+      //     minutes: 15,
+      //     seconds: 26
+      //   },
+      //   badger: {
+      //     hours: 1,
+      //     minutes: 35,
+      //     seconds: 49
+      //   }
+      // }
+    }
+  });
+});
+
 /*
   MIDDLEWARE FOR GETTING THE TOKEN FROM THE REQUEST HEADERS
   NOTE: Any routes that require authentication and need access to the token need to be under the middleware.
@@ -237,12 +280,9 @@ api.get('/api/auth/get-account-info/v1/', (req, res) => {
       console.log(userData);
       if (userData.success) {
         res.json({
-          user: {
-            firstName: userData.user.firstName,
-            lastName: userData.user.lastName,
-            username: userData.user.username,
-            email: userData.user.email
-          }
+          success: true,
+          message: 'User account loaded successfully.',
+          user: userData.user
         });
       }
       else {
@@ -265,20 +305,9 @@ api.get('/api/auth/get-account-info/testing/', (req, res) => {
       console.log(userData);
       if (userData.success) {
         res.json({
-          user: {
-            image: 'https://profilepicsbucket.crossfit.com/35d67-P11435_11-184.jpg',
-            firstName: 'Rich',
-            lastName: 'Froning',
-            email: 'rich.froning@gmail.com',
-            username: 'rich007',
-            affiliate: 'Crossfit Mayhem',
-            max: {
-              squat: 425,
-              dead: 475,
-              snatch: 295,
-              bench: 385
-            }
-          }
+          success: true,
+          message: 'User account loaded successfully.',
+          user: userData.user
         });
       }
       else {
@@ -291,6 +320,25 @@ api.get('/api/auth/get-account-info/testing/', (req, res) => {
     .catch(err => res.json(err));
 
 });
+
+
+api.post('/api/update-user/v1', (req, res) => {
+
+  const user = {
+    _id: req.decoded.userId,
+    user: req.body
+  };
+
+  const updateUserData = mongodb.updateUser.v1(user);
+
+  updateUserData
+    .then(result => {
+      console.log('sending back response...',result);
+      res.json(result);
+    })
+    .catch(err => res.json(err));
+});
+
 
 module.exports = api;
 

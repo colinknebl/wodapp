@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterUserService } from '../../services/register-user/register-user.service';
+import { FlashMessagesService } from '../../services/flash-messages/flash-messages.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,6 +20,7 @@ export class RegisterComponent implements OnInit {
     (
       private router:Router,
       private RegisterUser: RegisterUserService,
+      private flashMessagesService: FlashMessagesService,
       private formBuilder: FormBuilder
     ) 
     {
@@ -145,12 +147,25 @@ export class RegisterComponent implements OnInit {
     this.RegisterUser.submit(form)
       .subscribe(
         (res: any) => {
-          this.message = res.message;
-          console.log(res);
           if (res.success) {
+            this.flashMessagesService.sendMessage({
+              message: res.message,
+              messageClass: 'success',
+              showMessageBool: true,
+              messageDuration: 4000
+            });
+
             setTimeout(() => {
               this.router.navigate(['/login']);
             }, 3500)
+          }
+          else {
+            this.flashMessagesService.sendMessage({
+              message: res.message,
+              messageClass: 'alert',
+              showMessageBool: true,
+              messageDuration: 4000
+            });
           };
         },
         err => console.log(err));

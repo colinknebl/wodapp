@@ -52,7 +52,7 @@ fieldset {
   box-sizing: border-box;
   display: inline-block;
   // min-width: 152px;
-  min-width: 50%;
+  min-width: 40%;
   text-align: right;
 }
 .input-field {
@@ -67,11 +67,24 @@ fieldset {
     outline: none;
   }
 }
+.time-input {
+  // border: 2px solid blue;
+}
+.time-discription {
+  font-size: .75rem;
+}
+.time-input-field {
+  // border: 2px solid coral;
+  max-width: 30px;
+}
 .btn {
   border-radius: 5px;
   padding: .5rem;
   margin: .5rem .5rem 0 0;
   font-size: 1rem;
+}
+.btn-grp {
+  padding-bottom: 3rem;
 }
 .btn-info {
   background: $blue;

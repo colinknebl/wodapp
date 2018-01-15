@@ -222,6 +222,44 @@ mongodb = {
     }
   },
 
+  updateUser: {
+    v1: (userData) => {
+      return new Promise((resolve, reject) => {
+
+        // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+
+        MongoClient.connect(localhostUrl, (err, db) => {
+          assert.equal(null, err);
+
+          const _id = new ObjectId(userData._id);
+          const search = { _id : _id };
+          const set =  userData.user;
+          const query = search + set;
+          console.log('query', search, set, query);
+
+          db.collection('registeredUsers').updateOne(
+            search,
+            {$set: userData.user},
+            (err, result) => {
+              if (!err) {
+                resolve({
+                  success: true,
+                  message: 'User updated successfully'
+                });
+              }
+              else {
+                reject({
+                  success: false,
+                  message: `User update failed: ${err.message}`
+                });
+              }
+            }
+          );
+        });
+      });
+    }
+  },
+
   addContactRequest: (contactData) => {
     // MongoClient.connect(mongoAtlasUrl, (err, db) => {
     MongoClient.connect(localhostUrl, (err, db) => {

@@ -15,7 +15,7 @@ export class AuthService {
   private loginUrl = 'http://localhost:4800/api/auth/login/v1';
   // private loginUrl = 'http://forgdapp.com/api/auth/login/v1';
 
-  private getAccountTestingInfoUrl = 'http://localhost:4800/api/auth/get-account-info/testing/';
+  // private getAccountTestingInfoUrl = 'http://localhost:4800/api/auth/get-account-info/testing/';
   private getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/v1/';
   // private getAccountInfoUrl = 'http://forgdapp.com/api/auth/get-account-info/v1/';
 
@@ -31,6 +31,17 @@ export class AuthService {
     });
   }
 
+  getAuthenticationHeaders() {
+    this.loadToken();
+    this.options = new RequestOptions({
+      headers: new Headers({
+        'Content-Type'  : 'application/json',
+        'authorization' : this.authToken
+      })
+    });
+    return this.options;
+  }
+
   loadToken() {
     this.authToken = localStorage.getItem('token');
   }
@@ -38,7 +49,7 @@ export class AuthService {
   getAccountInfo() {
 
     this.createAuthenticationHeaders();
-    return this.http.get(this.getAccountTestingInfoUrl, this.options)
+    return this.http.get(this.getAccountInfoUrl, this.options)
       .map(data => data.json())
       .catch((error:any) => Observable.throw(error || 'Server error'));
   }
