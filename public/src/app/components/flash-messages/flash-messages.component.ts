@@ -8,14 +8,17 @@ import { FlashMessagesService } from '../../services/flash-messages/flash-messag
   styleUrls: ['./flash-messages.component.scss']
 })
 export class FlashMessagesComponent implements OnInit {
-
+  
   public message: string;
   public messageClass: string;
   public showMessageBool: boolean = false;
-  private subscription: Subscription;
+  // public message: string = 'filler string';
+  // public messageClass: string = 'info';
+  // public showMessageBool: boolean = true;
+  public subscription: Subscription;
  
     constructor(
-      private flashMessageService: FlashMessagesService
+      public flashMessageService: FlashMessagesService
     ) {
         this.subscription = this.flashMessageService.getMessage()
           .subscribe(flashMessage => {

@@ -17,9 +17,9 @@ export class AuthGuard implements CanActivate {
   redirectUrl: string;
 
   constructor( 
-    private authService: AuthService,
-    private router: Router,
-    private flashMessagesService: FlashMessagesService
+    public authService: AuthService,
+    public router: Router,
+    public flashMessagesService: FlashMessagesService
   ) {}
 
   canActivate(

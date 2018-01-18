@@ -10,8 +10,8 @@ export class NotAuthGuard implements CanActivate {
   */
 
   constructor( 
-    private authService: AuthService,
-    private router: Router
+    public authService: AuthService,
+    public router: Router
   ) {}
 
   canActivate() {

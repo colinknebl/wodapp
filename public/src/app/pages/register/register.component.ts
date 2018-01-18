@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegisterUserService } from '../../services/register-user/register-user.service';
+import { Component, OnInit }    from '@angular/core';
+import { FormControl,
+         FormGroup,
+         FormBuilder,
+         Validators }           from '@angular/forms';
+import { RegisterUserService }  from '../../services/register-user/register-user.service';
 import { FlashMessagesService } from '../../services/flash-messages/flash-messages.service';
-import { Router } from '@angular/router';
+import { Router }               from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,10 +21,10 @@ export class RegisterComponent implements OnInit {
 
   constructor
     (
-      private router:Router,
-      private RegisterUser: RegisterUserService,
-      private flashMessagesService: FlashMessagesService,
-      private formBuilder: FormBuilder
+      public router:Router,
+      public RegisterUser: RegisterUserService,
+      public flashMessagesService: FlashMessagesService,
+      public formBuilder: FormBuilder
     ) 
     {
       this.form = formBuilder.group({

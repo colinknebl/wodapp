@@ -34,22 +34,38 @@ mongodb = {
   },
 
   addUser: (user, date) => {
-    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
-    MongoClient.connect(localhostUrl, (err, db) => {
-      assert.equal(null, err); 
-      // console.log('adding user  to user db...');
 
-      db.collection('users')
-        .insertOne({
-          firstName : user.firstName,
-          lastName  : user.lastName,
-          email     : user.email,
-          dateAdded : date,
-          userNum   : userNum
-        });
-      db.close();      
+    return new Promise((resolve, reject) => {
+
+      // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      MongoClient.connect(localhostUrl, (err, db) => {
+        assert.equal(null, err); 
+
+        db.collection('users')
+          .insertOne({
+            firstName : user.firstName,
+            lastName  : user.lastName,
+            email     : user.email,
+            dateAdded : date,
+            userNum   : userNum
+          }, (err, result) => {
+            db.close();
+            if (err) {
+              reject({
+                success: false,
+                message: 'Error adding user.'
+              });
+            }
+            else {
+              userNum++;
+              resolve({
+                success: true,
+                message: 'User added successfully.'
+              });
+            }
+          });
+      });
     });
-    userNum++;
   },
 
 
@@ -168,19 +184,18 @@ mongodb = {
           const query = { 'username' : username };
 
           const registeredUser = db.collection('registeredUsers')
-            .find(query)
-            .toArray((err, user) => {
-              if (user.length === 0) {
-                reject({
-                  success : false,
-                  message : 'User not found in database.'
+            .find(query).next((err, user) => {
+              if (user) {
+                resolve({
+                  success: true,
+                  message: 'User account loaded successfully.',
+                  user: user
                 });
               }
               else {
-                resolve({
-                  success : true,
-                  message : 'User located in database.',
-                  user : user[0]
+                reject({
+                  success: false,
+                  message: `Error locating user in database. Error: ${err.message}.`
                 });
               }
             });
@@ -227,7 +242,6 @@ mongodb = {
       return new Promise((resolve, reject) => {
 
         // MongoClient.connect(mongoAtlasUrl, (err, db) => {
-
         MongoClient.connect(localhostUrl, (err, db) => {
           assert.equal(null, err);
 
@@ -281,13 +295,29 @@ mongodb = {
   },
 
   addWod: (wod) => {
-    // MongoClient.connect(mongoAtlasUrl, (err, db) => {
-    MongoClient.connect(localhostUrl, (err, db) => {
-      assert.equal(null, err); 
 
-      db.collection('wods').insertOne(wod);
-      db.close();
-      
+    return new Promise((resolve, reject) => {
+      // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      MongoClient.connect(localhostUrl, (err, db) => {
+        assert.equal(null, err); 
+
+        db.collection('wods').insertOne(wod, (err, result) => {
+          db.close();
+          if (err) {
+            reject({
+              success: false,
+              message: 'Workout was not successfully added to database.'
+            });
+          }
+          else {
+            resolve({
+              success: true,
+              message: 'Workout was added to database successfully.'
+            });
+          }
+        });
+        
+      });
     });
   },
 

@@ -17,7 +17,11 @@ wodGenerator = {
 
     let wod;
 
-    if (user.wodType === 'any') {
+    if (user.timer === null) {
+      user.timer = 'any';
+    }
+
+    if (user.wodType === 'any' || user.wodType === null) {
       let num = helpers.numGenerator(0, 2);
       switch (num) {
         case 0:
@@ -122,6 +126,8 @@ wodGenerator = {
 
       priExerciseQuery
         .then((priExercisesQueryResults) => { 
+          console.log('priExercisesQueryResults', priExercisesQueryResults.length);
+          priExercisesQueryResults.forEach(exercise => console.log(exercise.name));
 
           // RETRIEVE PRIMARY MUSCLE GROUP EXERCISES
           priExercises = priExercisesQueryResults;
@@ -519,9 +525,7 @@ module.exports = wodGenerator;
 
 
 helpers = {
-
-
-
+  
   addRun: (WOD) => {
 
     const run = { 
@@ -589,9 +593,11 @@ helpers = {
       let secExercises = [];
       let conExercises = [];
       let oppExercises = [];
-
+      console.log('muscleGrp:',muscleGrp);
       exercises.forEach((exercise) => {
 
+
+        console.log(exercise);
         let oppMuscleGrp;
 
           switch (muscleGrp) {
@@ -608,7 +614,7 @@ helpers = {
               oppMuscleGrp = "shoulders";
               break;
             default:
-              console.log("error in opposing muscle group assignment. tag: a4erw8y+yrtey5");
+              console.log(`error in opposing muscle group assignment for ${exercise.name}. tag: a4erw8y+yrtey5`);
           }
 
 
@@ -2118,15 +2124,13 @@ helpers = {
     }
   },
 
+  
 
 
 
   numGenerator: (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
-
-  
-
 
 
 

@@ -1,89 +1,115 @@
 <!-- <form action="/workout-generator" method="post" [formGroup]="demonstrateForm"> -->
-<form [formGroup]="demoForm" (submit)="submit()">
+<form [formGroup]="form" (submit)="submit()">
   
   <div class="lg-form-st">
-    <label class="main-label">First Name <span class="star">*</span>
+    <label class="main-label">First Name <span class="red">*</span>
       <input  type="text" 
               name="firstName" 
-              class="input-text" 
-              value="Colin" 
-              required
-              formControlName="firstName">
+              class="input-text"
+              formControlName="firstName"
+              [ngClass]="{
+                'input-text-has-error': form.controls.firstName.errors && form.controls.firstName.dirty
+              }">
+              <ul class="required-ul">
+                <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
+                <li *ngIf="form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty">Cannot be greater than 20 characters</li>
+              </ul>
     </label>
 
-    <label class="main-label">Last Name <span class="star">*</span>
+    <label class="main-label">Last Name <span class="red">*</span>
       <input  type="text" 
               name="lastName" 
               class="input-text" 
-              value="Knebl" 
-              required
-              formControlName="lastName">
+              formControlName="lastName"
+              [ngClass]="{
+                'input-text-has-error': form.controls.lastName.errors && form.controls.lastName.dirty
+              }">
+              <ul class="required-ul">
+                <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
+                <li *ngIf="form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty">Cannot be greater than 20 characters</li>
+              </ul>
     </label>
   </div>
   
   <div class="lg-form-st">
-    <label class="main-label">Email <span class="star">*</span>
+    <label class="main-label">Email <span class="red">*</span>
       <input  type="email" 
               name="email" 
               class="input-text" 
-              value="colin.knebl@outlook.com" 
-              required
-              formControlName="email">
+              formControlName="email"
+              [ngClass]="{
+                'input-text-has-error': form.controls.email.errors && form.controls.email.dirty
+              }">
+              <ul class="required-ul">
+                <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
+                <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid email</li>
+              </ul>
     </label>
 
     <label class="main-label">Phone
       <input  type="tel" 
               name="tel" 
-              class="input-text" 
-              required
+              class="input-text"
               formControlName="tel">
     </label>
   </div>
   
   <div class="lg-form-st">
-    <label class="main-label">Skill Level
-      <select name="skillLvl" formControlName="skillLvl">
+    <label class="main-label">Skill Level <span class="red">*</span>
+      <select 
+        name="skillLvl" 
+        formControlName="skillLvl"
+        [ngClass]="{ 'input-text-has-error': (form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)}">
         <option value="beginner">Beginner</option>
         <option value="intermediate">Intermediate</option>
         <option value="advanced">Advanced</option>
         <option value="athlete">Athlete</option>
       </select>
+      <ul class="required-ul">
+        <li *ngIf="(form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)">Please select from the available options.</li>
+      </ul>
     </label>
 
-    <label class="main-label">Gender
-      <select name="gender" formControlName="gender">
+    <label class="main-label">Gender <span class="red">*</span>
+      <select 
+        name="gender" 
+        formControlName="gender"
+        [ngClass]="{ 'input-text-has-error': (form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)}">
         <option value="female">Female</option>
         <option value="male">Male</option>
       </select>
+      <ul class="required-ul">
+        <li *ngIf="(form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)">Please select from the available options.</li>
+      </ul>
     </label>
   </div>
   
   <div class="lg-form-st">
     <label class="main-label">Desired WOD Type
       <select name="wodType" formControlName="wodType">
-        <option value="any">Any</option>
-        <option value="amrap">AMRAP</option>
-        <option value="singlet">Singlet</option>
-        <option value="couplet">Couplet</option>
-        <!-- <option value="triplet">Triplet</option> -->
-        <!-- <option value="chipper">Chipper</option> -->
-        <!-- <option value="bodyweight">Bodyweight</option> -->
-        <!-- <option value="emom">EMOM</option> -->
-        <!-- <option value="endurance">Endurance</option> -->
-        <!-- <option value="hybrid">Hybrid</option> -->
-        <!-- <option value="strength">Strength</option> -->
-        <!-- <option value="strongman">Strongman</option> -->
-        <!-- <option value="tabata">Tabata</option> -->
-        <!-- <option value="timeCap">Time Cap</option> -->
-        <!-- <option value="weightlifting">Weightlifting</option> -->
-        <!-- <option value="bodybuilding">Bodybuilding</option> -->
+        <!-- <option value="any">Any</option> -->
+        <!-- <option value="AMRAP">AMRAP</option> -->
+        <option value="Singlet">Singlet</option>
+        <!-- <option value="Couplet">Couplet</option> -->
+        <!-- <option value="Triplet">Triplet</option> -->
+        <!-- <option value="Chipper">Chipper</option> -->
+        <!-- <option value="Bodyweight">Bodyweight</option> -->
+        <!-- <option value="EMOM">EMOM</option> -->
+        <!-- <option value="Endurance">Endurance</option> -->
+        <!-- <option value="Hybrid">Hybrid</option> -->
+        <!-- <option value="Strength">Strength</option> -->
+        <!-- <option value="Strongman">Strongman</option> -->
+        <!-- <option value="Tabata">Tabata</option> -->
+        <!-- <option value="TimeCap">Time Cap</option> -->
+        <!-- <option value="Weightlifting">Weightlifting</option> -->
+        <!-- <option value="Bodybuilding">Bodybuilding</option> -->
       </select> 
     </label>
     
     <label class="main-label">Muscle Group Focus
       <select name="muscleGrp" formControlName="muscleGrp">
-        <option value="chest">Chest</option>
         <option value="any">Any</option>
+        <option value="chest">Chest</option>
         <option value="shoulders">Shoulders</option>
         <option value="legs">Legs</option>
         <option value="back">Back</option>
@@ -202,6 +228,7 @@
         </label>
       </div>
     </div>
+    <p class="pr-note">NOTE: If you don't know your PRs, estimate.</p>
   </fieldset>
 
   <fieldset>
@@ -210,206 +237,203 @@
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="barbell"
                 value="barbell"
-                formControlName="equipment"> Barbell
+                formControlName="barbell"> Barbell
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="dumbbells"
                 value="dumbbells"
-                formControlName="equipment"
+                formControlName="dumbbells"
                 checked="checked"> Dumbbells
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="plates"
                 value="plates"
-                formControlName="equipment"> Weight Plates
+                formControlName="plates"> Weight Plates
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="rack"
                 value="rack"
-                formControlName="equipment"> Squat Rack
+                formControlName="rack"> Squat Rack
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="bench"
                 value="bench"
-                formControlName="equipment"
-                checked="checked"> Bench
+                formControlName="bench"> Bench
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="jumpRope"
                 value="jumpRope"
-                formControlName="equipment"> Jump Rope
+                formControlName="jumpRope"> Jump Rope
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="box"
                 value="box"
-                formControlName="equipment"> Plyo Box
+                formControlName="box"> Plyo Box
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="kBell"
                 value="kBell"
-                formControlName="equipment"> Kettle Bell
+                formControlName="kBell"> Kettle Bell
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="dipStation"
                 value="dipStation"
-                formControlName="equipment"> Dip Station
+                formControlName="dipStation"> Dip Station
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="pullUpBar"
                 value="pullUpBar"
-                formControlName="equipment"> Pull-Up Bar
+                formControlName="pullUpBar"> Pull-Up Bar
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="medBall"
                 value="medBall"
-                formControlName="equipment"> Medicine Ball
+                formControlName="medBall"> Medicine Ball
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="rings"
                 value="rings"
-                formControlName="equipment"> Rings
+                formControlName="rings"> Rings
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="climbimgRope"
                 value="climbimgRope"
-                formControlName="equipment"> Climbing Rope
+                formControlName="climbimgRope"> Climbing Rope
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="conditioningRope"
                 value="conditioningRope"
-                formControlName="equipment"> Conditioning Ropes
+                formControlName="conditioningRope"> Conditioning Ropes
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="sled"
                 value="sled"
-                formControlName="equipment"> Sled
+                formControlName="sled"> Sled
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="sledgeHammer"
                 value="sledgeHammer"
-                formControlName="equipment"> Sledge Hammer
+                formControlName="sledgeHammer"> Sledge Hammer
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="abMat"
                 value="abMat"
-                formControlName="equipment"> AbMat
+                formControlName="abMat"> AbMat
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="resBands"
                 value="resBands"
-                formControlName="equipment"> Resistance Bands
+                formControlName="resBands"> Resistance Bands
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="tire"
                 value="tire"
-                formControlName="equipment"> Tire
+                formControlName="tire"> Tire
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="sandbag"
                 value="sandbag"
-                formControlName="equipment"> Sandbag
+                formControlName="sandbag"> Sandbag
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="chains"
                 value="chains"
-                formControlName="equipment"> Chains
+                formControlName="chains"> Chains
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="pegBoard"
                 value="pegBoard"
-                formControlName="equipment"> Peg Board
+                formControlName="pegBoard"> Peg Board
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="ghd"
                 value="ghd"
-                formControlName="equipment"> GHD
+                formControlName="ghd"> GHD
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="airBike"
                 value="airBike"
-                formControlName="equipment"> Air Bike
+                formControlName="airBike"> Air Bike
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="rower"
                 value="rower"
-                formControlName="equipment"> Rower
+                formControlName="rower"> Rower
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="skiErg"
                 value="skiErg"
-                formControlName="equipment"> SkiErg
+                formControlName="skiErg"> SkiErg
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="treadmill"
                 value="treadmill"
-                formControlName="equipment"> Treadmill
+                formControlName="treadmill"> Treadmill
       </label>
       <label>
         <input  type="checkbox"
                 class="input-equip"
-                name="equipment"
+                name="outdoorRun"
                 value="outdoorRun"
-                formControlName="equipment"> Outdoor Running Available
+                formControlName="outdoorRun"> Outdoor Running Available
       </label>
     </div>
   </fieldset>
 
-  <input #_id type="hidden" name="_id" formControlName="_id">
-
   <button id="form-submit-btn" class="btn btn-gradient-right" type="submit">Give me my custom workout!</button>
-  
+  <p class="red">{{ errorMessage }}</p>
 </form>

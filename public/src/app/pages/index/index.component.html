@@ -5,26 +5,26 @@
         <h3 class="header-header">forging elite workouts</h3>
         <aside class="header-form-aside">
           <h5>Enter your info to receive app updates!</h5>
-          <form [formGroup]="signUpForm" (submit)="submit()">
+          <form [formGroup]="form" (submit)="submit()">
             
             <input  type="text" 
                     name="firstName"                     
                     placeholder="First Name"
-                    formControlName="firstName"
-                    required>
+                    formControlName="firstName">
 
             <input  type="text" 
                     name="lastName"                     
                     placeholder="Last Name"
-                    formControlName="lastName"
-                    required>
+                    formControlName="lastName">
 
             <input  type="email" 
                     name="email" 
                     placeholder="Email Address"
                     formControlName="email">
 
-            <button type="submit">Submit</button>
+            <button [disabled]="!form.valid || !form.dirty" type="submit">Submit</button>
+
+            <p class="form-msg">{{ message }}</p>
           </form>
         </aside>
       </div>

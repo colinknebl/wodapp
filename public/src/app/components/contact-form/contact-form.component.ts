@@ -12,7 +12,7 @@ export class ContactFormComponent implements OnInit {
   public contactForm: FormGroup;
 
   constructor(
-    private ContactForm: ContactFormService,
+    public ContactForm: ContactFormService,
     public fb: FormBuilder) {
     this.contactForm = fb.group({
       firstName   : [null],

@@ -8,8 +8,8 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class GetWodService {
 
-  private apiUrl = 'http://localhost:4800/api/get-wod/';
-  // private apiUrl = 'http://forgdapp.com/api/get-wod/';
+  public apiUrl = 'http://localhost:4800/api/get-wod/';
+  // public apiUrl = 'http://forgdapp.com/api/get-wod/';
 
   constructor(public http:Http) { }
 

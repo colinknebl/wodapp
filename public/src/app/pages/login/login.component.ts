@@ -16,19 +16,19 @@ import { FlashMessagesService } from '../../services/flash-messages/flash-messag
 })
 export class LoginComponent implements OnInit {
 
-  private form: FormGroup;
-  private usernameErrorMessage: string;
-  private passwordErrorMessage: string;
-  private processing: boolean = false;
+  public form: FormGroup;
+  public usernameErrorMessage: string;
+  public passwordErrorMessage: string;
+  public processing: boolean = false;
   public message: string;
   public previousUrl: string;
 
   constructor(
-    private router: Router,
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private authGuard: AuthGuard,
-    private flashMessagesService: FlashMessagesService
+    public router: Router,
+    public authService: AuthService,
+    public fb: FormBuilder,
+    public authGuard: AuthGuard,
+    public flashMessagesService: FlashMessagesService
   ) {
     this.form = fb.group({
       username : [null, Validators.compose([
@@ -88,7 +88,6 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    // console.log(this.form.value);
     this.processing = true;
     this.disableForm();
     let form = this.form.value;

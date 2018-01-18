@@ -1,6 +1,11 @@
 @import '../../../assets/scss/variables',
         '../../../assets/scss/main-classes';
 
+.nav-bar {
+  border-bottom: 4px solid $teal;
+  background-image: url('http://retrofitness.com/franchising/images/grate_background.jpg');
+}
+
 .nav-menu-item {
   border-right: 2px solid $teal;
   &:last-of-type {

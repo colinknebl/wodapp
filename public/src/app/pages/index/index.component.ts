@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit }      from '@angular/core';
+import { FormControl,
+         FormGroup,
+         FormBuilder,
+         Validators }             from '@angular/forms';
 import { IndexHeaderFormService } from '../../services/index-header-form/index-header-form.service';
 
 @Component({
@@ -9,15 +12,29 @@ import { IndexHeaderFormService } from '../../services/index-header-form/index-h
 })
 export class IndexComponent implements OnInit {
 
-  public signUpForm: FormGroup;
+  public form: FormGroup;
+  public message: string;
 
   constructor(
     public indexForm: IndexHeaderFormService,
     public fb: FormBuilder) {
-    this.signUpForm = fb.group({
-      firstName : [null, Validators.required],
-      lastName  : [null, Validators.required],
-      email     : [null, Validators.required]
+    this.form = fb.group({
+      firstName : [null, Validators.compose([
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(20)
+        ])],
+
+      lastName  : [null, Validators.compose([
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(20)
+        ])],
+
+      email     : [null, Validators.compose([
+          Validators.required,
+          this.validateEmail
+        ])]
     });
 
   }
@@ -25,8 +42,23 @@ export class IndexComponent implements OnInit {
   ngOnInit() {
   }
 
+  validateEmail(controls) {
+    const regExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+    if (regExp.test(controls.value)) {
+      return null;
+    }
+    else {
+      return { 'validateEmail' : true};
+    }
+  }
+
   submit() {
-    this.indexForm.submit(this.signUpForm.value)
-      .subscribe();
+    this.indexForm.submit(this.form.value)
+      .subscribe(data => {
+        if (data.success) {
+          this.message = data.message;
+        }
+      });
   }
 }

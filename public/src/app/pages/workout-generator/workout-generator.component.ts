@@ -15,7 +15,7 @@ export class WorkoutGeneratorComponent implements OnInit {
   wod: Wod[];
 
   constructor(
-    private getWodService:GetWodService, 
+    public getWodService:GetWodService, 
     public router:Router, 
     public route:ActivatedRoute) { }
 
@@ -26,7 +26,6 @@ export class WorkoutGeneratorComponent implements OnInit {
     this.wod = [];
     this.getWodService.getWod(this.id)
       .subscribe(workout => {
-        console.log(workout);
         this.wod = workout;
       });
   }

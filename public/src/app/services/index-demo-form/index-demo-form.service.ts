@@ -5,16 +5,23 @@ import { Router } from '@angular/router';
 @Injectable()
 export class IndexDemoFormService {
 
-  constructor(private http: HttpClient, private router:Router) { }
+  constructor(public http: HttpClient, public router:Router) { }
 
-  submit(object:any) {
+  submit(data:any) {
 
     let apiUrl = 'http://localhost:4800/workout-generator/';
     // let apiUrl = 'http://forgdapp.com/workout-generator/';
 
-    return this.http.post(apiUrl, object.data, {observe: 'response'})
+    // Removes the re-direct URL from the object
+    const sendData = {
+      _id: data._id,
+      user: data.user
+    }
+// , {observe: 'response'}
+
+    return this.http.post(apiUrl, sendData)
       .subscribe(res => {
-          this.router.navigate([object.redirectUrl]);
+          this.router.navigate([data.redirectUrl]);
         }
       );
 

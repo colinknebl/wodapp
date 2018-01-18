@@ -22,16 +22,49 @@ export class AccountComponent implements OnInit {
   public editFormBool: boolean = false;
   public accountLoaded: boolean = false;
 
+  eqpmtArray = [
+    { 'name': 'Barbell', 'value': 'barbell' },
+    { 'name': 'Dumbbells', 'value': 'dumbbells' },
+    { 'name': 'Weight Plates', 'value': 'plates' },
+    { 'name': 'Squat Rack', 'value': 'rack' },
+    { 'name': 'Bench', 'value': 'bench' },
+    { 'name': 'Jump Rope', 'value': 'jumpRope' },
+    { 'name': 'Plyo Box', 'value': 'box' },
+    { 'name': 'Kettle Bell', 'value': 'kBell' },
+    { 'name': 'Dip Station', 'value': 'dipStation' },
+    { 'name': 'Pull-Up Bar', 'value': 'pullUpBar' },
+    { 'name': 'Medicine Ball', 'value': 'medBall' },
+    { 'name': 'Rings', 'value': 'rings' },
+    { 'name': 'Climbimg Rope', 'value': 'climbimgRope' },
+    { 'name': 'Conditioning Ropes', 'value': 'conditioningRope' },
+    { 'name': 'Sled', 'value': 'sled' },
+    { 'name': 'Sledge Hammer', 'value': 'sledgeHammer' },
+    { 'name': 'AbMat', 'value': 'abMat' },
+    { 'name': 'Resistance Bands', 'value': 'resBands' },
+    { 'name': 'Tire', 'value': 'tire' },
+    { 'name': 'Sandbag', 'value': 'sandbag' },
+    { 'name': 'Chains', 'value': 'chains' },
+    { 'name': 'Peg Board', 'value': 'pegBoard' },
+    { 'name': 'GHD', 'value': 'ghd' },
+    { 'name': 'Air Bike', 'value': 'airBike' },
+    { 'name': 'Rower', 'value': 'rower' },
+    { 'name': 'Ski Erg', 'value': 'skiErg' },
+    { 'name': 'Treadmill', 'value': 'treadmill' },
+    { 'name': 'Outdoor Running Available', 'value': 'outdoorRun' }
+  ]
 
   constructor( 
-    private User: UserModel,
-    private authService: AuthService,
-    private flashMessagesService: FlashMessagesService,
-    private updateUserService: UpdateUserService,
-    private router:Router,
-    private formBuilder: FormBuilder
+    public User: UserModel,
+    public authService: AuthService,
+    public flashMessagesService: FlashMessagesService,
+    public updateUserService: UpdateUserService,
+    public router:Router,
+    public formBuilder: FormBuilder
   ) {
     this.form = formBuilder.group({
+      affiliate: null,
+      skillLvl: null,
+      gender: null,
       maxSquat: null,
       maxDead: null,
       maxSnatch: null,
@@ -48,6 +81,35 @@ export class AccountComponent implements OnInit {
       badgerHrs: null,
       badgerMin: null,
       badgerSec: null,
+      equipment: null,
+      barbell          : null,
+      dumbbells        : null,
+      plates           : null,
+      rack             : null,
+      bench            : null,
+      jumpRope         : null,
+      box              : null,
+      kBell            : null,
+      dipStation       : null,
+      pullUpBar        : null,
+      medBall          : null,
+      rings            : null,
+      climbimgRope     : null,
+      conditioningRope : null,
+      sled             : null,
+      sledgeHammer     : null,
+      abMat            : null,
+      resBands         : null,
+      tire             : null,
+      sandbag          : null,
+      chains           : null,
+      pegBoard         : null,
+      ghd              : null,
+      airBike          : null,
+      rower            : null,
+      skiErg           : null,
+      treadmill        : null,
+      outdoorRun       : null,
     })
   }
 
@@ -79,6 +141,10 @@ export class AccountComponent implements OnInit {
             };
           }
 
+          if (!account.user.equipment) {
+            account.user.equipment= {};
+          }
+
           this.user = this.User.create({
             image: account.user.image,
             firstName: account.user.firstName,
@@ -86,6 +152,8 @@ export class AccountComponent implements OnInit {
             email: account.user.email,
             username: account.user.username,
             affiliate: account.user.affiliate,
+            gender: account.user.gender,
+            skillLvl: account.user.skillLvl,
             max: {
               squat: account.user.max.squat,
               dead: account.user.max.dead,
@@ -113,10 +181,43 @@ export class AccountComponent implements OnInit {
                 minutes: account.user.time.badger.minutes,
                 seconds: account.user.time.badger.seconds
               }
-            }          
-          });          
+            },
+            equipment: {
+              barbell: account.user.equipment.barbell,
+              dumbbells: account.user.equipment.dumbbells,
+              plates: account.user.equipment.plates,
+              rack: account.user.equipment.rack,
+              bench: account.user.equipment.bench,
+              jumpRope: account.user.equipment.jumpRope,
+              box: account.user.equipment.box,
+              kBell: account.user.equipment.kBell,
+              dipStation: account.user.equipment.dipStation,
+              pullUpBar: account.user.equipment.pullUpBar,
+              medBall: account.user.equipment.medBall,
+              rings: account.user.equipment.rings,
+              climbimgRope: account.user.equipment.climbimgRope,
+              conditioningRope: account.user.equipment.conditioningRope,
+              sled: account.user.equipment.sled,
+              sledgeHammer: account.user.equipment.sledgeHammer,
+              abMat: account.user.equipment.abMat,
+              resBands: account.user.equipment.resBands,
+              tire: account.user.equipment.tire,
+              sandbag: account.user.equipment.sandbag,
+              chains: account.user.equipment.chains,
+              pegBoard: account.user.equipment.pegBoard,
+              ghd: account.user.equipment.ghd,
+              airBike: account.user.equipment.airBike,
+              rower: account.user.equipment.rower,
+              skiErg: account.user.equipment.skiErg,
+              treadmill: account.user.equipment.treadmill,
+              outdoorRun: account.user.equipment.outdoorRun
+            }
+          });
 
           this.form.reset({
+            'affiliate': this.user.affiliate,
+            'skillLvl': this.user.skillLvl,
+            'gender': this.user.gender,
             'maxSquat': this.user.max.squat,
             'maxDead': this.user.max.dead,
             'maxSnatch': this.user.max.snatch,
@@ -132,8 +233,36 @@ export class AccountComponent implements OnInit {
             'dtSec': this.user.time.dt.seconds,
             'badgerHrs': this.user.time.badger.hours,
             'badgerMin': this.user.time.badger.minutes,
-            'badgerSec': this.user.time.badger.seconds
-          })
+            'badgerSec': this.user.time.badger.seconds,
+            'barbell': this.user.equipment.barbell,
+            'dumbbells': this.user.equipment.dumbbells,
+            'plates': this.user.equipment.plates,
+            'rack': this.user.equipment.rack,
+            'bench': this.user.equipment.bench,
+            'jumpRope': this.user.equipment.jumpRope,
+            'box': this.user.equipment.box,
+            'kBell': this.user.equipment.kBell,
+            'dipStation': this.user.equipment.dipStation,
+            'pullUpBar': this.user.equipment.pullUpBar,
+            'medBall': this.user.equipment.medBall,
+            'rings': this.user.equipment.rings,
+            'climbimgRope': this.user.equipment.climbimgRope,
+            'conditioningRope': this.user.equipment.conditioningRope,
+            'sled': this.user.equipment.sled,
+            'sledgeHammer': this.user.equipment.sledgeHammer,
+            'abMat': this.user.equipment.abMat,
+            'resBands': this.user.equipment.resBands,
+            'tire': this.user.equipment.tire,
+            'sandbag': this.user.equipment.sandbag,
+            'chains': this.user.equipment.chains,
+            'pegBoard': this.user.equipment.pegBoard,
+            'ghd': this.user.equipment.ghd,
+            'airBike': this.user.equipment.airBike,
+            'rower': this.user.equipment.rower,
+            'skiErg': this.user.equipment.skiErg,
+            'treadmill': this.user.equipment.treadmill,
+            'outdoorRun': this.user.equipment.outdoorRun
+          });
           this.accountLoaded = true;
         }
         else {
@@ -184,10 +313,14 @@ export class AccountComponent implements OnInit {
   }
 
   submit() {
+
     this.editFormBool = false;
     let form = this.form.value;
 
     const reformattedForm = {
+      'affiliate': form.affiliate,
+      'skillLvl': form.skillLvl,
+      'gender': form.gender,
       'max': {
         'squat': form.maxSquat,
         'dead': form.maxDead,
@@ -214,7 +347,37 @@ export class AccountComponent implements OnInit {
           'hours': form.badgerHrs,
           'minutes': form.badgerMin,
           'seconds': form.badgerSec
-        },
+        }
+      },
+      'equipment': {
+        'barbell': form.barbell,
+        'dumbbells': form.dumbbells,
+        'plates': form.plates,
+        'rack': form.rack,
+        'bench': form.bench,
+        'jumpRope': form.jumpRope,
+        'box': form.box,
+        'kBell': form.kBell,
+        'dipStation': form.dipStation,
+        'pullUpBar': form.pullUpBar,
+        'medBall': form.medBall,
+        'rings': form.rings,
+        'climbimgRope': form.climbimgRope,
+        'conditioningRope': form.conditioningRope,
+        'sled': form.sled,
+        'sledgeHammer': form.sledgeHammer,
+        'abMat': form.abMat,
+        'resBands': form.resBands,
+        'tire': form.tire,
+        'sandbag': form.sandbag,
+        'chains': form.chains,
+        'pegBoard': form.pegBoard,
+        'ghd': form.ghd,
+        'airBike': form.airBike,
+        'rower': form.rower,
+        'skiErg': form.skiErg,
+        'treadmill': form.treadmill,
+        'outdoorRun': form.outdoorRun
       }
     }
 

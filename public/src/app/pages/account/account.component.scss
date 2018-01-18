@@ -20,7 +20,6 @@
   height: auto;
 }
 .user-stats {
-  // border: 2px solid blue;
   flex-grow: 1;
 }
 
@@ -77,6 +76,11 @@ fieldset {
   // border: 2px solid coral;
   max-width: 30px;
 }
+.input-equip {
+  display: inline-block;
+  width: 100%;
+  padding-left: 1rem;
+}
 .btn {
   border-radius: 5px;
   padding: .5rem;
@@ -107,6 +111,9 @@ fieldset {
   }
   .user-info-text {
     text-align: left;
+  }
+  .input-equip {
+    width: 50%;
   }
 }
 

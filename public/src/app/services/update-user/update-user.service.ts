@@ -8,12 +8,12 @@ import { AuthService } from '../auth/auth.service';
 @Injectable()
 export class UpdateUserService {
 
-  private updateUrl = 'http://localhost:4800/api/update-user/v1';
-  // private updateUrl = 'http://forgdapp.com/api/update-user/v1';
+  public updateUrl = 'http://localhost:4800/api/update-user/v1';
+  // public updateUrl = 'http://forgdapp.com/api/update-user/v1';
 
   constructor(
-    private http: Http,
-    private authService: AuthService
+    public http: Http,
+    public authService: AuthService
   ) { }
 
   updateUser(userData: any) {

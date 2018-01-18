@@ -8,18 +8,18 @@ import { tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class AuthService {
 
-  private authToken;
-  private options;
-  private user;
+  public authToken;
+  public options;
+  public user;
 
-  private loginUrl = 'http://localhost:4800/api/auth/login/v1';
-  // private loginUrl = 'http://forgdapp.com/api/auth/login/v1';
+  public loginUrl = 'http://localhost:4800/api/auth/login/v1';
+  // public loginUrl = 'http://forgdapp.com/api/auth/login/v1';
 
-  // private getAccountTestingInfoUrl = 'http://localhost:4800/api/auth/get-account-info/testing/';
-  private getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/v1/';
-  // private getAccountInfoUrl = 'http://forgdapp.com/api/auth/get-account-info/v1/';
+  // public getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/testing/';
+  public getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/v1/';
+  // public getAccountInfoUrl = 'http://forgdapp.com/api/auth/get-account-info/v1/';
 
-  constructor(private http: Http) { }
+  constructor(public http: Http) { }
 
   createAuthenticationHeaders() {
     this.loadToken();

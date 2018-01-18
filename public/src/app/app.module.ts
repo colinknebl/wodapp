@@ -23,6 +23,7 @@ import { MobileNavComponent           } from './components/mobile-nav/mobile-nav
 import { AboutComponent               } from './pages/about/about.component';
 import { AccountComponent             } from './pages/account/account.component';
 import { ContactComponent             } from './pages/contact/contact.component';
+import { DonateComponent              } from './pages/_page-archive/donate/donate.component';
 import { FeaturesComponent            } from './pages/features/features.component';
 import { IndexComponent               } from './pages/index/index.component';
 import { LoginComponent               } from './pages/login/login.component';
@@ -47,6 +48,7 @@ import { NotAuthGuard                 } from './guards/notAuth.guard';
 
 // MODELS
 import { UserModel                    } from './models/user';
+import { UserGenModel                 } from './models/user-gen-wod';
 
 
 @NgModule({
@@ -69,7 +71,8 @@ import { UserModel                    } from './models/user';
     ContactFormComponent,
     RegisterComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    DonateComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import { UserModel                    } from './models/user';
     AuthGuard,
     NotAuthGuard,
     FlashMessagesService,
-    UserModel
+    UserModel,
+    UserGenModel
   ],
   bootstrap: [AppComponent]
 })

@@ -7,17 +7,17 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class RegisterUserService {
 
-  private apiUrl = 'http://localhost:4800/api/register-user/v3';
-  // private apiUrl = 'http://forgdapp.com/api/register-user/v3';
+  public apiUrl = 'http://localhost:4800/api/register-user/v3';
+  // public apiUrl = 'http://forgdapp.com/api/register-user/v3';
 
-  private checkUsernameUrl = 'http://localhost:4800/api/check-username/v1/';
-  // private checkUsernameUrl = 'http://forgdapp.com/api/check-username/v1/';
+  public checkUsernameUrl = 'http://localhost:4800/api/check-username/v1/';
+  // public checkUsernameUrl = 'http://forgdapp.com/api/check-username/v1/';
 
-  private checkEmailUrl = 'http://localhost:4800/api/check-email/v1/';
-  // private checkEmailUrl = 'http://forgdapp.com/api/check-email/v1/';
+  public checkEmailUrl = 'http://localhost:4800/api/check-email/v1/';
+  // public checkEmailUrl = 'http://forgdapp.com/api/check-email/v1/';
 
   constructor(
-    private http:Http
+    public http:Http
   ) { }
 
   checkUsername(username:string) {

@@ -21,8 +21,15 @@ api.get('/api/get-wod/:_id', (req, res) => {
 
 api.post('/api/add-user', (req, res) => {
   let today = Date();
-  mongodb.addUser(req.body, today);
-  res.send({result: 'success'});
+  
+  let addUser = mongodb.addUser(req.body, today);
+
+  addUser
+    .then(result => {
+      res.send(result);
+    })
+    .catch(err => res.send(err));
+
 });
 
 api.post('/api/contact-form', (req, res) => {
@@ -44,7 +51,7 @@ api.post('/api/contact-form', (req, res) => {
 
 api.post('/api/register-user/v3', (req, res) => {
 
-  let dataVerification = helpers.newUserDataCheck(req.body, res);
+  let dataVerification = validators.newUserDataCheck(req.body, res);
   
   if (dataVerification.success) {
 
@@ -54,7 +61,7 @@ api.post('/api/register-user/v3', (req, res) => {
       .then(userCheck => {
 
         if (userCheck.success) {
-          return helpers.encryptPassword(req.body.password);
+          return password.encryptPassword(req.body.password);
         }
         else {
           res.json(userCheck);
@@ -155,10 +162,8 @@ api.get('/api/check-email/v1/:email', (req, res) => {
   
 });
 
-// colinknebl
-// Special25!
+api.post('/api/auth/login/v1', (req, res) => {
 
-api.post('/api/auth/login/v1', (req, res) => { 
 
   if (req.body.username && req.body.password) {
 
@@ -166,8 +171,9 @@ api.post('/api/auth/login/v1', (req, res) => {
 
     userLoginQuery
       .then(user => {
-        const comparePass = helpers.comparePasswords(req.body.password, user.user.password);
 
+        const comparePass = password.comparePasswords(req.body.password, user.user.password);
+        
         if (comparePass) {
           const token = jwt.sign({ userId: user.user._id }, dbconfig.secret, { expiresIn: '24h' });
           res.json({
@@ -202,49 +208,84 @@ api.get('/api/auth/get-account-info/testing/', (req, res) => {
     success: true,
     message: 'User account info found',
     user: {
-      // image: 'https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAruAAAAJGU0YmZlMWFiLWI5ZTUtNGQxOC04NmZlLWZlYjg1ODk5NmNiOA.jpg',
+      image: 'https://media-exp2.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAruAAAAJGU0YmZlMWFiLWI5ZTUtNGQxOC04NmZlLWZlYjg1ODk5NmNiOA.jpg',
       firstName: 'Colin',
       lastName: 'Knebl',
       email: 'colin.knebl@outlook.com',
       username: 'colinknebl',
-      // affiliate: 'home gym',
+      affiliate: 'home gym',
+      gender: 'male',
+      skillLvl: 'intermediate',
       max: {
         squat: 275,
         dead: 315,
         snatch: 185,
         bench: 285
       },
-      // time: {
-      //   murph: {
-      //     hours: 1,
-      //     minutes: 5,
-      //     seconds: 14
-      //   },
-      //   diane: {
-      //     hours: 0,
-      //     minutes: 25,
-      //     seconds: 14
-      //   },
-      //   dt: {
-      //     hours: 0,
-      //     minutes: 15,
-      //     seconds: 26
-      //   },
-      //   badger: {
-      //     hours: 1,
-      //     minutes: 35,
-      //     seconds: 49
-      //   }
-      // }
+      time: {
+        murph: {
+          hours: 1,
+          minutes: 5,
+          seconds: 14
+        },
+        diane: {
+          hours: 0,
+          minutes: 25,
+          seconds: 14
+        },
+        dt: {
+          hours: 0,
+          minutes: 15,
+          seconds: 26
+        },
+        badger: {
+          hours: 1,
+          minutes: 35,
+          seconds: 49
+        }
+      },
+      equipment: {
+        barbell          : true,
+        dumbbells        : null,
+        plates           : true,
+        rack             : null,
+        bench            : null,
+        jumpRope         : null,
+        box              : true,
+        kBell            : null,
+        dipStation       : null,
+        pullUpBar        : null,
+        medBall          : null,
+        rings            : null,
+        climbimgRope     : null,
+        conditioningRope : true,
+        sled             : null,
+        sledgeHammer     : null,
+        abMat            : null,
+        resBands         : null,
+        tire             : null,
+        sandbag          : null,
+        chains           : null,
+        pegBoard         : null,
+        ghd              : null,
+        airBike          : null,
+        rower            : true,
+        skiErg           : true,
+        treadmill        : null,
+        outdoorRun       : null,
+      }
     }
   });
 });
+
+
 
 /*
   MIDDLEWARE FOR GETTING THE TOKEN FROM THE REQUEST HEADERS
   NOTE: Any routes that require authentication and need access to the token need to be under the middleware.
 */
 api.use((req, res, next) => {
+
   const token = req.headers.authorization;
 
   if (token) {
@@ -262,41 +303,25 @@ api.use((req, res, next) => {
     });
   }
   else {
-    res.json({
-      success: false,
-      message: 'No token provided.'
-    });
+    if (
+      req.path === '/api/auth/get-account-info/v1/' || 
+      req.path === '/api/auth/get-account-info/testing/' ||
+      req.path === '/api/update-user/v1'
+    ) {
+      res.json({
+        success: false,
+        message: 'No token provided.'
+      });
+    }
+    else {
+      res.redirect('/');
+    }
   }
 });
 // *******************
 
 
 api.get('/api/auth/get-account-info/v1/', (req, res) => {
-
-  let getUserQuery = mongodb.accountLookup.v1(req.decoded.userId);
-
-  getUserQuery
-    .then(userData => {
-      console.log(userData);
-      if (userData.success) {
-        res.json({
-          success: true,
-          message: 'User account loaded successfully.',
-          user: userData.user
-        });
-      }
-      else {
-        res.json({
-          success: false,
-          message: 'User account info not found.'
-        });
-      }
-    })
-    .catch(err => res.json(err));
-
-});
-
-api.get('/api/auth/get-account-info/testing/', (req, res) => {
 
   let getUserQuery = mongodb.accountLookup.v1(req.decoded.userId);
 
@@ -345,77 +370,11 @@ module.exports = api;
 
 
 
-
-
-
-
-
-
-
-helpers = {
+password = {
 
   comparePasswords: (userPassword, dbPassword) => {
+    console.log('test');
     return bcrypt.compareSync(userPassword, dbPassword);
-  },
-
-
-  newUserDataCheck: (user, res) => {
-    if (!user.firstName) {
-      res.json({
-        success: false,
-        message: 'You must provide your first name.'
-      });
-    } 
-    else if (!user.lastName) {
-      res.json({
-        success: false,
-        message: 'You must provide your last name.'
-      });
-    }
-    else if (!user.email) {
-      res.json({
-        success: false,
-        message: 'You must provide your email address.'
-      });
-    }
-    else if (!user.username) {
-      res.json({
-        success: false,
-        message: 'You must provide a username.'
-      });
-    }
-    else if (!user.password) {
-      res.json({
-        success: false,
-        message: 'You must provide a password.'
-      });
-    }
-    else {
-      let validFirstName = validators.firstName(user.firstName);
-      let validLastName = validators.lastName(user.lastName);
-      let validEmail = validators.email(user.email);
-      let validUsername = validators.username(user.username);
-      let validPassword = validators.password(user.password, user.confirm);
-
-      if (!validFirstName.success) {
-        return validFirstName;
-      }
-      else if (!validLastName.success) {
-        return validLastName;
-      }
-      else if (!validEmail.success) {
-        return validEmail;
-      }
-      else if (!validUsername.success) {
-        return validUsername;
-      }
-      else if (!validPassword.success) {
-        return validPassword;
-      }
-      else {
-        return { 'success' : true };
-      }
-    } 
   },
 
   encryptPassword: (password) => {
@@ -564,5 +523,65 @@ validators = {
         };
       }
     }
+  },
+
+
+  newUserDataCheck: (user, res) => {
+    if (!user.firstName) {
+      res.json({
+        success: false,
+        message: 'You must provide your first name.'
+      });
+    } 
+    else if (!user.lastName) {
+      res.json({
+        success: false,
+        message: 'You must provide your last name.'
+      });
+    }
+    else if (!user.email) {
+      res.json({
+        success: false,
+        message: 'You must provide your email address.'
+      });
+    }
+    else if (!user.username) {
+      res.json({
+        success: false,
+        message: 'You must provide a username.'
+      });
+    }
+    else if (!user.password) {
+      res.json({
+        success: false,
+        message: 'You must provide a password.'
+      });
+    }
+    else {
+      let validFirstName = validators.firstName(user.firstName);
+      let validLastName = validators.lastName(user.lastName);
+      let validEmail = validators.email(user.email);
+      let validUsername = validators.username(user.username);
+      let validPassword = validators.password(user.password, user.confirm);
+
+      if (!validFirstName.success) {
+        return validFirstName;
+      }
+      else if (!validLastName.success) {
+        return validLastName;
+      }
+      else if (!validEmail.success) {
+        return validEmail;
+      }
+      else if (!validUsername.success) {
+        return validUsername;
+      }
+      else if (!validPassword.success) {
+        return validPassword;
+      }
+      else {
+        return { 'success' : true };
+      }
+    } 
   }
 };

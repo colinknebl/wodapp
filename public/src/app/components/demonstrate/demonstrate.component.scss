@@ -1,7 +1,16 @@
 @import '../../../assets/scss/variables',
         '../../../assets/scss/main-classes';
 
-.star {
+.input-text-has-error {
+  border: 2px solid red;
+}
+.required-ul {
+  list-style-type: none;
+  li {
+    color: red;
+  }
+}
+.red {
   color: red;
 }
 form {
@@ -65,6 +74,13 @@ fieldset {
     style: italic;
   }
   color: $teal;
+}
+.pr-note {
+  margin-left: 0.5rem;
+  font: {
+    style: italic;
+    size: 0.8rem;
+  } 
 }
 
 @media screen and (min-width: 580px) {

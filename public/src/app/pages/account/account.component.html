@@ -14,7 +14,6 @@
         <div>
           <p>Username: {{ user.username }}</p>
           <p>Email: {{ user.email }}</p>
-          <p>Affiliate: {{ user.affiliate }}</p>
         </div>
       </div>
     </aside>
@@ -23,7 +22,38 @@
 
       <form [formGroup]="form"  (submit)="submit()">
         <fieldset>
-          <legend>{{ user.firstName }}'s PRs</legend>
+          <legend>Info</legend>
+
+          <label class="form-field">
+            <span class="input-discription">Affiliate:</span>
+            <input class="input-field"
+                   type="text" 
+                   name="affiliate"
+                   formControlName="affiliate">
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Skill Level:</span>
+            <select name="skillLvl" formControlName="skillLvl">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+              <option value="athlete">Athlete</option>
+            </select>
+          </label>
+
+          <label class="form-field">
+            <span class="input-discription">Gender:</span>
+            <select name="gender" formControlName="gender">
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </label>
+
+        </fieldset>
+
+        <fieldset>
+          <legend>PRs</legend>
 
           <label class="form-field">
             <span class="input-discription">Max Squat:</span>
@@ -63,7 +93,7 @@
         </fieldset>
 
         <fieldset>
-          <legend>{{ user.firstName }}'s Best Times</legend>
+          <legend>Best Times</legend>
 
           <label class="form-field">
             <span class="input-discription">Murph Time:</span>
@@ -198,25 +228,38 @@
           </label>
 
         </fieldset>
+
+        <fieldset>
+          <legend>Equipment</legend>
+
+          <label *ngFor="let eqpmt of eqpmtArray" class="input-equip">
+            <input  type="checkbox"
+                    name="{{ eqpmt.value }}"
+                    value="{{ eqpmt.value }}"
+                    formControlName="{{ eqpmt.value }}">
+            <span>{{ eqpmt.name }}</span>
+          </label>
+
+        </fieldset>
         
         <div class="btn-grp">
           <button 
             class="btn btn-info"
             type="button"
-            (click)="editForm()">Edit Form
+            (click)="editForm()">Edit Profile
           </button>
 
           <button 
             class="btn btn-submit"
             type="submit"
-            *ngIf="editFormBool === true">Submit Form
+            *ngIf="editFormBool === true">Submit
           </button>
 
           <button 
             class="btn btn-cancel"
             type="reset"
             *ngIf="editFormBool === true" 
-            (click)="cancelEdit()">Cancel Form Edit
+            (click)="cancelEdit()">Cancel
           </button>
           
         </div>

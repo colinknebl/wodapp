@@ -7,11 +7,11 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ContactFormService {
 
-  private apiUrl = 'http://localhost:4800/api/contact-form';
-  // private apiUrl = 'http://forgdapp.com/api/contact-form';
+  public apiUrl = 'http://localhost:4800/api/contact-form';
+  // public apiUrl = 'http://forgdapp.com/api/contact-form';
 
   constructor(
-    private http:Http) { }
+    public http:Http) { }
 
   submit(data:any) {
 
