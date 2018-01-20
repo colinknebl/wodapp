@@ -208,32 +208,32 @@ wodGenerator = {
     return new Promise((resolve, reject) => {
 
       // VARIABLE DECLARATIONS
-      let firstExercise;
-      let secondExercise;
-      let wodExercises;
-      let repScheme;
-      let percentOfMax;
-      let WOD = wodConst;
-      WOD.exercises = [];
-      let maxLifts = {
-        squat: user.maxSquat,
-        bench: user.maxBench,
-        snatch: user.maxSnatch,
-        deadlift: user.maxDead
-      };
+      // let firstExercise;
+      // let secondExercise;
+      // let wodExercises;
+      // let repScheme;
+      // let percentOfMax;
+      // let WOD = wodConst;
+      // WOD.exercises = [];
+      // let maxLifts = {
+      //   squat: user.maxSquat,
+      //   bench: user.maxBench,
+      //   snatch: user.maxSnatch,
+      //   deadlift: user.maxDead
+      // };
       // ***************************
 
 
       // SET TYPE
-      WOD.type = 'Couplet';
+      // WOD.type = 'Couplet';
       // ***************************
 
 
       // SET TIMER
-      if (user.timer !== 'any') {
-        WOD.timer = user.timer;
-      }
-      WOD.timer = helpers.setTimer(user.timer);
+      // if (user.timer !== 'any') {
+      //   WOD.timer = user.timer;
+      // }
+      // WOD.timer = helpers.setTimer(user.timer);
       // ***************************
 
       /*
@@ -246,116 +246,116 @@ wodGenerator = {
 
 
       // WOD SETUP STYLE & ROUNDS
-      let styles = [
-        'set reps',
-        'varied reps'
-      ];
-      let style = styles[helpers.numGenerator(0, styles.length)];
-      let rounds = helpers.assignRounds(WOD.timer, user.skillLvl);
-      WOD.rounds = rounds;
+      // let styles = [
+      //   'set reps',
+      //   'varied reps'
+      // ];
+      // let style = styles[helpers.numGenerator(0, styles.length)];
+      // let rounds = helpers.assignRounds(WOD.timer, user.skillLvl);
+      // WOD.rounds = rounds;
       // ***************************
 
 
       // ADD WOD INSTRUCTIONS
-      if (style === 'set reps') {
-        WOD.instructions = `${rounds} rounds for time`;
-      } else {
-        WOD.reps = helpers.assignVariedRepsPerRound(rounds, user.repScheme);        
-        WOD.instructions = `${WOD.reps} reps, for time`;
-      }
+      // if (style === 'set reps') {
+      //   WOD.instructions = `${rounds} rounds for time`;
+      // } else {
+      //   WOD.reps = helpers.assignVariedRepsPerRound(rounds, user.repScheme);        
+      //   WOD.instructions = `${WOD.reps} reps, for time`;
+      // }
       // ***************************
 
 
-      // QUERY DATABASE - GETS ALL EXERCISES THAT ARE IN THE 'CROSSFIT' CATEGORY
-      let crossfitExercisesQuery = mongodb.exerciseQuery({
-        user: user,
-        queryTypes: [
-          'category',
-          'skillLvl'
-        ],
-        categorySearchValues: ['crossfit'],
-        skillLvlSearchValues: user.skillLvl
-      });
-      // ***************************
+      // // QUERY DATABASE - GETS ALL EXERCISES THAT ARE IN THE 'CROSSFIT' CATEGORY
+      // let crossfitExercisesQuery = mongodb.exerciseQuery({
+      //   user: user,
+      //   queryTypes: [
+      //     'category',
+      //     'skillLvl'
+      //   ],
+      //   categorySearchValues: ['crossfit'],
+      //   skillLvlSearchValues: user.skillLvl
+      // });
+      // // ***************************
 
 
       crossfitExercisesQuery
         .then((crossfitExercisesQueryResults) => {
 
           // FILTER EXERCISES BASED ON USER'S EQUIPMENT
-          let validExercises = helpers.filterExercisesBasedOnEquipment.v2(crossfitExercisesQueryResults, user.equip);
+          // let validExercises = helpers.filterExercisesBasedOnEquipment.v2(crossfitExercisesQueryResults, user.equip);
           // ***************************
 
 
-          // CHOOSE EXERCISE(S) TO ADD TO WOD
-          if (user.muscleGrp === 'any') {
-            // if the user selects 'any' for muscle group focus, choose any two exercises in any order from the 'validExercises' array
-            firstExercise = validExercises[helpers.numGenerator(0, validExercises.length)];
-            do {
-              secondExercise = validExercises[helpers.numGenerator(0, validExercises.length)];  
-            } while (firstExercise.name === secondExercise.name);
-          }
-          else {
-            // if the user selects a specific muscle group to target, get one exercise in which the 'exercise.priMuscleGrpGeneral' is equal to the 'user.muscleGrp'
-            let targetMuscleGrpArray = [];
+          // // CHOOSE EXERCISE(S) TO ADD TO WOD
+          // if (user.muscleGrp === 'any') {
+          //   // if the user selects 'any' for muscle group focus, choose any two exercises in any order from the 'validExercises' array
+          //   firstExercise = validExercises[helpers.numGenerator(0, validExercises.length)];
+          //   do {
+          //     secondExercise = validExercises[helpers.numGenerator(0, validExercises.length)];  
+          //   } while (firstExercise.name === secondExercise.name);
+          // }
+          // else {
+          //   // if the user selects a specific muscle group to target, get one exercise in which the 'exercise.priMuscleGrpGeneral' is equal to the 'user.muscleGrp'
+          //   let targetMuscleGrpArray = [];
 
-            // add the exercises in which the 'exercise.priMuscleGrpGeneral' is what the user wants to focus on to the 'targetMuscleGrpArray'
-            validExercises.forEach((exercise) => {
-              if (exercise.priMuscleGrpGeneral === user.muscleGrp) {
-                targetMuscleGrpArray.push(exercise);
-              }
-            });
+          //   // add the exercises in which the 'exercise.priMuscleGrpGeneral' is what the user wants to focus on to the 'targetMuscleGrpArray'
+          //   validExercises.forEach((exercise) => {
+          //     if (exercise.priMuscleGrpGeneral === user.muscleGrp) {
+          //       targetMuscleGrpArray.push(exercise);
+          //     }
+          //   });
 
-            firstExercise = targetMuscleGrpArray[helpers.numGenMaxMinusOne(0, targetMuscleGrpArray.length)];
-            do {
-              secondExercise = validExercises[helpers.numGenMaxMinusOne(0, validExercises.length)];
-            } 
-            while (firstExercise.name === secondExercise.name);
-          }
-          // ***************************
+          //   firstExercise = targetMuscleGrpArray[helpers.numGenMaxMinusOne(0, targetMuscleGrpArray.length)];
+          //   do {
+          //     secondExercise = validExercises[helpers.numGenMaxMinusOne(0, validExercises.length)];
+          //   } 
+          //   while (firstExercise.name === secondExercise.name);
+          // }
+          // // ***************************
 
 
-          // GENERATE REP COUNT FOR WOD EXERCISES
-          let exercises = [firstExercise, secondExercise];
+          // // GENERATE REP COUNT FOR WOD EXERCISES
+          // let exercises = [firstExercise, secondExercise];
 
-          if (style === 'set reps') {
-            // if the style is 'set reps', the rep count is a random number based on user's desired rep scheme 
-            exercises = helpers.assignReps(user.repScheme, exercises);
-          }
-          WOD.exercises = exercises;
-          // ***************************
+          // if (style === 'set reps') {
+          //   // if the style is 'set reps', the rep count is a random number based on user's desired rep scheme 
+          //   exercises = helpers.assignReps(user.repScheme, exercises);
+          // }
+          // WOD.exercises = exercises;
+          // // ***************************
           
 
           // ASSIGN WEIGHT TO EXERCISES
-          exercises = helpers.assignRx(exercises, maxLifts, WOD.reps, WOD.rounds, user.repScheme, user.gender);
+          // exercises = helpers.assignRx(exercises, maxLifts, WOD.reps, WOD.rounds, user.repScheme, user.gender);
           // ***************************
 
 
           // ADD EXERCISES TO WOD OBJECT
-          WOD.exercises = exercises;
+          // WOD.exercises = exercises;
           // ***************************
 
 
           // OPTIONAL: ADD RUN COMPONENT
-          let runNum = helpers.numGenerator(0, 10);
-          // I don't like running, so only add a run if the below criteria are met. 
-          if (runNum >= 7 && WOD.timer >= 15) {
-            WOD = helpers.addRun(WOD);
-          }
-          else {
-            WOD.run = false;
-          }
+          // let runNum = helpers.numGenerator(0, 10);
+          // // I don't like running, so only add a run if the below criteria are met. 
+          // if (runNum >= 7 && WOD.timer >= 15) {
+          //   WOD = helpers.addRun(WOD);
+          // }
+          // else {
+          //   WOD.run = false;
+          // }
           // ************************
 
 
-          // ADD WOD TO DATABASE
-          mongodb.addWod(WOD);
-          // ***************************
+          // // ADD WOD TO DATABASE
+          // mongodb.addWod(WOD);
+          // // ***************************
 
 
-          // SEND WOD BACK TO ROUTE TO SEND BACK TO CLIENT
-          resolve(WOD);
-          // ***************************
+          // // SEND WOD BACK TO ROUTE TO SEND BACK TO CLIENT
+          // resolve(WOD);
+          // // ***************************
 
         })
         .catch(err => console.error(err));
@@ -811,7 +811,7 @@ helpers = {
 
 
 
-  assignRx: (exerciseArray, maxLifts, reps, rounds, repScheme, gender) => {
+  // assignRx: (exerciseArray, maxLifts, reps, rounds, repScheme, gender) => {
     /*
       exerciseArray = array
       maxLifts = object
@@ -821,321 +821,321 @@ helpers = {
       gender = string
     */
 
-    const newExerciseArray = [];
+    // const newExerciseArray = [];
 
-    // IF THE REP COUNT IS VARIED, GET THE AVERAGE REPS PERFORMED PER ROUND - THE AVERAGE IS THEN USED TO ASSIGN THE WEIGHT USED FOR THAT EXERCISE
-    let average;
-    if (reps) {
+    // // IF THE REP COUNT IS VARIED, GET THE AVERAGE REPS PERFORMED PER ROUND - THE AVERAGE IS THEN USED TO ASSIGN THE WEIGHT USED FOR THAT EXERCISE
+    // let average;
+    // if (reps) {
       
-      let repSchemeArray = [];
-      let number = '';
+    //   let repSchemeArray = [];
+    //   let number = '';
 
-      for (let i = 0; i < reps.length; i++) {
+    //   for (let i = 0; i < reps.length; i++) {
 
-        if (reps[i] === '-') {
-          number = Number.parseInt(number);
-          repSchemeArray.push(number);
-          number = '';
-        }
-        else if (i === (reps.length - 1)) {
-          number += reps[i];
-          number = Number.parseInt(number);
-          repSchemeArray.push(number);
-        }
-        else if (reps[i] !== '-') {
-          number += reps[i];
-        }
-        else {
-          console.log('error finding average. tag: 3890qn5bad-26');
-        }
-      }
-      let sum = 0;
+    //     if (reps[i] === '-') {
+    //       number = Number.parseInt(number);
+    //       repSchemeArray.push(number);
+    //       number = '';
+    //     }
+    //     else if (i === (reps.length - 1)) {
+    //       number += reps[i];
+    //       number = Number.parseInt(number);
+    //       repSchemeArray.push(number);
+    //     }
+    //     else if (reps[i] !== '-') {
+    //       number += reps[i];
+    //     }
+    //     else {
+    //       console.log('error finding average. tag: 3890qn5bad-26');
+    //     }
+    //   }
+    //   let sum = 0;
 
-      repSchemeArray.forEach((repRound) => {
-        sum = sum + repRound;
-      });
-      average = sum / repSchemeArray.length;
-    }
-
-
-    function assignWeight(exercise) {
-
-      // ASSIGN A VALUE TO maxLift
-      let maxLift;
-      switch (exercise.maxOfExercise) {
-        case 'bench':
-          maxLift = maxLifts.bench;
-          break;
-        case 'squat':
-          maxLift = maxLifts.squat;
-          break;
-        case 'deadlift':
-          maxLift = maxLifts.deadlift;
-          break;
-        case 'snatch':
-          maxLift = maxLifts.snatch;
-          break;
-        default:
-          console.log(`error assigning 'maxLift' for exercise ${exercise.name}. tag: 39dhtn38dfh`);
-      }
-
-      // ASSIGN A VALUE TO "weightFactor"
-      let weightFactor;
-      if (exercise.reps <= 2 || average <= 2 || repScheme <= 2) {
-        weightFactor = 0.95;
-      }
-      else if (
-        (exercise.reps > 2 && exercise.reps <= 4) 
-        || 
-        (average > 2 && average <= 4)
-        ||
-        (repScheme > 2 && repScheme <= 4)) 
-        {
-          weightFactor = 0.9;
-      }
-      else if (
-        (exercise.reps > 4 && exercise.reps <= 6) 
-        || 
-        (average > 4 && average <= 6)
-        ||
-        (repScheme > 4 && repScheme <= 6)) 
-        {
-          weightFactor = 0.85;
-      }
-      else if (
-        (exercise.reps > 6 && exercise.reps <= 11) 
-        || 
-        (average > 6 && average <= 11)
-        ||
-        (repScheme > 6 && repScheme <= 11))
-        {
-          weightFactor = 0.8;
-      }
-      else if (
-        (exercise.reps > 11 && exercise.reps <= 19) 
-        || 
-        (average > 11 && average <= 19)
-        ||
-        (repScheme > 11 && repScheme <= 19))
-        {
-          weightFactor = 0.7;
-      }
-      else if (
-        (exercise.reps > 19 && exercise.reps <= 29) 
-        || 
-        (average > 19 && average <= 29)
-        ||
-        (repScheme > 19 && repScheme <= 29))
-        {
-          weightFactor = 0.5;
-      }
-      else if (
-        (exercise.reps >= 30)
-        || 
-        (average >= 30)
-        ||
-        (repScheme >= 30)) 
-        {
-          weightFactor = 0.4;
-      }
-      else {
-        console.log(`error in assigning weight factor for '${exercise.name}'. tag: asdoip215`);
-      }
-
-      // ASSIGN THE EXERCISE weightAmount
-      let weightAmount = Math.floor(maxLift * exercise.percentOfMax * weightFactor);
-      weightAmount = helpers.roundNum(weightAmount);
-      exercise.weightAmount = weightAmount + ' lbs';
-
-      // ADD THE EXERCISE WITH THE WEIGHT ASSIGNED TO newExerciseArray
-      newExerciseArray.push(exercise);
-    }
+    //   repSchemeArray.forEach((repRound) => {
+    //     sum = sum + repRound;
+    //   });
+    //   average = sum / repSchemeArray.length;
+    // }
 
 
-    // ASSIGN THE COUNT FOR MOUNTAIN CLIMBERS
-    function assignMtClimbersCount(climbers) {
+    // function assignWeight(exercise) {
 
-      let count;
-      let reps = climbers.repScheme;
+    //   // ASSIGN A VALUE TO maxLift
+    //   let maxLift;
+    //   switch (exercise.maxOfExercise) {
+    //     case 'bench':
+    //       maxLift = maxLifts.bench;
+    //       break;
+    //     case 'squat':
+    //       maxLift = maxLifts.squat;
+    //       break;
+    //     case 'deadlift':
+    //       maxLift = maxLifts.deadlift;
+    //       break;
+    //     case 'snatch':
+    //       maxLift = maxLifts.snatch;
+    //       break;
+    //     default:
+    //       console.log(`error assigning 'maxLift' for exercise ${exercise.name}. tag: 39dhtn38dfh`);
+    //   }
 
-      if (repScheme === 'any') {
-        count = helpers.numGenerator(reps.range[0], reps.range[1]);
-      }
-      else if (repScheme === 'lowRepHighWeight') {
-        count = helpers.numGenerator(reps.low[0], reps.low[1]);
-      }
-      else if (repScheme === 'mediumRepsAndWeight') {
-        count = helpers.numGenerator(reps.mid[0], reps.mid[1]);
-      }
-      else if (repScheme === 'highRepLowWeight') {
-        count = helpers.numGenerator(reps.high[0], reps.high[1]);
-      }
-      else {
-        console.log('error in assigning mountain climbers amount. tag: jt65+g53qg51');
-      }
-      count = helpers.roundNum(count);
-      climbers.weightAmount = count + ' four count';
-      newExerciseArray.push(climbers);
-    }
+    //   // ASSIGN A VALUE TO "weightFactor"
+    //   let weightFactor;
+    //   if (exercise.reps <= 2 || average <= 2 || repScheme <= 2) {
+    //     weightFactor = 0.95;
+    //   }
+    //   else if (
+    //     (exercise.reps > 2 && exercise.reps <= 4) 
+    //     || 
+    //     (average > 2 && average <= 4)
+    //     ||
+    //     (repScheme > 2 && repScheme <= 4)) 
+    //     {
+    //       weightFactor = 0.9;
+    //   }
+    //   else if (
+    //     (exercise.reps > 4 && exercise.reps <= 6) 
+    //     || 
+    //     (average > 4 && average <= 6)
+    //     ||
+    //     (repScheme > 4 && repScheme <= 6)) 
+    //     {
+    //       weightFactor = 0.85;
+    //   }
+    //   else if (
+    //     (exercise.reps > 6 && exercise.reps <= 11) 
+    //     || 
+    //     (average > 6 && average <= 11)
+    //     ||
+    //     (repScheme > 6 && repScheme <= 11))
+    //     {
+    //       weightFactor = 0.8;
+    //   }
+    //   else if (
+    //     (exercise.reps > 11 && exercise.reps <= 19) 
+    //     || 
+    //     (average > 11 && average <= 19)
+    //     ||
+    //     (repScheme > 11 && repScheme <= 19))
+    //     {
+    //       weightFactor = 0.7;
+    //   }
+    //   else if (
+    //     (exercise.reps > 19 && exercise.reps <= 29) 
+    //     || 
+    //     (average > 19 && average <= 29)
+    //     ||
+    //     (repScheme > 19 && repScheme <= 29))
+    //     {
+    //       weightFactor = 0.5;
+    //   }
+    //   else if (
+    //     (exercise.reps >= 30)
+    //     || 
+    //     (average >= 30)
+    //     ||
+    //     (repScheme >= 30)) 
+    //     {
+    //       weightFactor = 0.4;
+    //   }
+    //   else {
+    //     console.log(`error in assigning weight factor for '${exercise.name}'. tag: asdoip215`);
+    //   }
+
+    //   // ASSIGN THE EXERCISE weightAmount
+    //   let weightAmount = Math.floor(maxLift * exercise.percentOfMax * weightFactor);
+    //   weightAmount = helpers.roundNum(weightAmount);
+    //   exercise.weightAmount = weightAmount + ' lbs';
+
+    //   // ADD THE EXERCISE WITH THE WEIGHT ASSIGNED TO newExerciseArray
+    //   newExerciseArray.push(exercise);
+    // }
 
 
-    // ASSIGN THE COUNT FOR JUMP ROPE
-    function assignJumpRopeCount(exercise) {
+    // // ASSIGN THE COUNT FOR MOUNTAIN CLIMBERS
+    // function assignMtClimbersCount(climbers) {
 
-      let count;
-      let reps = exercise.repScheme;
+    //   let count;
+    //   let reps = climbers.repScheme;
 
-      if (repScheme === 'any') {
-        count = helpers.numGenerator(reps.range[0], reps.range[1]);
-      }
-      else if (repScheme === 'lowRepHighWeight') {
-        count = helpers.numGenerator(reps.low[0], reps.low[1]);
-      }
-      else if (repScheme === 'mediumRepsAndWeight') {
-        count = helpers.numGenerator(reps.mid[0], reps.mid[1]);
-      }
-      else if (repScheme === 'highRepLowWeight') {
-        count = helpers.numGenerator(reps.high[0], reps.high[1]);
-      }
-      else {
-        console.log('error in assigning jump rope count. tag: nv410dq%e0g');
-      }
-      count = helpers.roundNum(count);
-      exercise.weightAmount = count;
-      newExerciseArray.push(exercise);
-    }
-
-
-    // ASSIGN DISTANCE FOR SPRINTS
-    function assignDistance(exercise) {
-      rounds = 1;
-
-      let dist = exercise.distance;
-      let distance;
-      if (rounds >= 1 && rounds <= 2) {
-        distance = helpers.numGenerator(dist.long[0], dist.long[1]);
-      }
-      else if (rounds > 2 && rounds <= 5) {
-        distance = helpers.numGenerator(dist.med[0], dist.med[1]);
-      }
-      else if (rounds > 5) {
-        distance = helpers.numGenerator(dist.short[0], dist.short[1]);
-      }
-      else {
-        console.error(`error in assigning ${exercise.name} distance. tag: 57aa55g09dnt`);
-      }
-
-      if(exercise.name === "Handstand Walk") {
-        distance = helpers.roundNum(distance);
-        exercise.weightAmount = `${distance} ${exercise.distance.unit}`;
-      }
-      else if (exercise.name === "Sprint") {
-        exercise.weightAmount = `${distance * 100} ${exercise.distance.unit}`;
-      }
-      else if (exercise.name !== "Handstand Walk" && exercise.name !== "Sprint") {
-        exercise.weightAmount = `${distance} ${exercise.distance.unit}`;
-      }
-      else {
-        console.error(`error in assigning ${exercise.name} weightAmount. tag: 849dfng-dadgne^f`);
-      }
-      newExerciseArray.push(exercise);
-    }
+    //   if (repScheme === 'any') {
+    //     count = helpers.numGenerator(reps.range[0], reps.range[1]);
+    //   }
+    //   else if (repScheme === 'lowRepHighWeight') {
+    //     count = helpers.numGenerator(reps.low[0], reps.low[1]);
+    //   }
+    //   else if (repScheme === 'mediumRepsAndWeight') {
+    //     count = helpers.numGenerator(reps.mid[0], reps.mid[1]);
+    //   }
+    //   else if (repScheme === 'highRepLowWeight') {
+    //     count = helpers.numGenerator(reps.high[0], reps.high[1]);
+    //   }
+    //   else {
+    //     console.log('error in assigning mountain climbers amount. tag: jt65+g53qg51');
+    //   }
+    //   count = helpers.roundNum(count);
+    //   climbers.weightAmount = count + ' four count';
+    //   newExerciseArray.push(climbers);
+    // }
 
 
+    // // ASSIGN THE COUNT FOR JUMP ROPE
+    // function assignJumpRopeCount(exercise) {
 
-    function distOrCal(exercise) {
+    //   let count;
+    //   let reps = exercise.repScheme;
 
-      // choose whether the weight amount will be distance or calories
-      let choice = helpers.numGenerator(0, 1);
+    //   if (repScheme === 'any') {
+    //     count = helpers.numGenerator(reps.range[0], reps.range[1]);
+    //   }
+    //   else if (repScheme === 'lowRepHighWeight') {
+    //     count = helpers.numGenerator(reps.low[0], reps.low[1]);
+    //   }
+    //   else if (repScheme === 'mediumRepsAndWeight') {
+    //     count = helpers.numGenerator(reps.mid[0], reps.mid[1]);
+    //   }
+    //   else if (repScheme === 'highRepLowWeight') {
+    //     count = helpers.numGenerator(reps.high[0], reps.high[1]);
+    //   }
+    //   else {
+    //     console.log('error in assigning jump rope count. tag: nv410dq%e0g');
+    //   }
+    //   count = helpers.roundNum(count);
+    //   exercise.weightAmount = count;
+    //   newExerciseArray.push(exercise);
+    // }
 
-      if (choice === 1) {
 
-        let cal = exercise.calories;
-        let calories;
-        if (rounds >= 1 && rounds <= 2) {
-          calories = helpers.numGenerator(cal.high[0], cal.high[1]);
-        }
-        else if (rounds > 2 && rounds <= 5) {
-          calories = helpers.numGenerator(cal.mid[0], cal.mid[1]);
-        }
-        else if (rounds > 5) {
-          calories = helpers.numGenerator(cal.low[0], cal.low[1]);
-        }
-        else {
-          console.error(`error in assigning ${exercise.name} calories. tag: gbf38^3idjg77afn`);
-        }
-        calories = helpers.roundNum(calories);
-        exercise.weightAmount = `${calories} ${exercise.calories.unit}`;
-      }
-      else {
+    // // ASSIGN DISTANCE FOR SPRINTS
+    // function assignDistance(exercise) {
+    //   rounds = 1;
 
-        let dist = exercise.distance;
-        let distance;
-        if (rounds >= 1 && rounds <= 2) {
-          distance = helpers.numGenerator(dist.long[0], dist.long[1]);
-        }
-        else if (rounds > 2 && rounds <= 5) {
-          distance = helpers.numGenerator(dist.med[0], dist.med[1]);
-        }
-        else if (rounds > 5) {
-          distance = helpers.numGenerator(dist.short[0], dist.short[1]);
-        }
-        else {
-          console.error(`error in assigning ${exercise.name} distance. tag: 48g3j%^fugnq0v4g68/`);
-        }
-        exercise.weightAmount = `${distance * 100} ${exercise.distance.unit}`;
-      }
-      newExerciseArray.push(exercise);
-    }
+    //   let dist = exercise.distance;
+    //   let distance;
+    //   if (rounds >= 1 && rounds <= 2) {
+    //     distance = helpers.numGenerator(dist.long[0], dist.long[1]);
+    //   }
+    //   else if (rounds > 2 && rounds <= 5) {
+    //     distance = helpers.numGenerator(dist.med[0], dist.med[1]);
+    //   }
+    //   else if (rounds > 5) {
+    //     distance = helpers.numGenerator(dist.short[0], dist.short[1]);
+    //   }
+    //   else {
+    //     console.error(`error in assigning ${exercise.name} distance. tag: 57aa55g09dnt`);
+    //   }
+
+    //   if(exercise.name === "Handstand Walk") {
+    //     distance = helpers.roundNum(distance);
+    //     exercise.weightAmount = `${distance} ${exercise.distance.unit}`;
+    //   }
+    //   else if (exercise.name === "Sprint") {
+    //     exercise.weightAmount = `${distance * 100} ${exercise.distance.unit}`;
+    //   }
+    //   else if (exercise.name !== "Handstand Walk" && exercise.name !== "Sprint") {
+    //     exercise.weightAmount = `${distance} ${exercise.distance.unit}`;
+    //   }
+    //   else {
+    //     console.error(`error in assigning ${exercise.name} weightAmount. tag: 849dfng-dadgne^f`);
+    //   }
+    //   newExerciseArray.push(exercise);
+    // }
 
 
 
+    // function distOrCal(exercise) {
 
-    function assignCalories(exercise) {
+    //   // choose whether the weight amount will be distance or calories
+    //   let choice = helpers.numGenerator(0, 1);
 
-      let cal = exercise.calories;
-      let calories;
-      if (rounds >= 1 && rounds <= 2) {
-        calories = helpers.numGenerator(cal.high[0], cal.high[1]);
-      }
-      else if (rounds > 2 && rounds <= 5) {
-        calories = helpers.numGenerator(cal.mid[0], cal.mid[1]);
-      }
-      else if (rounds > 5) {
-        calories = helpers.numGenerator(cal.low[0], cal.low[1]);
-      }
-      else {
-        console.error(`error in assigning ${exercise.name} calories. tag: 5fk40tb28&ak$e`);
-      }
-      calories = helpers.roundNum(calories);
-      exercise.weightAmount = `${calories} calories`;
-      newExerciseArray.push(exercise);
-    }
+    //   if (choice === 1) {
+
+    //     let cal = exercise.calories;
+    //     let calories;
+    //     if (rounds >= 1 && rounds <= 2) {
+    //       calories = helpers.numGenerator(cal.high[0], cal.high[1]);
+    //     }
+    //     else if (rounds > 2 && rounds <= 5) {
+    //       calories = helpers.numGenerator(cal.mid[0], cal.mid[1]);
+    //     }
+    //     else if (rounds > 5) {
+    //       calories = helpers.numGenerator(cal.low[0], cal.low[1]);
+    //     }
+    //     else {
+    //       console.error(`error in assigning ${exercise.name} calories. tag: gbf38^3idjg77afn`);
+    //     }
+    //     calories = helpers.roundNum(calories);
+    //     exercise.weightAmount = `${calories} ${exercise.calories.unit}`;
+    //   }
+    //   else {
+
+    //     let dist = exercise.distance;
+    //     let distance;
+    //     if (rounds >= 1 && rounds <= 2) {
+    //       distance = helpers.numGenerator(dist.long[0], dist.long[1]);
+    //     }
+    //     else if (rounds > 2 && rounds <= 5) {
+    //       distance = helpers.numGenerator(dist.med[0], dist.med[1]);
+    //     }
+    //     else if (rounds > 5) {
+    //       distance = helpers.numGenerator(dist.short[0], dist.short[1]);
+    //     }
+    //     else {
+    //       console.error(`error in assigning ${exercise.name} distance. tag: 48g3j%^fugnq0v4g68/`);
+    //     }
+    //     exercise.weightAmount = `${distance * 100} ${exercise.distance.unit}`;
+    //   }
+    //   newExerciseArray.push(exercise);
+    // }
 
 
 
-    function assignWeightByGender(exercise) {
-      if (gender === 'female') {
-        exercise.weightAmount = `${exercise.weight.female} ${exercise.weight.unit}`;
-      }
-      else {
-        exercise.weightAmount = `${exercise.weight.male} ${exercise.weight.unit}`;
-      }
-      newExerciseArray.push(exercise);
-    }
+
+    // function assignCalories(exercise) {
+
+    //   let cal = exercise.calories;
+    //   let calories;
+    //   if (rounds >= 1 && rounds <= 2) {
+    //     calories = helpers.numGenerator(cal.high[0], cal.high[1]);
+    //   }
+    //   else if (rounds > 2 && rounds <= 5) {
+    //     calories = helpers.numGenerator(cal.mid[0], cal.mid[1]);
+    //   }
+    //   else if (rounds > 5) {
+    //     calories = helpers.numGenerator(cal.low[0], cal.low[1]);
+    //   }
+    //   else {
+    //     console.error(`error in assigning ${exercise.name} calories. tag: 5fk40tb28&ak$e`);
+    //   }
+    //   calories = helpers.roundNum(calories);
+    //   exercise.weightAmount = `${calories} calories`;
+    //   newExerciseArray.push(exercise);
+    // }
 
 
-    // ASSIGN WEIGHT TO EXERCISES IN WHICH THE VALUE OF "weighted" IS "either"
-    function assignEither(exercise) {
-      let ex;
-      if (repScheme > 19 || reps > 19 || average > 19) {
-        ex = exercise.weightAmount = "BW";
-        newExerciseArray.push(ex);
-      }
-      else {
-        assignWeight(exercise);
-      }
-    }
+
+    // function assignWeightByGender(exercise) {
+    //   if (gender === 'female') {
+    //     exercise.weightAmount = `${exercise.weight.female} ${exercise.weight.unit}`;
+    //   }
+    //   else {
+    //     exercise.weightAmount = `${exercise.weight.male} ${exercise.weight.unit}`;
+    //   }
+    //   newExerciseArray.push(exercise);
+    // }
+
+
+    // // ASSIGN WEIGHT TO EXERCISES IN WHICH THE VALUE OF "weighted" IS "either"
+    // function assignEither(exercise) {
+    //   let ex;
+    //   if (repScheme > 19 || reps > 19 || average > 19) {
+    //     ex = exercise.weightAmount = "BW";
+    //     newExerciseArray.push(ex);
+    //   }
+    //   else {
+    //     assignWeight(exercise);
+    //   }
+    // }
 
 
     // console.log('rounds:', rounds);
@@ -1146,511 +1146,511 @@ helpers = {
     // console.log('gender:',gender);
     
 
-    // LOOP THROUGH EACH EXERCISE AND SEND IT TO A FUNCTION TO CALCULATE weightAmount
-    exerciseArray.forEach((exercise) => {
+    // // LOOP THROUGH EACH EXERCISE AND SEND IT TO A FUNCTION TO CALCULATE weightAmount
+    // exerciseArray.forEach((exercise) => {
       
-      if (exercise.weightAmount) {
-        newExerciseArray.push(exercise);
-      }
+    //   if (exercise.weightAmount) {
+    //     newExerciseArray.push(exercise);
+    //   }
 
-      else if (exercise.weighted === true && 'percentOfMax' in exercise) {
-        assignWeight(exercise);
-      }
+    //   else if (exercise.weighted === true && 'percentOfMax' in exercise) {
+    //     assignWeight(exercise);
+    //   }
 
-      else if ('distance' in exercise && 'calories' in exercise) {
-        distOrCal(exercise);
-      }
+    //   else if ('distance' in exercise && 'calories' in exercise) {
+    //     distOrCal(exercise);
+    //   }
 
-      else if ('calories' in exercise) {
-        assignCalories(exercise);
-      }
+    //   else if ('calories' in exercise) {
+    //     assignCalories(exercise);
+    //   }
 
-      else if ('distance' in exercise) {
-        assignDistance(exercise);
-      }
+    //   else if ('distance' in exercise) {
+    //     assignDistance(exercise);
+    //   }
 
-      else if (exercise.weighted === "gender") {
-        assignWeightByGender(exercise);
-      }
+    //   else if (exercise.weighted === "gender") {
+    //     assignWeightByGender(exercise);
+    //   }
 
-      else if (exercise.name === 'Mountain Climbers' && reps === undefined) {
-        assignMtClimbersCount(exercise);
-      }
+    //   else if (exercise.name === 'Mountain Climbers' && reps === undefined) {
+    //     assignMtClimbersCount(exercise);
+    //   }
 
-      else if (exercise.necessaryEquip == 'jump rope' && reps === undefined) {
-        assignJumpRopeCount(exercise);
-      }
+    //   else if (exercise.necessaryEquip == 'jump rope' && reps === undefined) {
+    //     assignJumpRopeCount(exercise);
+    //   }
 
-      else if (exercise.weighted === false && reps !== undefined) {
-        exercise.weightAmount = 'n/a';
-        newExerciseArray.push(exercise);
-      }
+    //   else if (exercise.weighted === false && reps !== undefined) {
+    //     exercise.weightAmount = 'n/a';
+    //     newExerciseArray.push(exercise);
+    //   }
 
-      else if (exercise.assisted === true) {
-        exercise.weightAmount = 'assisted';
-        newExerciseArray.push(exercise);
-      }
+    //   else if (exercise.assisted === true) {
+    //     exercise.weightAmount = 'assisted';
+    //     newExerciseArray.push(exercise);
+    //   }
 
-      else if (exercise.weighted === 'either') {
-        assignEither(exercise);
-      }
+    //   else if (exercise.weighted === 'either') {
+    //     assignEither(exercise);
+    //   }
 
-      else {
-        console.log(`error parsing exercise while assigning weight for: '${exercise.name}'. tag: 213554sdafasd`);
-      }
+    //   else {
+    //     console.log(`error parsing exercise while assigning weight for: '${exercise.name}'. tag: 213554sdafasd`);
+    //   }
 
-    });
+    // });
 
     // newExerciseArray.forEach((exercise, index) => {
     //   console.log(`${index+1}. ${exercise.name} :: ${exercise.weightAmount}`);
     // });
 
-    return newExerciseArray;
-  },
+    // return newExerciseArray;
+  // },
 
 
 
 
 
 
-  assignVariedRepsPerRound: (rounds, desiredRepScheme) => {
+  // assignVariedRepsPerRound: (rounds, desiredRepScheme) => {
     
-    let reps;
-    let repsStart;
-    let repsString = '';
-    let repIncrements = [
-      [1, 2],
-      [3, 4],
-      [5, 6],
-      [7, 8, 10]
-    ];
-    let repIncArray;
-    let repIncrement;
-    
-    
-    // CHOOSE IF ASCENDING OR DESCENDING REP INCREMENTS
-    let repTypes = ['ascending', 'descending'];
-    let repType = repTypes[helpers.numGenMaxMinusOne(0, repTypes.length)];
+  //   let reps;
+  //   let repsStart;
+  //   let repsString = '';
+  //   let repIncrements = [
+  //     [1, 2],
+  //     [3, 4],
+  //     [5, 6],
+  //     [7, 8, 10]
+  //   ];
+  //   let repIncArray;
+  //   let repIncrement;
     
     
-    // CHOOSE THE INCREMENT AMOUNT FOR DESCENDING REP SCHEMES
-    function chooseDescendingIncrement(repsStart) {
+  //   // CHOOSE IF ASCENDING OR DESCENDING REP INCREMENTS
+  //   let repTypes = ['ascending', 'descending'];
+  //   let repType = repTypes[helpers.numGenMaxMinusOne(0, repTypes.length)];
+    
+    
+  //   // CHOOSE THE INCREMENT AMOUNT FOR DESCENDING REP SCHEMES
+  //   function chooseDescendingIncrement(repsStart) {
 
-      let descendingRepIncrements = [
-        []
-      ];
+  //     let descendingRepIncrements = [
+  //       []
+  //     ];
 
-      let count = 0;
-      do { 
-        if (repsStart > 0 && repsStart <= 20) {
-          // rep increment possibilities: 1 or 2
-          repIncArray = repIncrements[0];
-          repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
-        }
-        else if (repsStart > 20 && repsStart <= 29) {
-          // rep increment possibilities: 3 - 6
-          repIncArray = repIncrements[helpers.numGenMaxMinusOne(1, repIncrements.length - 1)];
-          repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
-        }
-        else if (repsStart > 29) {
-          // rep increment possibilities: 5 - 8, 10
-          repIncArray = repIncrements[helpers.numGenMaxMinusOne(2, repIncrements.length)];
-          repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
-        }
-        else {
-          console.log('error in choosing descending rep increment. tag: 2667a4t6gfahhh');
-        }
-        count++;
-      } while (repsStart - (rounds * repIncrement) < 1 && count < 10);
+  //     let count = 0;
+  //     do { 
+  //       if (repsStart > 0 && repsStart <= 20) {
+  //         // rep increment possibilities: 1 or 2
+  //         repIncArray = repIncrements[0];
+  //         repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
+  //       }
+  //       else if (repsStart > 20 && repsStart <= 29) {
+  //         // rep increment possibilities: 3 - 6
+  //         repIncArray = repIncrements[helpers.numGenMaxMinusOne(1, repIncrements.length - 1)];
+  //         repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
+  //       }
+  //       else if (repsStart > 29) {
+  //         // rep increment possibilities: 5 - 8, 10
+  //         repIncArray = repIncrements[helpers.numGenMaxMinusOne(2, repIncrements.length)];
+  //         repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
+  //       }
+  //       else {
+  //         console.log('error in choosing descending rep increment. tag: 2667a4t6gfahhh');
+  //       }
+  //       count++;
+  //     } while (repsStart - (rounds * repIncrement) < 1 && count < 10);
 
-      if (count >= 9 && repIncrement < 1) {
-        repIncrement = 4;
-      }
+  //     if (count >= 9 && repIncrement < 1) {
+  //       repIncrement = 4;
+  //     }
 
-      return repIncrement;
-    }
-
-
-    // CHOOSE THE INCREMENT AMOUNT FOR ASCENDING REP SCHEMES
-    function chooseAscendingIncrement(repsStart) {
-
-      if (repsStart > 0 && repsStart <= 20) {
-        // rep increment possibilities: 3 - 8, 10
-        repIncArray = repIncrements[helpers.numGenMaxMinusOne(1, repIncrements.length)];
-        repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
-      }
-      else if (repsStart > 20 && repsStart <= 30) {
-        // rep increment possibilities: 3 - 6
-        repIncArray = repIncrements[helpers.numGenMaxMinusOne(1, repIncrements.length - 1)];
-        repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length )];
-      }
-      else if (repsStart > 30) {
-        // if the repsStart is greater than 30, the reps will be consistent throughout each round
-        repIncrement = 0;
-      }
-      else {
-        console.log('error in choosing ascending rep increment.');
-      }
-
-      return repIncrement;
-    }
+  //     return repIncrement;
+  //   }
 
 
-    // ASSIGNS REPS TO EACH ROUND
-    function assignReps(repsStart, repIncrement) {
+  //   // CHOOSE THE INCREMENT AMOUNT FOR ASCENDING REP SCHEMES
+  //   function chooseAscendingIncrement(repsStart) {
 
-      let repArray = [];
+  //     if (repsStart > 0 && repsStart <= 20) {
+  //       // rep increment possibilities: 3 - 8, 10
+  //       repIncArray = repIncrements[helpers.numGenMaxMinusOne(1, repIncrements.length)];
+  //       repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length)];
+  //     }
+  //     else if (repsStart > 20 && repsStart <= 30) {
+  //       // rep increment possibilities: 3 - 6
+  //       repIncArray = repIncrements[helpers.numGenMaxMinusOne(1, repIncrements.length - 1)];
+  //       repIncrement = repIncArray[helpers.numGenMaxMinusOne(0, repIncArray.length )];
+  //     }
+  //     else if (repsStart > 30) {
+  //       // if the repsStart is greater than 30, the reps will be consistent throughout each round
+  //       repIncrement = 0;
+  //     }
+  //     else {
+  //       console.log('error in choosing ascending rep increment.');
+  //     }
 
-      repArray.push(repsStart);
+  //     return repIncrement;
+  //   }
+
+
+  //   // ASSIGNS REPS TO EACH ROUND
+  //   function assignReps(repsStart, repIncrement) {
+
+  //     let repArray = [];
+
+  //     repArray.push(repsStart);
  
-      if (repType === 'ascending') {
-        for (let i = 1; i < rounds; i++) {
+  //     if (repType === 'ascending') {
+  //       for (let i = 1; i < rounds; i++) {
 
-          nextRep = repArray.splice(repArray.length - 1, 1);
-          repArray.push(nextRep[0]);
-          addRep = Number.parseInt(nextRep) + Number.parseInt(repIncrement);         
-          repArray.push(addRep);
-        }
-      }
-      else {
-        for (let i = 1; i < rounds; i++) {
+  //         nextRep = repArray.splice(repArray.length - 1, 1);
+  //         repArray.push(nextRep[0]);
+  //         addRep = Number.parseInt(nextRep) + Number.parseInt(repIncrement);         
+  //         repArray.push(addRep);
+  //       }
+  //     }
+  //     else {
+  //       for (let i = 1; i < rounds; i++) {
 
-          nextRep = repArray.splice(repArray.length - 1, 1);
-          repArray.push(nextRep[0]);
-          addRep = Number.parseInt(nextRep) - Number.parseInt(repIncrement);         
-          repArray.push(addRep);
-        }
-      }
+  //         nextRep = repArray.splice(repArray.length - 1, 1);
+  //         repArray.push(nextRep[0]);
+  //         addRep = Number.parseInt(nextRep) - Number.parseInt(repIncrement);         
+  //         repArray.push(addRep);
+  //       }
+  //     }
 
-      return repArray;
-    }
-
-
-    // FIXES REP SCHEMES THAT INCLUDE NEGATIVE NUMBERS BY ADDING THE INCREMENT
-    function fixRepsAssignment(newRepArray, inc) {
-
-      let fixedArray = [];
-
-      newRepArray.forEach((roundReps) => {
-        if (roundReps < 1) {
-          roundReps = fixedArray[fixedArray.length - 1] + inc;
-          fixedArray.push(roundReps);
-        }
-        else {
-          fixedArray.push(roundReps);
-        }
-
-      });
-
-      return fixedArray;
-
-    }
+  //     return repArray;
+  //   }
 
 
-    // CONVERTS THE REP ARRAY TO A STRING
-    function toString(newRepArray) {
+  //   // FIXES REP SCHEMES THAT INCLUDE NEGATIVE NUMBERS BY ADDING THE INCREMENT
+  //   function fixRepsAssignment(newRepArray, inc) {
 
-      for (let i = 0; i < newRepArray.length; i++) {
-        reps = newRepArray[i] + '';
+  //     let fixedArray = [];
+
+  //     newRepArray.forEach((roundReps) => {
+  //       if (roundReps < 1) {
+  //         roundReps = fixedArray[fixedArray.length - 1] + inc;
+  //         fixedArray.push(roundReps);
+  //       }
+  //       else {
+  //         fixedArray.push(roundReps);
+  //       }
+
+  //     });
+
+  //     return fixedArray;
+
+  //   }
+
+
+  //   // CONVERTS THE REP ARRAY TO A STRING
+  //   function toString(newRepArray) {
+
+  //     for (let i = 0; i < newRepArray.length; i++) {
+  //       reps = newRepArray[i] + '';
         
-        if (i === newRepArray.length - 1) {
-          repsString += reps;
-        }
-        else {
-          repsString += reps + '-';
-        }
-      }
+  //       if (i === newRepArray.length - 1) {
+  //         repsString += reps;
+  //       }
+  //       else {
+  //         repsString += reps + '-';
+  //       }
+  //     }
 
-      return repsString;
-    }
+  //     return repsString;
+  //   }
 
 
-    // FIND THE REPS IN THE FIRST ROUND
-    if (desiredRepScheme === 'lowRepHighWeight') {
-      repsStart = helpers.numGenerator(3, 9);
-    }
-    else if (desiredRepScheme === 'mediumRepsAndWeight') {
-      repsStart = helpers.numGenerator(10, 24);
-    }
-    else if (desiredRepScheme === 'highRepLowWeight') {
-      repsStart = helpers.numGenerator(25, 50);
-    } 
-    else {
-      repsStart = helpers.numGenerator(3, 50);
-    }
+  //   // FIND THE REPS IN THE FIRST ROUND
+  //   if (desiredRepScheme === 'lowRepHighWeight') {
+  //     repsStart = helpers.numGenerator(3, 9);
+  //   }
+  //   else if (desiredRepScheme === 'mediumRepsAndWeight') {
+  //     repsStart = helpers.numGenerator(10, 24);
+  //   }
+  //   else if (desiredRepScheme === 'highRepLowWeight') {
+  //     repsStart = helpers.numGenerator(25, 50);
+  //   } 
+  //   else {
+  //     repsStart = helpers.numGenerator(3, 50);
+  //   }
 
-    if (rounds > 3) {
-      repsStart = helpers.roundNum(repsStart);
-    }
+  //   if (rounds > 3) {
+  //     repsStart = helpers.roundNum(repsStart);
+  //   }
     
 
-    // console.log(`varied reps; rounds: ${rounds}`);
-    // console.log(`desiredRepScheme: ${desiredRepScheme}`);
-    // console.log(`repType: ${repType}`);
-    // console.log(`repsStart: ${repsStart}`);
+  //   // console.log(`varied reps; rounds: ${rounds}`);
+  //   // console.log(`desiredRepScheme: ${desiredRepScheme}`);
+  //   // console.log(`repType: ${repType}`);
+  //   // console.log(`repsStart: ${repsStart}`);
     
 
-    // ADD OR SUBTRACT REPS FROM EACH ROUND
-    let inc;
-    if (repType === 'descending') {
-      inc = chooseDescendingIncrement(repsStart);
-    }
-    else {
-      inc = chooseAscendingIncrement(repsStart);
-    }
+  //   // ADD OR SUBTRACT REPS FROM EACH ROUND
+  //   let inc;
+  //   if (repType === 'descending') {
+  //     inc = chooseDescendingIncrement(repsStart);
+  //   }
+  //   else {
+  //     inc = chooseAscendingIncrement(repsStart);
+  //   }
 
-    // IF THE REP ARRAY INCLUDES ANY NUMBER LESS THAN 1, THE INCREMENT IS ADDED TO THE ROUND INSTEAD OF SUBTRACTED. THIS WILL ENSURE THE REP SCHEME DOES NOT ASSIGN A ROUND WITH NEGATIVE REPS.
-    newRepArray = assignReps(repsStart, inc);
-    if (newRepArray[newRepArray.length - 1] < 1) {
-      newRepArray = fixRepsAssignment(newRepArray, inc);
-    }
+  //   // IF THE REP ARRAY INCLUDES ANY NUMBER LESS THAN 1, THE INCREMENT IS ADDED TO THE ROUND INSTEAD OF SUBTRACTED. THIS WILL ENSURE THE REP SCHEME DOES NOT ASSIGN A ROUND WITH NEGATIVE REPS.
+  //   newRepArray = assignReps(repsStart, inc);
+  //   if (newRepArray[newRepArray.length - 1] < 1) {
+  //     newRepArray = fixRepsAssignment(newRepArray, inc);
+  //   }
 
-    // CONVERT THE ARRAY OF REPS IN EACH ROUND TO A STRING SEPERATED BY DASHES
-    repsString = toString(newRepArray);
+  //   // CONVERT THE ARRAY OF REPS IN EACH ROUND TO A STRING SEPERATED BY DASHES
+  //   repsString = toString(newRepArray);
 
-    return repsString;
-  },
-
-
-
-
-
-
-
-  assignRounds: (timer, skillLvl) => {
-    /*
-      Arguments:
-      1. timer = the user.timer from form submission
-      2. skillLvl = the user.skillLvl from form submission
-
-      Function:
-      Assign the number of rounds based on the user's skill level. The more skilled the user is, the less time per round assigned. Additionally, as the rounds progress the user is alloted more time to complete the rounds. 
-    */
-
-    let rounds;
-
-    if (skillLvl === 'beginner') {
-      if (timer > 0 && timer <= 6) {
-        rounds = 1;
-      }
-      else if (timer > 6 && timer <= 12) {
-        rounds = 2;
-      }
-      else if (timer > 12 && timer <= 19) {
-        rounds = 3;
-      }
-      else if (timer > 19 && timer <= 26) {
-        rounds = 4;
-      }
-      else if (timer > 26 && timer <= 34) {
-        rounds = 5;
-      }
-      else if (timer > 34 && timer <= 42) {
-        rounds = 6;
-      }
-      else if (timer > 42 && timer <= 51) {
-        rounds = 7;
-      }
-      else if (timer > 51) {
-        rounds = 8;
-      }
-      else {
-        console.log("error calculating 'beginner' rounds. tag: adg7924ba058s");
-      }
-    }
-    else if (skillLvl === 'intermediate') {
-      if (timer > 0 && timer <= 5) {
-        rounds = 1;
-      }
-      else if (timer > 5 && timer <= 10) {
-        rounds = 2;
-      }
-      else if (timer > 10 && timer <= 16) {
-        rounds = 3;
-      }
-      else if (timer > 16 && timer <= 22) {
-        rounds = 4;
-      }
-      else if (timer > 22 && timer <= 28) {
-        rounds = 5;
-      }
-      else if (timer > 28 && timer <= 35) {
-        rounds = 6;
-      }
-      else if (timer > 35 && timer <= 42) {
-        rounds = 7;
-      }
-      else if (timer > 42 && timer <= 50) {
-        rounds = 8;
-      }
-      else if (timer > 50) {
-        rounds = 9;
-      }
-      else {
-        console.log("error calculating 'intermediate' rounds. tag: sd0g9u8dfg96sdf8g");
-      }
-    }
-    else if (skillLvl === 'advanced') {
-      if (timer > 0 && timer <= 4) {
-        rounds = 1;
-      }
-      else if (timer > 4 && timer <= 8) {
-        rounds = 2;
-      }
-      else if (timer > 8 && timer <= 13) {
-        rounds = 3;
-      }
-      else if (timer > 13 && timer <= 18) {
-        rounds = 4;
-      }
-      else if (timer > 18 && timer <= 24) {
-        rounds = 5;
-      }
-      else if (timer > 24 && timer <= 30) {
-        rounds = 6;
-      }
-      else if (timer > 30 && timer <= 37) {
-        rounds = 7;
-      }
-      else if (timer > 37 && timer <= 44) {
-        rounds = 8;
-      }
-      else if (timer > 44 && timer <= 52) {
-        rounds = 9;
-      }
-      else if (timer > 52) {
-        rounds = 10;
-      }
-      else {
-        console.log("error calculating 'advanced' rounds. tag: 215;jb145;1465624");
-      }
-    }
-    else if (skillLvl === 'athlete') {
-      if (timer > 0 && timer <= 3) {
-        rounds = 1;
-      }
-      else if (timer > 3 && timer <= 6) {
-        rounds = 2;
-      }
-      else if (timer > 6 && timer <= 10) {
-        rounds = 3;
-      }
-      else if (timer > 10 && timer <= 14) {
-        rounds = 4;
-      }
-      else if (timer > 14 && timer <= 19) {
-        rounds = 5;
-      }
-      else if (timer > 19 && timer <= 24) {
-        rounds = 6;
-      }
-      else if (timer > 24 && timer <= 30) {
-        rounds = 7;
-      }
-      else if (timer > 30 && timer <= 36) {
-        rounds = 8;
-      }
-      else if (timer > 36 && timer <= 43) {
-        rounds = 9;
-      }
-      else if (timer > 43 && timer <= 50) {
-        rounds = 10;
-      }
-      else if (timer > 50) {
-        rounds = 12;
-      }
-      else {
-        console.log("error calculating 'athlete' rounds. tag: q9wre84@6q8er846f4");
-      }
-    }
-
-    return rounds;
-  },
+  //   return repsString;
+  // },
 
 
 
 
 
 
-  assignReps: (desiredRepScheme, exerciseArray) => {
-    /*
-       SEE documentation.txt FOR MORE DETAILS
-    */
 
-    let reps;
-    let exercisesWithRepsAssigned = [];
+  // assignRounds: (timer, skillLvl) => {
+  //   /*
+  //     Arguments:
+  //     1. timer = the user.timer from form submission
+  //     2. skillLvl = the user.skillLvl from form submission
 
-    // console.log(' ^^^^^^^^^^^^^^^^ ');
-    // console.log(desiredRepScheme);
-    // console.log(exerciseArray);
-    // console.log(' ^^^^^^^^^^^^^^^^ ');
+  //     Function:
+  //     Assign the number of rounds based on the user's skill level. The more skilled the user is, the less time per round assigned. Additionally, as the rounds progress the user is alloted more time to complete the rounds. 
+  //   */
 
-    desiredRepScheme = 'highRepLowWeight';
+  //   let rounds;
 
-    exerciseArray.forEach((exercise) => {
-      if ('repScheme' in exercise) {
-        if (desiredRepScheme === 'lowRepHighWeight') {
-          exercise.reps = helpers.numGenerator(exercise.repScheme.low[0], exercise.repScheme.low[1]);
-        }
-        else if (desiredRepScheme === 'highRepLowWeight') {
-          reps = helpers.numGenerator(exercise.repScheme.high[0], exercise.repScheme.high[1]);
-          reps = helpers.roundNum(reps);
-          exercise.reps = reps;
-        }
-        else if (desiredRepScheme === 'mediumRepsAndWeight') {
-          reps = helpers.numGenerator(exercise.repScheme.mid[0], exercise.repScheme.mid[1]);
-          if (reps >= 25) {reps = helpers.roundNum(reps); }
-          exercise.reps = reps;
-        }
-        else {
-          reps = helpers.numGenerator(exercise.repScheme.range[0], exercise.repScheme.range[1]);
-          if (reps >= 25) {reps = helpers.roundNum(reps); }
-          exercise.reps = reps;
-        }
-      }
-      else {
-        console.log(`error in assigning reps to exercise or reps not applicable -- exercise: ${exercise.name}. tag: 23508ugna8gh44`);
-        exercise.reps = 'n/a';
-      }
+  //   if (skillLvl === 'beginner') {
+  //     if (timer > 0 && timer <= 6) {
+  //       rounds = 1;
+  //     }
+  //     else if (timer > 6 && timer <= 12) {
+  //       rounds = 2;
+  //     }
+  //     else if (timer > 12 && timer <= 19) {
+  //       rounds = 3;
+  //     }
+  //     else if (timer > 19 && timer <= 26) {
+  //       rounds = 4;
+  //     }
+  //     else if (timer > 26 && timer <= 34) {
+  //       rounds = 5;
+  //     }
+  //     else if (timer > 34 && timer <= 42) {
+  //       rounds = 6;
+  //     }
+  //     else if (timer > 42 && timer <= 51) {
+  //       rounds = 7;
+  //     }
+  //     else if (timer > 51) {
+  //       rounds = 8;
+  //     }
+  //     else {
+  //       console.log("error calculating 'beginner' rounds. tag: adg7924ba058s");
+  //     }
+  //   }
+  //   else if (skillLvl === 'intermediate') {
+  //     if (timer > 0 && timer <= 5) {
+  //       rounds = 1;
+  //     }
+  //     else if (timer > 5 && timer <= 10) {
+  //       rounds = 2;
+  //     }
+  //     else if (timer > 10 && timer <= 16) {
+  //       rounds = 3;
+  //     }
+  //     else if (timer > 16 && timer <= 22) {
+  //       rounds = 4;
+  //     }
+  //     else if (timer > 22 && timer <= 28) {
+  //       rounds = 5;
+  //     }
+  //     else if (timer > 28 && timer <= 35) {
+  //       rounds = 6;
+  //     }
+  //     else if (timer > 35 && timer <= 42) {
+  //       rounds = 7;
+  //     }
+  //     else if (timer > 42 && timer <= 50) {
+  //       rounds = 8;
+  //     }
+  //     else if (timer > 50) {
+  //       rounds = 9;
+  //     }
+  //     else {
+  //       console.log("error calculating 'intermediate' rounds. tag: sd0g9u8dfg96sdf8g");
+  //     }
+  //   }
+  //   else if (skillLvl === 'advanced') {
+  //     if (timer > 0 && timer <= 4) {
+  //       rounds = 1;
+  //     }
+  //     else if (timer > 4 && timer <= 8) {
+  //       rounds = 2;
+  //     }
+  //     else if (timer > 8 && timer <= 13) {
+  //       rounds = 3;
+  //     }
+  //     else if (timer > 13 && timer <= 18) {
+  //       rounds = 4;
+  //     }
+  //     else if (timer > 18 && timer <= 24) {
+  //       rounds = 5;
+  //     }
+  //     else if (timer > 24 && timer <= 30) {
+  //       rounds = 6;
+  //     }
+  //     else if (timer > 30 && timer <= 37) {
+  //       rounds = 7;
+  //     }
+  //     else if (timer > 37 && timer <= 44) {
+  //       rounds = 8;
+  //     }
+  //     else if (timer > 44 && timer <= 52) {
+  //       rounds = 9;
+  //     }
+  //     else if (timer > 52) {
+  //       rounds = 10;
+  //     }
+  //     else {
+  //       console.log("error calculating 'advanced' rounds. tag: 215;jb145;1465624");
+  //     }
+  //   }
+  //   else if (skillLvl === 'athlete') {
+  //     if (timer > 0 && timer <= 3) {
+  //       rounds = 1;
+  //     }
+  //     else if (timer > 3 && timer <= 6) {
+  //       rounds = 2;
+  //     }
+  //     else if (timer > 6 && timer <= 10) {
+  //       rounds = 3;
+  //     }
+  //     else if (timer > 10 && timer <= 14) {
+  //       rounds = 4;
+  //     }
+  //     else if (timer > 14 && timer <= 19) {
+  //       rounds = 5;
+  //     }
+  //     else if (timer > 19 && timer <= 24) {
+  //       rounds = 6;
+  //     }
+  //     else if (timer > 24 && timer <= 30) {
+  //       rounds = 7;
+  //     }
+  //     else if (timer > 30 && timer <= 36) {
+  //       rounds = 8;
+  //     }
+  //     else if (timer > 36 && timer <= 43) {
+  //       rounds = 9;
+  //     }
+  //     else if (timer > 43 && timer <= 50) {
+  //       rounds = 10;
+  //     }
+  //     else if (timer > 50) {
+  //       rounds = 12;
+  //     }
+  //     else {
+  //       console.log("error calculating 'athlete' rounds. tag: q9wre84@6q8er846f4");
+  //     }
+  //   }
 
-      exercisesWithRepsAssigned.push(exercise);
-    });
+  //   return rounds;
+  // },
 
-    return exercisesWithRepsAssigned;
-  },
+
+
+
+
+
+  // assignReps: (desiredRepScheme, exerciseArray) => {
+  //   /*
+  //      SEE documentation.txt FOR MORE DETAILS
+  //   */
+
+  //   let reps;
+  //   let exercisesWithRepsAssigned = [];
+
+  //   // console.log(' ^^^^^^^^^^^^^^^^ ');
+  //   // console.log(desiredRepScheme);
+  //   // console.log(exerciseArray);
+  //   // console.log(' ^^^^^^^^^^^^^^^^ ');
+
+  //   desiredRepScheme = 'highRepLowWeight';
+
+  //   exerciseArray.forEach((exercise) => {
+  //     if ('repScheme' in exercise) {
+  //       if (desiredRepScheme === 'lowRepHighWeight') {
+  //         exercise.reps = helpers.numGenerator(exercise.repScheme.low[0], exercise.repScheme.low[1]);
+  //       }
+  //       else if (desiredRepScheme === 'highRepLowWeight') {
+  //         reps = helpers.numGenerator(exercise.repScheme.high[0], exercise.repScheme.high[1]);
+  //         reps = helpers.roundNum(reps);
+  //         exercise.reps = reps;
+  //       }
+  //       else if (desiredRepScheme === 'mediumRepsAndWeight') {
+  //         reps = helpers.numGenerator(exercise.repScheme.mid[0], exercise.repScheme.mid[1]);
+  //         if (reps >= 25) {reps = helpers.roundNum(reps); }
+  //         exercise.reps = reps;
+  //       }
+  //       else {
+  //         reps = helpers.numGenerator(exercise.repScheme.range[0], exercise.repScheme.range[1]);
+  //         if (reps >= 25) {reps = helpers.roundNum(reps); }
+  //         exercise.reps = reps;
+  //       }
+  //     }
+  //     else {
+  //       console.log(`error in assigning reps to exercise or reps not applicable -- exercise: ${exercise.name}. tag: 23508ugna8gh44`);
+  //       exercise.reps = 'n/a';
+  //     }
+
+  //     exercisesWithRepsAssigned.push(exercise);
+  //   });
+
+  //   return exercisesWithRepsAssigned;
+  // },
 
   
 
 
 
 
-  roundNum: (num) => {
-    let returnNum;
-    num = num + '';
+  // roundNum: (num) => {
+  //   let returnNum;
+  //   num = num + '';
 
-    let originalNum = num.slice(0, num.length - 1);
+  //   let originalNum = num.slice(0, num.length - 1);
 
-    let roundedNum = num.slice(-1);
-    if (roundedNum < 2.5) {
-      roundedNum = 0;
-      returnNum = originalNum + roundedNum;
-    }
-    else if (roundedNum >= 2.5 && roundedNum <= 7.4) {
-      roundedNum = 5;
-      returnNum = originalNum + roundedNum;
-    }
-    else  {
-      let upNum = num.slice(num.length - 2, num.length - 1);
-      upNum++;
-      upNum = upNum + '0';
-      originalNum = num.slice(0, num.length - 2);
-      returnNum = originalNum + upNum;
-    }
+  //   let roundedNum = num.slice(-1);
+  //   if (roundedNum < 2.5) {
+  //     roundedNum = 0;
+  //     returnNum = originalNum + roundedNum;
+  //   }
+  //   else if (roundedNum >= 2.5 && roundedNum <= 7.4) {
+  //     roundedNum = 5;
+  //     returnNum = originalNum + roundedNum;
+  //   }
+  //   else  {
+  //     let upNum = num.slice(num.length - 2, num.length - 1);
+  //     upNum++;
+  //     upNum = upNum + '0';
+  //     originalNum = num.slice(0, num.length - 2);
+  //     returnNum = originalNum + upNum;
+  //   }
     
-    returnNum = Number.parseInt(returnNum);
+  //   returnNum = Number.parseInt(returnNum);
 
-    return returnNum;
-  },
+  //   return returnNum;
+  // },
 
   
 

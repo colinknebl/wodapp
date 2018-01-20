@@ -25,7 +25,7 @@ module.exports = {
         message: `wod does not have any instructions. ${file} tag: ${tag}`
       };
     }
-    else if (data.needs.timer === true && (!wod.timer || typeof wod.timer !== 'string')) {
+    else if (data.needs.timer === true && (!wod.timer || typeof wod.timer !== 'number')) {
       return {
         success: false,
         message: `wod does not have a timer. ${file} tag: ${tag}`

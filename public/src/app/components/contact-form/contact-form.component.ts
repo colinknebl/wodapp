@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit }  from '@angular/core';
+import { FormControl,
+         FormGroup,
+         FormBuilder,
+         Validators }         from '@angular/forms';
 import { ContactFormService } from '../../services/contact-form/contact-form.service';
 
 @Component({
@@ -9,28 +12,58 @@ import { ContactFormService } from '../../services/contact-form/contact-form.ser
 })
 export class ContactFormComponent implements OnInit {
 
-  public contactForm: FormGroup;
+  public form: FormGroup;
+  public message: string;
 
   constructor(
-    public ContactForm: ContactFormService,
+    public contactFormService: ContactFormService,
     public fb: FormBuilder) {
-    this.contactForm = fb.group({
-      firstName   : [null],
-      lastName    : [null],
-      email       : [null],
-      requestType : [null],
-      message     : [null]
+    this.form = fb.group({
+      firstName   : [null, Validators.compose([
+        Validators.required,
+        Validators.maxLength(20)
+      ])],
+      lastName    : [null, Validators.compose([
+        Validators.required,
+        Validators.maxLength(20)
+      ])],
+      email       : [null, Validators.compose([
+        Validators.required,
+        this.validateEmail
+      ])],
+      requestType : [null, Validators.required],
+      message     : [null, Validators.compose([
+        Validators.required,
+        Validators.maxLength(1000)
+      ])]
     });
   }
 
   ngOnInit() {
   }
 
-  submit() {
-    let form = this.contactForm.value;
+  validate() {
+    console.log('test');
+  }
 
-    this.ContactForm.submit(form)
-      .subscribe();
+  validateEmail(controls) {
+    const regExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+    if (regExp.test(controls.value)) {
+      return null;
+    }
+    else {
+      return { 'validateEmail' : true};
+    }
+  }
+
+  submit() {
+    let form = this.form.value;
+
+    this.contactFormService.submit(form)
+      .subscribe(data => {
+        this.message = data.message;
+      });
   }
 
 }

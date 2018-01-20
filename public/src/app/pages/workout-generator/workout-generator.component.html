@@ -44,7 +44,7 @@
               <p>{{ exercise.reps }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>
             </div>
           </div>
-          <div *ngIf="wod.run === false">
+          <div *ngIf="wod.run === false || wod.run === null">
             <p>Instructions: Complete {{ wod.rounds }} rounds of {{ wod.reps }} reps within {{ wod.timer }} minutes.</p>
             <div *ngFor="let exercise of wod.exercises">
               <p><span *ngIf="exercise.reps">{{ exercise.reps }}</span>{{ wod.repScheme }} {{ exercise.name }}, {{ exercise.weightAmount }}</p>

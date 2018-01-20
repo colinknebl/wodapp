@@ -398,8 +398,11 @@ mongodb = {
         const exerciseArray = [];
         const projection = {
           _id:0,
-          "primaryMuscleTarget":0,
-          "secondaryMuscleTarget":0
+          primaryMuscleTarget:0,
+          secondaryMuscleTarget:0,
+          category:0,
+          level:0,
+          muscleGrps:0,
         };
       
         const cursor = db.collection('exercises').find(query, projection);

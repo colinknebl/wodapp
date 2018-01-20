@@ -558,6 +558,7 @@ db.exercises.insertMany(
       ],
       "weighted" : true,
       "percentOfMax" : 0.375,
+      "maxOfExercise" : "deadlift",
       "repScheme" : {
         "range" : [1, 50],
         "low" : [1, 6],

@@ -120,13 +120,12 @@ module.exports = {
             }); // returns success (T/F) and message
 
             if (results.success) {
-
+              wod.passedValidation = true;
               // ADD WOD TO DATABASE
               let addToDb = mongodb.addWod(wod);
 
               addToDb
                 .then(results => {
-
                   if (results.success) {
                     resolve({
                       success: true,
@@ -140,6 +139,7 @@ module.exports = {
                 }));
             }
             else {
+              wod.passedValidation = false;
               reject({
                 success: false,
                 message: `Workout failed final validation: ${results.message}.`

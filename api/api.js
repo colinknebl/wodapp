@@ -34,6 +34,8 @@ api.post('/api/add-user', (req, res) => {
 
 api.post('/api/contact-form', (req, res) => {
 
+  console.log(req.body);
+
   let today = Date();
 
   let contactData = {
@@ -45,7 +47,10 @@ api.post('/api/contact-form', (req, res) => {
     dateAdded   : today
   };
   mongodb.addContactRequest(contactData);
-  res.send({'result': 'success'});
+  res.send({
+    success: true,
+    message: 'Thank you for your feedback! If required, someone will contact you soon.'
+  });
 
 });
 

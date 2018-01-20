@@ -46,8 +46,7 @@ app.post('/workout-generator/', (req, res) => {
 
   wod
     .then(results => {
-
-      console.log('final results',results);
+      console.log('final results:',results);
       res.json(results);
     })
     .catch(err => res.json(err) );
