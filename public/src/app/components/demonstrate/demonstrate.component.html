@@ -1,439 +1,324 @@
-<!-- <form action="/workout-generator" method="post" [formGroup]="demonstrateForm"> -->
 <form [formGroup]="form" (submit)="submit()">
-  
-  <div class="lg-form-st">
-    <label class="main-label">First Name <span class="red">*</span>
-      <input  type="text" 
-              name="firstName" 
-              class="input-text"
-              formControlName="firstName"
-              [ngClass]="{
-                'input-text-has-error': form.controls.firstName.errors && form.controls.firstName.dirty
-              }">
-              <ul class="required-ul">
-                <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
-                <li *ngIf="form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty">Cannot be greater than 20 characters</li>
-              </ul>
-    </label>
 
-    <label class="main-label">Last Name <span class="red">*</span>
-      <input  type="text" 
-              name="lastName" 
-              class="input-text" 
-              formControlName="lastName"
-              [ngClass]="{
-                'input-text-has-error': form.controls.lastName.errors && form.controls.lastName.dirty
-              }">
-              <ul class="required-ul">
-                <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
-                <li *ngIf="form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty">Cannot be greater than 20 characters</li>
-              </ul>
-    </label>
-  </div>
-  
-  <div class="lg-form-st">
-    <label class="main-label">Email <span class="red">*</span>
-      <input  type="email" 
-              name="email" 
-              class="input-text" 
-              formControlName="email"
-              [ngClass]="{
-                'input-text-has-error': form.controls.email.errors && form.controls.email.dirty
-              }">
-              <ul class="required-ul">
-                <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
-                <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid email</li>
-              </ul>
-    </label>
+  <div class="slide-container">
 
-    <label class="main-label">Phone
-      <input  type="tel" 
-              name="tel" 
-              class="input-text"
-              formControlName="tel">
-    </label>
-  </div>
-  
-  <div class="lg-form-st">
-    <label class="main-label">Skill Level <span class="red">*</span>
-      <select 
-        name="skillLvl" 
-        formControlName="skillLvl"
-        [ngClass]="{ 'input-text-has-error': (form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)}">
-        <option value="beginner">Beginner</option>
-        <option value="intermediate">Intermediate</option>
-        <option value="advanced">Advanced</option>
-        <option value="athlete">Athlete</option>
-      </select>
-      <ul class="required-ul">
-        <li *ngIf="(form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)">Please select from the available options.</li>
-      </ul>
-    </label>
+    <div #slide1 class="slide slide-1">
+      <h5 class="slide__header">First things first, please enter your name and email.</h5>
+      <div class="slide__label-container">
 
-    <label class="main-label">Gender <span class="red">*</span>
-      <select 
-        name="gender" 
-        formControlName="gender"
-        [ngClass]="{ 'input-text-has-error': (form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)}">
-        <option value="female">Female</option>
-        <option value="male">Male</option>
-      </select>
-      <ul class="required-ul">
-        <li *ngIf="(form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)">Please select from the available options.</li>
-      </ul>
-    </label>
-  </div>
-  
-  <div class="lg-form-st">
-    <label class="main-label">Desired WOD Type
-      <select name="wodType" formControlName="wodType">
-        <!-- <option value="any">Any</option> -->
-        <!-- <option value="AMRAP">AMRAP</option> -->
-        <option value="Singlet">Singlet</option>
-        <option value="Couplet">Couplet</option>
-        <!-- <option value="Triplet">Triplet</option> -->
-        <!-- <option value="Chipper">Chipper</option> -->
-        <!-- <option value="Bodyweight">Bodyweight</option> -->
-        <!-- <option value="EMOM">EMOM</option> -->
-        <!-- <option value="Endurance">Endurance</option> -->
-        <!-- <option value="Hybrid">Hybrid</option> -->
-        <!-- <option value="Strength">Strength</option> -->
-        <!-- <option value="Strongman">Strongman</option> -->
-        <!-- <option value="Tabata">Tabata</option> -->
-        <!-- <option value="TimeCap">Time Cap</option> -->
-        <!-- <option value="Weightlifting">Weightlifting</option> -->
-        <!-- <option value="Bodybuilding">Bodybuilding</option> -->
-      </select> 
-    </label>
+         <label class="slide__label">
+          <span class="slide__label__header">First Name<span class="red">*</span></span>
+          <input type="text" 
+                 name="firstName" 
+                 class="slide__input"
+                 formControlName="firstName"
+                 [ngClass]="{
+                  'input-text-has-error': form.controls.firstName.errors && form.controls.firstName.dirty
+                 }">
+          <ul class="slide__required-ul">
+            <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
+            <li *ngIf="form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty">Cannot be greater than 20 characters</li>
+          </ul>
+        </label>
+
+        <label class="slide__label">
+          <span class="slide__label__header">Last Name<span class="red">*</span></span>
+          <input type="text" 
+                 name="lastName" 
+                 class="slide__input"
+                 formControlName="lastName"
+                 [ngClass]="{
+                   'input-text-has-error': form.controls.lastName.errors && form.controls.lastName.dirty
+                 }">
+          <ul class="slide__required-ul">
+            <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
+            <li *ngIf="form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty">Cannot be greater than 20 characters</li>
+          </ul>
+        </label>
+      
+
+        <label class="slide__label">
+          <span class="slide__label__header">Email<span class="red">*</span></span>
+          <input type="email" 
+                 name="email" 
+                 class="slide__input"
+                 formControlName="email"
+                 [ngClass]="{
+                    'input-text-has-error': form.controls.email.errors && form.controls.email.dirty
+                 }">
+          <ul class="slide__required-ul">
+            <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
+            <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid email</li>
+          </ul>
+        </label>
+      </div>
+      
+      <div class="slide__btn-container-two">
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+      </div>
+    </div>
+
+
+
+
+   
+    <div #slide2 class="slide slide-2">
+      <h5 class="slide__header">A bit more details...don't worry, this is as personal as we get.</h5>
+      <div class="slide__label-container">
+
+        <label class="slide__label">
+          <span class="slide__label__header">Skill Level<span class="red">*</span></span>
+          <select class="slide__select"
+                  name="skillLvl" 
+                  formControlName="skillLvl"
+                  [ngClass]="{ 'input-text-has-error': (form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)}">
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                  <option value="athlete">Athlete</option>
+          </select>
+          <ul class="slide__required-ul">
+            <li *ngIf="(form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)">Please select from the available options.</li>
+          </ul>
+        </label>
+
+
+        <label class="slide__label">
+          <span class="slide__label__header">Gender<span class="red">*</span></span>
+          <select class="slide__select"
+                  name="gender" 
+                  formControlName="gender"
+                  [ngClass]="{ 'input-text-has-error': (form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)}">
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+          </select>
+          <ul class="slide__required-ul">
+            <li *ngIf="(form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)">Please select from the available options.</li>
+          </ul>
+        </label>
+
+      
+
+        <label class="slide__label">
+          <span class="slide__label__header">Desired WOD Type</span>
+          <select class="slide__select"
+                  name="wodType" 
+                  formControlName="wodType">
+                  <option value="any">Any</option>
+                  <option value="AMRAP">AMRAP</option>
+                  <option value="Singlet">Singlet</option>
+                  <option value="Couplet">Couplet</option>
+                  <option value="Triplet">Triplet</option>
+                  <option value="Chipper">Chipper</option>
+                  <option value="Bodyweight">Bodyweight</option>
+                  <option value="EMOM">EMOM</option>
+                  <option value="Tabata">Tabata</option>
+          </select>
+        </label>
+      </div>
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+      </div>
+    </div>
+
+
+
+
+    <div #slide3 class="slide slide-3">
+      <h5 class="slide__header">Decisions, decisions</h5>
+      <div class="slide__label-container">
+
+        <label class="slide__label">
+          <span class="slide__label__header">Do you want only bodyweight exercises?</span>
+          <select class="slide__select"
+                  name="bodyweightOnly" 
+                  formControlName="bodyweightOnly">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                  <option value="idc">I don't care</option>
+          </select>
+        </label>
+
+        <label class="slide__label">
+          <span class="slide__label__header">Do you want an endurance focused workout?</span>
+          <select class="slide__select"
+                  name="enduranceWod" 
+                  formControlName="enduranceWod">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                  <option value="idc">I don't care</option>
+          </select>
+        </label>
+
+        <label class="slide__label">
+          <span class="slide__label__header">Do you want to include strongman exercises?</span>
+          <select class="slide__select"
+                  name="includeStrongManExercises" 
+                  formControlName="includeStrongManExercises">
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                  <option value="idc">I don't care</option>
+          </select>
+        </label>
+
+      </div>
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+      </div>
+    </div>
+
+
+    <div #slide4 class="slide slide-4">
+      <h5 class="slide__header">Give me the deets</h5>
+      <div class="slide__label-container">
+
+        <label class="slide__label">
+          <span class="slide__label__header">Do you want to focus on a specific muscle group?</span>
+          <select class="slide__select"
+                  name="muscleGrp"
+                  formControlName="muscleGrp">
+                  <option value="any">Any</option>
+                  <option value="chest">Chest</option>
+                  <option value="shoulders">Shoulders</option>
+                  <option value="legs">Legs</option>
+                  <option value="back">Back</option>
+          </select>
+        </label>
+
+
+        <label class="slide__label">
+          <span class="slide__label__header">Pick you poison</span>
+          <select class="slide__select"
+                  name="repScheme"
+                  formControlName="repScheme">
+                  <option value="any">Any</option>
+                  <option value="lowRepHighWeight">Low Reps, High Weight</option>
+                  <option value="highRepLowWeight">High Reps, Low Weight</option>
+                  <option value="mediumRepsAndWeight">Medium Reps, Medium Weight</option>
+          </select> 
+        </label>
+
+        <label class="slide__label">
+          <span class="slide__label__header">Workout Length <span class="slide__label-note">*in minutes*</span></span> 
+          <select class="slide__select"
+                  name="wodTimer" 
+                  formControlName="wodTimer">
+                  <option value="any">5 - 60</option>
+                  <option value="noTimer">No Timer</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                  <option value="45">45</option>
+                  <option value="50">50</option>
+                  <option value="55">55</option>
+                  <option value="60">60</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+      </div>
+    </div>
+
+
+
+    <div #slide5 class="slide slide-5">
+      <h5 class="slide__header">What are you PRs? (Personal Records)</h5>
+      <div class="slide__label-container">
+          <p class="slide__pr-note">NOTE: If you don't know your PRs, estimate.</p>
+        
+          <label class="slide__label">
+            <span class="slide__label__header">Flat Bench Press</span>
+            <input type="number" 
+                   name="maxBench" 
+                   class="slide__input"
+                   formControlName="maxBench">
+          </label>
+
+          <label class="slide__label">
+            <span class="slide__label__header">Back Squat</span>
+            <input type="number" 
+                   name="maxSquat" 
+                   class="slide__input"
+                   formControlName="maxSquat">
+          </label>
+
+          <label class="slide__label">
+            <span class="slide__label__header">Snatch</span>
+            <input type="number" 
+                   name="maxSnatch" 
+                   class="slide__input"
+                   formControlName="maxSnatch">
+          </label>
+
+          <label class="slide__label">
+            <span class="slide__label__header">Deadlift</span>
+            <input type="number" 
+                   name="maxDead" 
+                   class="slide__input"
+                   formControlName="maxDead">
+          </label>
+
+      </div>
+
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+      </div>
+    </div>
+
+
+
+    <div #slide6 class="slide slide-6">
+      <h5 class="slide__header">What equipment do you have at your disposal?</h5>
+      <div class="slide__label-container">
+          <p class="slide__pr-note">NOTE: If you want bodyweight only exercises you don't need to select any equipment.</p>
+          
+          <div class="slide__equip-flex">
+            <label *ngFor="let eq of eqArray" class="slide__label-equip">
+            <input  type="checkbox"
+                    name="{{ eq.value }}"
+                    value="{{ eq.value }}"
+                    formControlName="{{ eq.value }}">
+                    <span>{{ eq.span }}</span>
+            </label>
+          </div>
+      </div>
+
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="submit" class="slide__btn slide__btn--submit" >Submit</button>
+
+      </div>
+    </div>
+
     
-    <label class="main-label">Muscle Group Focus
-      <select name="muscleGrp" formControlName="muscleGrp">
-        <option value="any">Any</option>
-        <option value="chest">Chest</option>
-        <option value="shoulders">Shoulders</option>
-        <option value="legs">Legs</option>
-        <option value="back">Back</option>
-      </select>
-    </label>
+    <p class="red">{{ errorMessage }}</p>
   </div>
-  
-  <div class="lg-form-st">
-    <label class="main-label">Desired Rep Scheme
-      <select name="repScheme" formControlName="repScheme">
-        <option value="any">Any</option>
-        <!-- <option value="21-15-9">21 - 15 - 9</option> -->
-        <option value="lowRepHighWeight">Low Reps, High Weight</option>
-        <option value="highRepLowWeight">High Reps, Low Weight</option>
-        <option value="mediumRepsAndWeight">Medium Reps, Medium Weight</option>
-      </select> 
-    </label>
-
-    <label class="main-label">Workout Length <span class="wod-span">*in minutes*</span>
-      <select name="wodTimer" formControlName="wodTimer">
-        <option value="any">5 - 60</option>
-        <option value="noTimer">No Timer</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <!-- <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option> -->
-        <option value="25">25</option>
-        <!-- <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option> -->
-        <option value="30">30</option>
-        <!-- <option value="31">31</option>
-        <option value="32">32</option>
-        <option value="33">33</option>
-        <option value="34">34</option> -->
-        <option value="35">35</option>
-        <!-- <option value="36">36</option>
-        <option value="37">37</option>
-        <option value="38">38</option>
-        <option value="39">39</option> -->
-        <option value="40">40</option>
-       <!--  <option value="41">41</option>
-        <option value="42">42</option>
-        <option value="43">43</option>
-        <option value="44">44</option> -->
-        <option value="45">45</option>
-        <!-- <option value="46">46</option>
-        <option value="47">47</option>
-        <option value="48">48</option>
-        <option value="49">49</option> -->
-        <option value="50">50</option>
-        <!-- <option value="51">51</option>
-        <option value="52">52</option>
-        <option value="53">53</option>
-        <option value="54">54</option> -->
-        <option value="55">55</option>
-        <!-- <option value="56">56</option>
-        <option value="57">57</option>
-        <option value="58">58</option>
-        <option value="59">59</option> -->
-        <option value="60">60</option>
-      </select>
-    </label>
-  </div>
-
-  <fieldset>
-    <legend>Enter Your PRs</legend>
-    <div class="fieldset-lifts">
-      <div class="lg-form-st">
-        <label>Flat Bench Press
-          <input  type="number" 
-                  class="input-max" 
-                  name="maxBench" 
-                  value="135"
-                  formControlName="maxBench">
-        </label>
-        <label>Back Squat
-          <input  type="number" 
-                  class="input-max" 
-                  name="maxSquat" 
-                  value="225"
-                  formControlName="maxSquat">
-        </label>
-      </div>
-      <div class="lg-form-st">
-        <label>Snatch
-          <input  type="number" 
-                  class="input-max" 
-                  name="maxSnatch" 
-                  value="115"
-                  formControlName="maxSnatch">
-        </label>
-        <label>Deadlift
-          <input  type="number" 
-                  class="input-max"
-                  name="maxDead"
-                  value="250"
-                  formControlName="maxDead">
-        </label>
-      </div>
-    </div>
-    <p class="pr-note">NOTE: If you don't know your PRs, estimate.</p>
-  </fieldset>
-
-  <fieldset>
-    <legend>Equipment</legend>
-    <div class="fieldset-equip">
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="barbell"
-                value="barbell"
-                formControlName="barbell"> Barbell
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="dumbbells"
-                value="dumbbells"
-                formControlName="dumbbells"
-                checked="checked"> Dumbbells
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="plates"
-                value="plates"
-                formControlName="plates"> Weight Plates
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="rack"
-                value="rack"
-                formControlName="rack"> Squat Rack
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="bench"
-                value="bench"
-                formControlName="bench"> Bench
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="jumpRope"
-                value="jumpRope"
-                formControlName="jumpRope"> Jump Rope
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="box"
-                value="box"
-                formControlName="box"> Plyo Box
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="kBell"
-                value="kBell"
-                formControlName="kBell"> Kettle Bell
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="dipStation"
-                value="dipStation"
-                formControlName="dipStation"> Dip Station
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="pullUpBar"
-                value="pullUpBar"
-                formControlName="pullUpBar"> Pull-Up Bar
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="medBall"
-                value="medBall"
-                formControlName="medBall"> Medicine Ball
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="rings"
-                value="rings"
-                formControlName="rings"> Rings
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="climbimgRope"
-                value="climbimgRope"
-                formControlName="climbimgRope"> Climbing Rope
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="conditioningRope"
-                value="conditioningRope"
-                formControlName="conditioningRope"> Conditioning Ropes
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="sled"
-                value="sled"
-                formControlName="sled"> Sled
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="sledgeHammer"
-                value="sledgeHammer"
-                formControlName="sledgeHammer"> Sledge Hammer
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="abMat"
-                value="abMat"
-                formControlName="abMat"> AbMat
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="resBands"
-                value="resBands"
-                formControlName="resBands"> Resistance Bands
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="tire"
-                value="tire"
-                formControlName="tire"> Tire
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="sandbag"
-                value="sandbag"
-                formControlName="sandbag"> Sandbag
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="chains"
-                value="chains"
-                formControlName="chains"> Chains
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="pegBoard"
-                value="pegBoard"
-                formControlName="pegBoard"> Peg Board
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="ghd"
-                value="ghd"
-                formControlName="ghd"> GHD
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="airBike"
-                value="airBike"
-                formControlName="airBike"> Air Bike
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="rower"
-                value="rower"
-                formControlName="rower"> Rower
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="skiErg"
-                value="skiErg"
-                formControlName="skiErg"> SkiErg
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="treadmill"
-                value="treadmill"
-                formControlName="treadmill"> Treadmill
-      </label>
-      <label>
-        <input  type="checkbox"
-                class="input-equip"
-                name="outdoorRun"
-                value="outdoorRun"
-                formControlName="outdoorRun"> Outdoor Running Available
-      </label>
-    </div>
-  </fieldset>
-
-  <button id="form-submit-btn" class="btn btn-gradient-right" type="submit">Give me my custom workout!</button>
-  <p class="red">{{ errorMessage }}</p>
 </form>

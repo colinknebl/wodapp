@@ -6,7 +6,8 @@ const express        = require('express'),
       routes         = require('./routes/routes'),
       api            = require('./api/api'),
       middleware     = require('./middleware/middleware'),
-      wodGeneratorV2 = require('./workout_gen_software/wodGeneratorV2');
+      wodGeneratorV2 = require('./workout_gen_software/wodGeneratorV2'),
+      wodGeneratorV3 = require('./workout_gen_software/wodGeneratorV3');
 
 // MIDDLEWARE
 app.use(middleware);
@@ -42,7 +43,7 @@ app.post('/workout-generator/', (req, res) => {
   // ADD USER TO THE USER DATABASE
   // mongodb.addUser(user.firstName, user.lastName, user.email);
 
-  wod = wodGeneratorV2.generateWod(req.body);
+  wod = wodGeneratorV3.generateWod(req.body);
 
   wod
     .then(results => {

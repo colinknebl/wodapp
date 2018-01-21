@@ -7,7 +7,8 @@ const path         = require('path'),
 
 const amrap        = require('./wod_types/amrap'),
       singlet      = require('./wod_types/singlet'),
-      couplet        = require('./wod_types/couplet');
+      couplet      = require('./wod_types/couplet'),
+      triplet      = require('./wod_types/triplet');
 
 
 
@@ -36,7 +37,7 @@ const amrap        = require('./wod_types/amrap'),
 wodGeneratorV2 = {
 
   generateWod: (data) => {
-    console.log(data._id);
+
     return new Promise((resolve, reject) => {
       let wod = {
         _id: data._id,
@@ -84,6 +85,14 @@ wodGeneratorV2 = {
               break;
             case "Couplet":
               wod = couplet.generate(user, wod);
+              wod
+                .then(results => {
+                  resolve(results);
+                })
+                .catch(err => reject(err));
+              break;
+            case "Triplet":
+              wod = triplet.generate(user, wod);
               wod
                 .then(results => {
                   resolve(results);

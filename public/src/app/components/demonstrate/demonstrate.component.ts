@@ -9,7 +9,7 @@ import { FormControl,
 import { Router }               from '@angular/router';
 import { IndexDemoFormService } from '../../services/index-demo-form/index-demo-form.service';
 import { AuthService }          from '../../services/auth/auth.service';
-import { UserGenModel   }          from '../../models/user-gen-wod';
+import { UserGenModel   }       from '../../models/user-gen-wod';
 
 @Component({
   selector: 'app-demonstrate',
@@ -18,13 +18,22 @@ import { UserGenModel   }          from '../../models/user-gen-wod';
 })
 export class DemonstrateComponent implements OnInit {
   @ViewChild("_id", {read: ElementRef}) tref: ElementRef;
+  @ViewChild('btnPrev') btnPrev: ElementRef;
+  @ViewChild('slide1') slide1: ElementRef;
+  @ViewChild('slide2') slide2: ElementRef;
+  @ViewChild('slide3') slide3: ElementRef;
+  @ViewChild('slide4') slide4: ElementRef;
+  @ViewChild('slide5') slide5: ElementRef;
+  @ViewChild('slide6') slide6: ElementRef;
 
+  
   public form: FormGroup;
   public user;
   public errorMessage: string;
   public gender: boolean = true;
   public fixSkillLvl: boolean = true;
   public formSubmitted: boolean = false;
+  public slides: any[];
 
   constructor(
     public router:Router,
@@ -48,6 +57,9 @@ export class DemonstrateComponent implements OnInit {
       tel              : null,
       skillLvl         : [null, Validators.required],
       gender           : [null, Validators.required],
+      bodyweightOnly   : null,
+      enduranceWod     : null,
+      includeStrongManExercises: null,
       wodType          : null,
       muscleGrp        : null,
       repScheme        : null,
@@ -68,7 +80,7 @@ export class DemonstrateComponent implements OnInit {
       pullUpBar        : null,
       medBall          : null,
       rings            : null,
-      climbimgRope     : null,
+      climbingRope     : null,
       conditioningRope : null,
       sled             : null,
       sledgeHammer     : null,
@@ -89,6 +101,16 @@ export class DemonstrateComponent implements OnInit {
 
   ngOnInit() {
     const loggedIn = this.authService.tokenCheck();
+
+
+    this.slides = [
+      this.slide1,
+      this.slide2,
+      this.slide3,
+      this.slide4,
+      this.slide5,
+      this.slide6
+    ];
 
     if (loggedIn) {
       this.authService.getAccountInfo()
@@ -200,6 +222,26 @@ export class DemonstrateComponent implements OnInit {
     }
   }
 
+  private transform: number = 0;
+
+  nextSlide() {
+    
+    this.transform = this.transform - 100;
+
+    this.slides.forEach(slide => {
+      slide.nativeElement.style.transform = `translate(${this.transform}%, 0%)`;
+    })
+  }
+
+  prevSlide() {
+
+    this.transform = this.transform + 100;
+
+    this.slides.forEach(slide => {
+      slide.nativeElement.style.transform = `translate(${this.transform}%, 0%)`;
+    })
+  }
+
   submit() {
     this.formSubmitted = true;
 
@@ -239,6 +281,7 @@ export class DemonstrateComponent implements OnInit {
       tel: this.form.value.tel,
       skillLvl: this.form.value.skillLvl,
       gender: this.form.value.gender,
+      bodyweightOnly: this.form.value.bodyweightOnly,
       wodType: this.form.value.wodType,
       muscleGrp: this.form.value.muscleGrp,
       repScheme: this.form.value.repScheme,
@@ -287,5 +330,36 @@ export class DemonstrateComponent implements OnInit {
     this.form.value.outdoorRun ? eArray.push('outdoorRun') : null;
     return eArray;
   }
+
+  public eqArray: any[] = [
+    {span: 'Barbell', value: 'barbell'},
+    {span: 'Dumbbells', value: 'dumbbells'},
+    {span: 'Weight Plates', value: 'plates'},
+    {span: 'Squat Rack', value: 'rack'},
+    {span: 'Bench', value: 'bench'},
+    {span: 'Jump Rope', value: 'jumpRope'},
+    {span: 'Plyo Box', value: 'box'},
+    {span: 'Kettle Bell', value: 'kBell'},
+    {span: 'Dip Station', value: 'dipStation'},
+    {span: 'Pull-Up Bar', value: 'pullUpBar'},
+    {span: 'Medicine Ball', value: 'medBall'},
+    {span: 'Rings', value: 'rings'},
+    {span: 'Climbing Rope', value: 'climbingRope'},
+    {span: 'Conditioning Ropes', value: 'conditioningRope'},
+    {span: 'Sled', value: 'sled'},
+    {span: 'Sledge Hammer', value: 'sledgeHammer'},
+    {span: 'AbMat', value: 'abMat'},
+    {span: 'Resistance Bands', value: 'resBands'},
+    {span: 'Tire', value: 'tire'},
+    {span: 'Sandbag', value: 'sandbag'},
+    {span: 'Chains', value: 'chains'},
+    {span: 'Peg Board', value: 'pegBoard'},
+    {span: 'GHD', value: 'ghd'},
+    {span: 'Air Bike', value: 'airBike'},
+    {span: 'Rower', value: 'rower'},
+    {span: 'SkiErg', value: 'skiErg'},
+    {span: 'Treadmill', value: 'treadmill'},
+    {span: 'Outdoor Running Space', value: 'outdoorRun'},
+  ]
 
 }

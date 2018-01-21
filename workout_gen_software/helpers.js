@@ -2,6 +2,255 @@ const numbers = require('./numbers');
 
 helpers = {
 
+  repSchemes: {
+    /*
+      Round types:
+      1. all exercises perform the same amount of reps per round, and the reps remain consistent throughout each round.
+      2. all exercises perform the same amount of reps per round, and each round has a different rep target.
+      3. each rep has a unique rep count, rep count maintained throughout the workout.
+      4. each round has a 
+    */
+
+    twoRounds: {
+      lowReps: ['7-11', '9-11', '5-15', '6-9', '9-6', '12-6', '6-12'],
+      medReps: ['21-9', '15-9', '14-7', '7-14', '25-15', '25-13', '13-25'],
+      highReps: ['50-25', '31-19', '28-20', '25-50', '30-40', '40-30', '20-40', '40-20']
+    },
+
+    threeRounds: {
+      lowReps: ['5-7-9', '9-7-5', '7-9-12', '12-9-7', '3-9-15', '15-9-3'],
+      medReps: ['21-15-9', '9-15-21', '21-9-15', '15-9-21', '15-21-9', '5-10-15', '15-10-5'],
+      highReps: ['40-30-20', '20-30-40', '10-20-30', '30-20-10', '30-25-20', '20-25-30']
+    },
+
+    fourRounds: {
+      lowReps: ['3-5-7-9', '9-7-5-3', '2-4-6-8', '8-6-4-2', '4-12-8-4', '9-5-7-3'],
+      medReps: ['5-10-15-20', '9-15-21-27', '27-21-15-9', '5-15-25-35', '35-25-15-5', '20-15-10-15', '21-15-9-3'],
+      highReps: ['10-20-30-40', '40-30-20-10', '20-30-25-35', '35-25-30-20']
+    },
+      
+      
+
+    fiveRounds: [
+    ],
+
+    sixRounds: [
+    ],
+
+    sevenRounds: [
+    ],
+
+    eightRounds: [
+    ],
+
+    nineRounds: [
+    ],
+
+    tenRounds: [
+    ],
+
+    elevenRounds: [
+    ],
+
+    twelveRounds: [
+    ]
+  },
+
+  chooseTripletExercises: {
+    v1: (muscleGrp, exercises) => {
+
+      let ex1, ex2, ex3, option, i, secEx, thdEx;
+      let options = [0, 1, 2];
+
+      const chestExercises = exercises.filter(exercise => exercise.priMuscleGrpGeneral === 'chest');
+      const backExercises = exercises.filter(exercise => exercise.priMuscleGrpGeneral === 'back');
+      const legExercises = exercises.filter(exercise => exercise.priMuscleGrpGeneral === 'legs');
+      const shoulderExercises = exercises.filter(exercise => exercise.priMuscleGrpGeneral === 'shoulders');
+
+      function chooseThirdExercise(ex1, ex2) {
+        
+        option = options[numbers.pickOneFromList(0, options.length)];
+        switch (option) {
+          case 0:
+            ex3 = chestExercises[numbers.pickOneFromList(0, chestExercises.length)];
+            break;
+          case 1:
+            ex3 = backExercises[numbers.pickOneFromList(0, backExercises.length)];
+            break;
+          case 2:
+            ex3 = legExercises[numbers.pickOneFromList(0, legExercises.length)];
+            break;
+          case 3: 
+            ex3 = shoulderExercises[numbers.pickOneFromList(0, shoulderExercises.length)];
+            break;
+        }
+      }
+
+      function chooseFirstAndSecondExercises() {
+        if (muscleGrp === 'legs') {
+          ex1 = legExercises[numbers.pickOneFromList(0, legExercises.length)];
+          i = 0;
+          do {
+            ex2 = legExercises[numbers.pickOneFromList(0, legExercises.length)];
+            i++;
+          } while (ex1.name === ex2.name && i < 10);
+          if (i < 10) { secEx = 'legs'; }
+
+          if (ex1.name === ex2.name) {
+            option = options[numbers.pickOneFromList(0, options.length)];
+            switch (option) {
+              case 0:
+                secEx = 'back';
+                ex2 = backExercises[numbers.pickOneFromList(0, backExercises.length)];
+                break;
+              case 1:
+                secEx = 'chest';
+                ex2 = chestExercises[numbers.pickOneFromList(0, chestExercises.length)];
+                break;
+              case 2:
+                secEx = 'shoulders';
+                ex2 = shouldersExercises[numbers.pickOneFromList(0, shoulderstExercises.length)];
+                break;
+              default:
+                secEx = 'back';
+                ex2 = backExercises[numbers.pickOneFromList(0, backExercises.length)];
+                break;
+            }
+          }
+          chooseThirdExercise();
+        }
+      }
+      do {
+        chooseFirstAndSecondExercises();
+      } while ((ex1.name === ex2.name) || (ex1.name === ex3.name) || (ex2.name === ex3.name));
+
+      // console.log(ex1.name);
+      // console.log(ex2.name);
+      // console.log(ex3.name);
+      
+      return [ex1, ex2, ex3];
+    }
+  },
+
+  setTripletReps: {
+    v1: (data) => {
+      let repScheme = data.repScheme;
+      let wod = data.wod;
+
+      function twoRounds() {
+        let x = helpers.repSchemes.twoRounds;
+        if (repScheme === 'lowRepHighWeight') {          
+          return x.lowReps[numbers.pickOneFromList(0, x.lowReps.length)];
+        }
+        else if (repScheme === 'mediumRepsAndWeight') {
+          return x.medReps[numbers.pickOneFromList(0, x.medReps.length)]; 
+        }
+        else if (repScheme === 'highRepLowWeight') {
+          return x.highReps[numbers.pickOneFromList(0, x.highReps.length)];
+        }
+        else if (repScheme === 'any') {
+          let schemes = ['high', 'low', 'med'];
+          let chosenScheme = schemes[numbers.pickOneFromList(0, schemes.length)];
+          switch (chosenScheme) {
+            case 'low':
+              return x.lowReps[numbers.pickOneFromList(0, x.lowReps.length)];
+            case 'med':
+              return x.medReps[numbers.pickOneFromList(0, x.medReps.length)]; 
+            case 'high':
+              return x.highReps[numbers.pickOneFromList(0, x.highReps.length)];
+            default:
+              return '21-9';
+          }
+        }
+        else {
+          return '21-9';
+        }
+      }
+      function threeRounds() {
+        let x = helpers.repSchemes.threeRounds;
+        if (repScheme === 'lowRepHighWeight') {
+          return x.lowReps[numbers.pickOneFromList(0, x.lowReps.length)];
+        }
+        else if (repScheme === 'mediumRepsAndWeight') {
+          return x.medReps[numbers.pickOneFromList(0, x.medReps.length)]; 
+        }
+        else if (repScheme === 'highRepLowWeight') {
+          return x.highReps[numbers.pickOneFromList(0, x.highReps.length)];
+        }
+        else if (repScheme === 'any') {
+          let schemes = ['high', 'low', 'med'];
+          let chosenScheme = schemes[numbers.pickOneFromList(0, schemes.length)];
+          switch (chosenScheme) {
+            case 'low':
+              return x.lowReps[numbers.pickOneFromList(0, x.lowReps.length)];
+            case 'med':
+              return x.medReps[numbers.pickOneFromList(0, x.medReps.length)]; 
+            case 'high':
+              return x.highReps[numbers.pickOneFromList(0, x.highReps.length)];
+            default:
+              return '21-15-9';
+          }
+        }
+        else {
+          return '21-15-9';
+        }
+      }
+
+      function fourRounds() {
+        let x = helpers.repSchemes.fourRounds;
+        if (repScheme === 'lowRepHighWeight') {
+          return x.lowReps[numbers.pickOneFromList(0, x.lowReps.length)];
+        }
+        else if (repScheme === 'mediumRepsAndWeight') {
+          return x.medReps[numbers.pickOneFromList(0, x.medReps.length)]; 
+        }
+        else if (repScheme === 'highRepLowWeight') {
+          return x.highReps[numbers.pickOneFromList(0, x.highReps.length)];
+        }
+        else if (repScheme === 'any') {
+          let schemes = ['high', 'low', 'med'];
+          let chosenScheme = schemes[numbers.pickOneFromList(0, schemes.length)];
+          switch (chosenScheme) {
+            case 'low':
+              return x.lowReps[numbers.pickOneFromList(0, x.lowReps.length)];
+            case 'med':
+              return x.medReps[numbers.pickOneFromList(0, x.medReps.length)]; 
+            case 'high':
+              return x.highReps[numbers.pickOneFromList(0, x.highReps.length)];
+            default:
+              return '21-15-9-3';
+          }
+        }
+        else {
+          return '21-15-9-3';
+        }
+      }
+
+
+      if (data.style === 'varied reps') {
+        switch (wod.rounds) {
+          case 2:
+            wod.repScheme = twoRounds();
+            break;
+          case 3:
+            wod.repScheme = threeRounds();
+            break;
+          case 4:
+            wod.repScheme = fourRounds();
+            break;
+          default:
+            wod.repScheme = threeRounds();
+            break;
+        }
+      }
+      else {
+        wod.repScheme = numbers.generate(7, 40);
+      }
+
+      return wod;
+    }
+  },
+
   setTimer: (timer) => {
     if (timer === 'any') {
       timer = numbers.generate(5, 60);

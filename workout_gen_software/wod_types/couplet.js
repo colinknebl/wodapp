@@ -38,7 +38,7 @@ module.exports = {
           'set reps',
           'varied reps'
         ];
-        let style = styles[numbers.generate(0, styles.length)];
+        let style = styles[numbers.pickOneFromList(0, styles.length)];
         let assignRounds = helpers.assignRounds.v1(wod.timer, user.skillLvl);
         // ***************************
 
