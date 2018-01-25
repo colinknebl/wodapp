@@ -7,6 +7,14 @@ const express       = require('express'),
       dbconfig      = require('../config/databaseConfig');
 
 
+api.post('/api/footer-form', (req, res) => {
+  mongodb.addUserEmail(req.body.email)
+    .then(result => {
+      res.send(result);
+    });
+});
+
+
 api.get('/api/get-wod/:_id', (req, res) => {
 
   let _id = req.params._id;

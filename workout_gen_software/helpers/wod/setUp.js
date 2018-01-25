@@ -8,15 +8,16 @@ const numbers = require('../numbers/numbers.js'),
   FORM VALIDATION TO-DO
   
   Couplets and Triplets:
-  1. all couplets and triplets are "For Time"...no timer allowed
+  1. DONE: all couplets and triplets are "For Time"...no timer allowed
 
 
   AMRAPs:
-  1. cannot be low reps, high weight
+  1. DONE: cannot be low reps, high weight
 
   
   Singlets:
-  1. can ONLY be low rep, high weight
+  1. DONE: can ONLY be low rep, high weight
+  2. DONE: cannot have a timer
 
 
   Chippers:
@@ -25,29 +26,27 @@ const numbers = require('../numbers/numbers.js'),
 
 
   Bodyweight: 
-  1. this is not a workout itself, it is a workout add-on
+  1. DONE: this is not a workout itself, it is a workout add-on
      the following workouts can be bodyweight only: 
       - Chipper, AMRAP, Couplet, Triplet, EMOM, Tabata
-  2. THIS HAS BEEN REMOVED, only NEED TO add check box to the form.
 
 
   Endurance:
-  1. this is not a workout itself, it is a workout add-on
+  1. DONE: this is not a workout itself, it is a workout add-on
      the following workout can be endurance focused workouts:
      - Chipper, Couplet, Triplet, EMOM, Tabata
-  2. THIS HAS BEEN REMOVED, only NEED TO add check box to the form.
 
 
   Strongman:
-  1. this is not a workout itself, it is a workout add-on
+  1. DONE: this is not a workout itself, it is a workout add-on
      the following workout can include strongman exercises:
      - AMRAP, Chipper, Couplet, Triplet, EMOM, Tabata
-  2. THIS HAS BEEN REMOVED, only NEED TO add check box to the form.
+
   
 
   Tabatas:
-  1. can only be low weight, high reps
-  2. no timer allowed in tabatas
+  1. DONE: can only be low weight, high reps
+  2. DONE: no timer allowed in tabatas
 
 */      
 

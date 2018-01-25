@@ -8,6 +8,7 @@ import { ContactComponent             } from './pages/contact/contact.component'
 import { FeaturesComponent            } from './pages/features/features.component';
 import { IndexComponent               } from './pages/index/index.component';
 import { LoginComponent               } from './pages/login/login.component';
+import { PrivacyPolicyComponent       } from './pages/privacy-policy/privacy-policy.component';
 import { RegisterComponent            } from './pages/register/register.component';
 import { WorkoutGeneratorComponent    } from './pages/workout-generator/workout-generator.component';
 
@@ -42,6 +43,10 @@ const appRoutes:Routes = [
     path        : 'login',
     component   : LoginComponent,
     canActivate : [NotAuthGuard]
+  },
+  {
+    path        : 'privacy-policy',
+    component   : PrivacyPolicyComponent
   },
   {
     path        : 'register',

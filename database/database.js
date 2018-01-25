@@ -68,6 +68,37 @@ mongodb = {
     });
   },
 
+  addUserEmail: (email) => {
+
+    return new Promise((resolve, reject) => {
+
+      // MongoClient.connect(mongoAtlasUrl, (err, db) => {
+      MongoClient.connect(localhostUrl, (err, db) => {
+        assert.equal(null, err); 
+
+        db.collection('footerEmailSubmits')
+          .insertOne({
+            email : email
+          }, (err, result) => {
+            db.close();
+            if (err) {
+              reject({
+                success: false,
+                message: 'Error adding email.'
+              });
+            }
+            else {
+              userNum++;
+              resolve({
+                success: true,
+                message: 'Email added successfully.'
+              });
+            }
+          });
+      });
+    });
+  },
+
 
   addRegisteredUser: {
     v1: (user, today) => {

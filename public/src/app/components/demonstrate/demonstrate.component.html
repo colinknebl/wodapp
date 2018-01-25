@@ -16,8 +16,10 @@
                   'input-text-has-error': form.controls.firstName.errors && form.controls.firstName.dirty
                  }">
           <ul class="slide__required-ul">
-            <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
-            <li *ngIf="form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty">Cannot be greater than 20 characters</li>
+            <li *ngIf="(form.controls.firstName.errors?.required && form.controls.firstName.dirty) ||
+                       (form.controls.firstName.errors?.required && slideOneNextClicked)">This field is required</li>
+            <li *ngIf="(form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty) ||
+                       (form.controls.firstName.errors?.maxlength && slideOneNextClicked)">Cannot be greater than 20 characters</li>
           </ul>
         </label>
 
@@ -31,8 +33,10 @@
                    'input-text-has-error': form.controls.lastName.errors && form.controls.lastName.dirty
                  }">
           <ul class="slide__required-ul">
-            <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
-            <li *ngIf="form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty">Cannot be greater than 20 characters</li>
+            <li *ngIf="(form.controls.lastName.errors?.required && form.controls.lastName.dirty) ||
+                       (form.controls.lastName.errors?.required && slideOneNextClicked)">This field is required</li>
+            <li *ngIf="(form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty) ||
+                       (form.controls.lastName.errors?.maxlength && slideOneNextClicked)">Cannot be greater than 20 characters</li>
           </ul>
         </label>
       
@@ -47,14 +51,16 @@
                     'input-text-has-error': form.controls.email.errors && form.controls.email.dirty
                  }">
           <ul class="slide__required-ul">
-            <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
-            <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid email</li>
+            <li *ngIf="(form.controls.email.errors?.required && form.controls.email.dirty) || 
+                       (form.controls.email.errors?.required && slideOneNextClicked)">This field is required</li>
+            <li *ngIf="(form.controls.email.errors?.validateEmail && form.controls.email.dirty) ||
+                       (form.controls.email.errors?.validateEmail && slideOneNextClicked)">This must be a valid email</li>
           </ul>
         </label>
       </div>
       
       <div class="slide__btn-container-two">
-        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+        <button type="button" class="slide__btn slide__btn--next" (click)="validateSlideOne()">Next >></button>
       </div>
     </div>
 
@@ -78,7 +84,9 @@
                   <option value="athlete">Athlete</option>
           </select>
           <ul class="slide__required-ul">
-            <li *ngIf="(form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || (form.controls.skillLvl.invalid && formSubmitted === true)">Please select from the available options.</li>
+            <li *ngIf="(form.controls.skillLvl.invalid  && form.controls.skillLvl.dirty) || 
+                       (form.controls.skillLvl.invalid && formSubmitted === true) ||
+                       (form.controls.skillLvl.invalid && slideTwoNextClicked)">Please select from the available options.</li>
           </ul>
         </label>
 
@@ -93,7 +101,9 @@
                   <option value="male">Male</option>
           </select>
           <ul class="slide__required-ul">
-            <li *ngIf="(form.controls.gender.invalid  && form.controls.gender.dirty) || (form.controls.gender.invalid && formSubmitted === true)">Please select from the available options.</li>
+            <li *ngIf="(form.controls.gender.invalid && form.controls.gender.dirty) ||
+                       (form.controls.gender.invalid && formSubmitted === true) ||
+                       (form.controls.gender.invalid && slideTwoNextClicked)">Please select from the available options.</li>
           </ul>
         </label>
 
@@ -119,7 +129,7 @@
       <div class="slide__btn-container-two">
         <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
 
-        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+        <button type="button" class="slide__btn slide__btn--next" (click)="validateSlideTwo()">Next >></button>
       </div>
     </div>
 
@@ -134,33 +144,39 @@
           <span class="slide__label__header">Do you want only bodyweight exercises?</span>
           <select class="slide__select"
                   name="bodyweightOnly" 
-                  formControlName="bodyweightOnly">
+                  formControlName="bodyweightOnly"
+                  *ngIf="showBodyWeightOnly">
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                   <option value="idc">I don't care</option>
           </select>
+          <p class="red italic" *ngIf="!showBodyWeightOnly">Not applicable to workout type: {{ wodType }}.</p>
         </label>
 
         <label class="slide__label">
           <span class="slide__label__header">Do you want an endurance focused workout?</span>
           <select class="slide__select"
                   name="enduranceWod" 
-                  formControlName="enduranceWod">
+                  formControlName="enduranceWod"
+                  *ngIf="showEnduranceFocus">
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                   <option value="idc">I don't care</option>
           </select>
+          <p class="red italic" *ngIf="!showEnduranceFocus">Not applicable to workout type: {{ wodType }}.</p>
         </label>
 
         <label class="slide__label">
           <span class="slide__label__header">Do you want to include strongman exercises?</span>
           <select class="slide__select"
                   name="includeStrongManExercises" 
-                  formControlName="includeStrongManExercises">
+                  formControlName="includeStrongManExercises"
+                  *ngIf="showStrongman">
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                   <option value="idc">I don't care</option>
           </select>
+          <p class="red italic" *ngIf="!showStrongman">Not applicable to workout type: {{ wodType }}.</p>
         </label>
 
       </div>
@@ -196,13 +212,26 @@
                   name="repScheme"
                   formControlName="repScheme">
                   <option value="any">Any</option>
-                  <option value="lowRepHighWeight">Low Reps, High Weight</option>
-                  <option value="highRepLowWeight">High Reps, Low Weight</option>
-                  <option value="mediumRepsAndWeight">Medium Reps, Medium Weight</option>
+                  <option
+                    *ngIf="form.controls.wodType.value !== 'AMRAP' &&
+                           form.controls.wodType.value !== 'Chipper' &&
+                           form.controls.wodType.value !== 'Tabata'"
+                    value="lowRepHighWeight">Low Reps, High Weight
+                  </option>
+                  <option
+                    *ngIf="form.controls.wodType.value !== 'Singlet' &&
+                           form.controls.wodType.value !== 'Tabata'"
+                    value="mediumRepsAndWeight">Medium Reps, Medium Weight
+                  </option>
+                  <option
+                    *ngIf="form.controls.wodType.value !== 'Singlet'"
+                    value="highRepLowWeight">High Reps, Low Weight
+                  </option>
           </select> 
         </label>
 
-        <label class="slide__label">
+        <label class="slide__label"
+          *ngIf="showTimer">
           <span class="slide__label__header">Workout Length <span class="slide__label-note">*in minutes*</span></span> 
           <select class="slide__select"
                   name="wodTimer" 
@@ -249,7 +278,7 @@
     <div #slide5 class="slide slide-5">
       <h5 class="slide__header">What are you PRs? (Personal Records)</h5>
       <div class="slide__label-container">
-          <p class="slide__pr-note">NOTE: If you don't know your PRs, estimate.</p>
+          <p class="slide__pr-note">NOTE: If you don't know your PRs, estimate. This is how your suggested weights per exercise are calculated.</p>
         
           <label class="slide__label">
             <span class="slide__label__header">Flat Bench Press</span>
@@ -300,7 +329,58 @@
           <p class="slide__pr-note">NOTE: If you want bodyweight only exercises you don't need to select any equipment.</p>
           
           <div class="slide__equip-flex">
-            <label *ngFor="let eq of eqArray" class="slide__label-equip">
+            <label *ngFor="let eq of eqArray1" class="slide__label-equip">
+            <input  type="checkbox"
+                    name="{{ eq.value }}"
+                    value="{{ eq.value }}"
+                    formControlName="{{ eq.value }}">
+                    <span>{{ eq.span }}</span>
+            </label>
+          </div>
+      </div>
+
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+
+      </div>
+    </div>
+
+
+
+    <div #slide7 class="slide slide-7">
+      <h5 class="slide__header">More Equipment Options</h5>
+      <div class="slide__label-container">
+          <p class="slide__pr-note">NOTE: If you want bodyweight only exercises you don't need to select any equipment.</p>
+          
+          <div class="slide__equip-flex">
+            <label *ngFor="let eq of eqArray2" class="slide__label-equip">
+            <input  type="checkbox"
+                    name="{{ eq.value }}"
+                    value="{{ eq.value }}"
+                    formControlName="{{ eq.value }}">
+                    <span>{{ eq.span }}</span>
+            </label>
+          </div>
+      </div>
+
+      <div class="slide__btn-container-two">
+        <button #btnPrev type="button" class="slide__btn slide__btn--prev" (click)="prevSlide()"><< Previous</button>
+
+        <button type="button" class="slide__btn slide__btn--next" (click)="nextSlide()">Next >></button>
+      </div>
+    </div>
+
+
+
+    <div #slide8 class="slide slide-8">
+      <h5 class="slide__header">Last of the Equipment</h5>
+      <div class="slide__label-container">
+          <p class="slide__pr-note">NOTE: If you want bodyweight only exercises you don't need to select any equipment.</p>
+          
+          <div class="slide__equip-flex">
+            <label *ngFor="let eq of eqArray3" class="slide__label-equip">
             <input  type="checkbox"
                     name="{{ eq.value }}"
                     value="{{ eq.value }}"
@@ -318,7 +398,7 @@
       </div>
     </div>
 
-    
-    <p class="red">{{ errorMessage }}</p>
   </div>
 </form>
+
+<p class="red">{{ errorMessage }}</p>

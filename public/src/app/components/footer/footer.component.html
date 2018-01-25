@@ -1,5 +1,62 @@
 <footer class="footer">
   <div class="section-content">
+    <ul class="footer--list footer--site-map-list">
+      <li><h6 class="footer--list-header">Site Map</h6></li>
+      <li><a class="footer--list-link" routerLink="/">Home</a></li>
+      <li><a class="footer--list-link" routerLink="/features">Features</a></li>
+      <li><a class="footer--list-link" routerLink="/about">About</a></li>
+      <li><a class="footer--list-link" routerLink="/contact">Contact</a></li>
+      <li><a class="footer--list-link" routerLink="/login" *ngIf="!authService.tokenCheck()">Login</a></li>
+      <li><a class="footer--list-link" routerLink="/account" *ngIf="authService.tokenCheck()">Account</a></li>
+      <li><a class="footer--list-link" routerLink="/" *ngIf="authService.tokenCheck()" (click)="logout()">Logout</a></li>
+    </ul>
+
+    <ul class="footer--list footer-support-list">
+      <li><h6 class="footer--list-header">Support</h6></li>
+      <li><a class="footer--list-link" routerLink="/contact">Contact Us</a></li>
+      <li><a class="footer--list-link" routerLink="/privacy-policy">Privacy Policy</a></li>
+      <!-- <li><a class="footer--list-link" routerLink="/contact">Terms of Use</a></li> -->
+      <hr>
+      <li class="footer--list-item">
+        <p>Sign up for emails of workouts,<br>fitness tips, and more!</p>
+        <form [formGroup]="form" (submit)="submit()">
+          <input 
+            type="email"
+            class="footer--email-form" 
+            name="email"
+            placeholder="email"
+            formControlName="email">
+            <input type="submit" class="footer--email-form-btn" name="submit" value="Submit">
+            <p class="footer--form-message-error" 
+              *ngIf="
+                (!showMessage && form.controls.email.dirty || formSubmitted) && 
+                (form.controls.email.errors?.required || form.controls.email.errors?.validateEmail)">
+            Please enter a valid email.</p>
+            <p [ngClass]="{
+              'footer--form-message-error': !formSubmitSuccess,
+              'footer--form-message-success': formSubmitSuccess}">{{ formSubmitMessage }}</p>
+        </form>
+      </li>
+    </ul>
+
+
+    <ul class="footer--list footer--social-list">
+      <li><h6 class="footer--list-header">Social</h6></li>
+      <li class="footer--list-item"><a href="" class="footer--list-link">facebook</a></li>
+      <li class="footer--list-item"><a href="" class="footer--list-link">twitter</a></li>
+      <li class="footer--list-item"><a href="" class="footer--list-link">instagram</a></li>
+      <li class="footer--list-item"><a href="" class="footer--list-link">linkedin</a></li>
+      <li class="footer--list-item"><a href="" class="footer--list-link">google+</a></li>
+    </ul>
+
+    <p class="copyright">&copy; 2018 Forgd</p>
+  </div>
+</footer>
+
+
+
+<!-- <footer class="footer">
+  <div class="section-content">
     <ul id="footer-site-map-list" class="footer-list">
       <li><h6 class="footer-header">Site Map</h6></li>
       <li><a class="footer-link" routerLink="/">Home</a></li>
@@ -7,9 +64,6 @@
       <li><a class="footer-link" routerLink="/about">About</a></li>
       <li><a class="footer-link" routerLink="/contact">Contact</a></li>
       <li><a class="footer-link" routerLink="/account">Account</a></li>
-      <!-- <li><a class="footer-link" routerLink="/donate">Donate</a></li> -->
-      <!-- <li><a class="footer-link" routerLink="/check-status">Check Status</a></li>
-      <li><a class="footer-link" routerLink="/blog">Blog</a></li> -->
     </ul>
     <ul id="footer-examples-list" class="footer-list">
       <li><h6 class="footer-header">Case Studies</h6></li>
@@ -33,4 +87,4 @@
     </ul>
     <p id="copyright">&copy; 2018 Forgd</p>
   </div>
-</footer>
+</footer> -->

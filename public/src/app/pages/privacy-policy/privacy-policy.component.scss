@@ -1,0 +1,15 @@
+@import '../../../assets/scss/variables',
+        '../../../assets/scss/main-classes';
+
+.section {
+  background: white;
+}
+.article--para {
+  margin-bottom: 1rem;
+  &:last-of-type {
+    margin-bottom: none;
+  }
+}
+.article--header {
+  margin: 2rem auto;
+}

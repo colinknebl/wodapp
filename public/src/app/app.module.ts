@@ -27,6 +27,7 @@ import { DonateComponent              } from './pages/_page-archive/donate/donat
 import { FeaturesComponent            } from './pages/features/features.component';
 import { IndexComponent               } from './pages/index/index.component';
 import { LoginComponent               } from './pages/login/login.component';
+import { PrivacyPolicyComponent       } from './pages/privacy-policy/privacy-policy.component';
 import { RegisterComponent            } from './pages/register/register.component';
 import { WorkoutGeneratorComponent    } from './pages/workout-generator/workout-generator.component';
 
@@ -35,6 +36,7 @@ import { WorkoutGeneratorComponent    } from './pages/workout-generator/workout-
 import { AuthService                  } from './services/auth/auth.service';
 import { ContactFormService           } from './services/contact-form/contact-form.service';
 import { FlashMessagesService         } from './services/flash-messages/flash-messages.service';
+import { FooterFormService            } from './services/footer-form/footer-form.service';
 import { GetWodService                } from './services/get-wod/get-wod.service';
 import { IndexDemoFormService         } from './services/index-demo-form/index-demo-form.service';
 import { IndexHeaderFormService       } from './services/index-header-form/index-header-form.service';
@@ -71,8 +73,10 @@ import { UserGenModel                 } from './models/user-gen-wod';
     ContactFormComponent,
     RegisterComponent,
     LoginComponent,
+    PrivacyPolicyComponent,
     AccountComponent,
-    DonateComponent
+    DonateComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +99,8 @@ import { UserGenModel                 } from './models/user-gen-wod';
     NotAuthGuard,
     FlashMessagesService,
     UserModel,
-    UserGenModel
+    UserGenModel,
+    FooterFormService
   ],
   bootstrap: [AppComponent]
 })

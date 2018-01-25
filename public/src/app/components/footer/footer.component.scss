@@ -3,32 +3,62 @@
 
 footer {
   background: $footer-color;
-  text-align: center;
   display: flex;
   justify-content: center;
   .section-content{
     margin: 4rem auto 2rem;
   }
 }
-
-.footer-header {
-  margin: 1rem auto;
-}
-.footer-list {
+.footer--list {
   list-style-type: none;
   margin-bottom: 2rem;
 }
-.footer-link {
+.footer--list-header {
+  margin: 1rem auto;
+}
+.footer--list-link {
   text-decoration: none;
   color: darken(white, 20%);
   &:hover, &:active {
     color: darken(white, 50%);
   }
 }
-
-#copyright {
-  color: darken(white, 50%);
+.footer--list-item p {
+  color: darken(white, 20%);
 }
+.footer--email-form {
+  padding: 0.25rem;
+  outline: none;
+  font-size: 0.75rem;
+}
+.footer--form-message-error {
+  color: red !important;
+  font-style: italic;
+}
+.footer--form-message-success {
+  color: $teal !important;
+  font-style: italic;
+}
+hr {
+  margin: 0.5rem auto;
+}
+.footer--email-form-btn {
+  border: 2px solid $teal;
+  background: $teal;
+  color: $text-color;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+  &:active, &:hover {
+    background: $footer-color;
+    color: $teal;
+  }
+}
+
+
+
 
 
 @media only screen and (min-width: $break-point) and (min-height: $footer-height-desktop) {
@@ -47,48 +77,107 @@ footer {
       grid-gap: 1rem;
     }
   }
-  .social-header {
-    display: none;
+
+  hr {
+    width: 75%;
+    margin-left: 0;
   }
-  .footer-list {
-    margin-bottom: 0rem;
-    &:nth-of-type(2) {
-      justify-self: center;
-    }
-    &:nth-of-type(3) {
-      justify-self: end;
-    }
-  }
-  .social-list-item {
-    display: inline-block;
-    margin-left: 1rem;
-    &:first-of-type {
-      margin-left: 0px;
-    }
-  }
-  .social-list-item a {
-    color: darken(white, 50%);
-    &:hover, &:active {
-      color: darken(white, 20%);
-    }
-  }
-  #footer-site-map-list {
-    grid-area: list1;
-  }
-  #footer-examples-list {
-    grid-area: list2;
-  }
-  #footer-support-list {
-    grid-area: list3;
-  }
-  #copyright {
-    grid-area: copyright;
-    align-self: end;
-  }
-  #social-list {
-    grid-area: social;
-    align-self: end;
-    justify-self: end;
+} 
+
+
+
+
+
+
+
+// footer {
+//   background: $footer-color;
+//   text-align: center;
+//   display: flex;
+//   justify-content: center;
+//   .section-content{
+//     margin: 4rem auto 2rem;
+//   }
+// }
+
+// .footer-header {
+//   margin: 1rem auto;
+// }
+// .footer-list {
+//   list-style-type: none;
+//   margin-bottom: 2rem;
+// }
+// .footer-link {
+//   text-decoration: none;
+//   color: darken(white, 20%);
+//   &:hover, &:active {
+//     color: darken(white, 50%);
+//   }
+// }
+
+// #copyright {
+//   color: darken(white, 50%);
+// }
+
+
+// @media only screen and (min-width: $break-point) and (min-height: $footer-height-desktop) {
+//   footer {
+//     position: fixed;
+//     top: auto; right: 0; bottom: 0; left: 0;
+//     z-index: -2;
+//     height: $footer-height-desktop;
+//     text-align: left;
+//     .section-content{
+//       display: grid;
+//       grid-template-areas:
+//         "list1 list2 list3"
+//         "copyright social social"
+//       ;
+//       grid-gap: 1rem;
+//     }
+//   }
+//   .social-header {
+//     display: none;
+//   }
+//   .footer-list {
+//     margin-bottom: 0rem;
+//     &:nth-of-type(2) {
+//       justify-self: center;
+//     }
+//     &:nth-of-type(3) {
+//       justify-self: end;
+//     }
+//   }
+//   .social-list-item {
+//     display: inline-block;
+//     margin-left: 1rem;
+//     &:first-of-type {
+//       margin-left: 0px;
+//     }
+//   }
+//   .social-list-item a {
+//     color: darken(white, 50%);
+//     &:hover, &:active {
+//       color: darken(white, 20%);
+//     }
+//   }
+//   #footer-site-map-list {
+//     grid-area: list1;
+//   }
+//   #footer-examples-list {
+//     grid-area: list2;
+//   }
+//   #footer-support-list {
+//     grid-area: list3;
+//   }
+//   #copyright {
+//     grid-area: copyright;
+//     align-self: end;
+//   }
+//   #social-list {
+//     grid-area: social;
+//     align-self: end;
+//     justify-self: end;
     
-  }
-}
+//   }
+// }

@@ -25,6 +25,8 @@ export class DemonstrateComponent implements OnInit {
   @ViewChild('slide4') slide4: ElementRef;
   @ViewChild('slide5') slide5: ElementRef;
   @ViewChild('slide6') slide6: ElementRef;
+  @ViewChild('slide7') slide7: ElementRef;
+  @ViewChild('slide8') slide8: ElementRef;
 
   
   public form: FormGroup;
@@ -34,6 +36,13 @@ export class DemonstrateComponent implements OnInit {
   public fixSkillLvl: boolean = true;
   public formSubmitted: boolean = false;
   public slides: any[];
+  public slideOneNextClicked: boolean = false;
+  public slideTwoNextClicked: boolean = false;
+  public wodType;
+  public showBodyWeightOnly: boolean;
+  public showStrongman: boolean;
+  public showEnduranceFocus: boolean;
+  public showTimer: boolean;
 
   constructor(
     public router:Router,
@@ -109,7 +118,9 @@ export class DemonstrateComponent implements OnInit {
       this.slide3,
       this.slide4,
       this.slide5,
-      this.slide6
+      this.slide6,
+      this.slide7,
+      this.slide8
     ];
 
     if (loggedIn) {
@@ -242,6 +253,67 @@ export class DemonstrateComponent implements OnInit {
     })
   }
 
+  validateSlideOne() {
+    this.slideOneNextClicked = true;
+
+    let form = this.form.controls;
+    if (form.firstName.valid && form.lastName.valid && form.email.valid) {
+      this.nextSlide();
+    }
+  }
+
+  validateSlideTwo() {
+    this.slideTwoNextClicked = true;
+
+    if (this.form.value.wodType) {
+      this.wodType = this.form.value.wodType;
+
+      // LOGIC FOR SHOWING BODYWEIGHT ONLY AND STRONGMAN EXERCISES QUESTIONS IN FORM
+      if (this.wodType === 'Chipper' || 
+          this.wodType === 'AMRAP' || 
+          this.wodType === 'Couplet' || 
+          this.wodType === 'Triplet' || 
+          this.wodType === 'EMOM' || 
+          this.wodType === 'Tabata') {
+        this.showBodyWeightOnly = true;
+        this.showStrongman = true;
+      }
+      else {
+        this.showBodyWeightOnly = false;
+        this.showStrongman = false;
+      }
+
+      // LOGIC FOR SHOWING ENDURANCE QUESTION IN FORM
+      if (this.wodType === 'Chipper' || 
+          this.wodType === 'Couplet' || 
+          this.wodType === 'Triplet' || 
+          this.wodType === 'EMOM' || 
+          this.wodType === 'Tabata') {
+        this.showEnduranceFocus = true;
+      }
+      else {
+        this.showEnduranceFocus = false;
+      }
+
+      // LOGIC FOR SHOWING TIMER OPTION IN FORM
+      if (this.wodType === 'Chipper' || 
+          this.wodType === 'Couplet' || 
+          this.wodType === 'Triplet' || 
+          this.wodType === 'Singlet' ||
+          this.wodType === 'Tabata') {
+        this.showTimer = false;
+      }
+      else {
+        this.showTimer = true;
+      }
+    }
+
+    let form = this.form.controls;
+    if (form.skillLvl.valid && form.gender.valid) {
+      this.nextSlide();
+    }
+  }
+
   submit() {
     this.formSubmitted = true;
 
@@ -331,35 +403,41 @@ export class DemonstrateComponent implements OnInit {
     return eArray;
   }
 
-  public eqArray: any[] = [
+  public eqArray1: any[] = [ //10
     {span: 'Barbell', value: 'barbell'},
     {span: 'Dumbbells', value: 'dumbbells'},
     {span: 'Weight Plates', value: 'plates'},
-    {span: 'Squat Rack', value: 'rack'},
     {span: 'Bench', value: 'bench'},
-    {span: 'Jump Rope', value: 'jumpRope'},
-    {span: 'Plyo Box', value: 'box'},
-    {span: 'Kettle Bell', value: 'kBell'},
+    {span: 'Chains', value: 'chains'},
+    {span: 'Squat Rack', value: 'rack'},
     {span: 'Dip Station', value: 'dipStation'},
     {span: 'Pull-Up Bar', value: 'pullUpBar'},
-    {span: 'Medicine Ball', value: 'medBall'},
-    {span: 'Rings', value: 'rings'},
-    {span: 'Climbing Rope', value: 'climbingRope'},
-    {span: 'Conditioning Ropes', value: 'conditioningRope'},
-    {span: 'Sled', value: 'sled'},
-    {span: 'Sledge Hammer', value: 'sledgeHammer'},
-    {span: 'AbMat', value: 'abMat'},
-    {span: 'Resistance Bands', value: 'resBands'},
     {span: 'Tire', value: 'tire'},
-    {span: 'Sandbag', value: 'sandbag'},
-    {span: 'Chains', value: 'chains'},
-    {span: 'Peg Board', value: 'pegBoard'},
+    {span: 'Rings', value: 'rings'}
+  ]
+
+  public eqArray2: any[] = [ //9
+    {span: 'Kettle Bell', value: 'kBell'},
+    {span: 'Resistance Bands', value: 'resBands'},
+    {span: 'Plyo Box', value: 'box'},
+    {span: 'Medicine Ball', value: 'medBall'},
     {span: 'GHD', value: 'ghd'},
+    {span: 'Peg Board', value: 'pegBoard'},
+    {span: 'AbMat', value: 'abMat'},
+    {span: 'Sledge Hammer', value: 'sledgeHammer'},
+    {span: 'Climbing Rope', value: 'climbingRope'}    
+  ]
+
+  public eqArray3: any[] = [ //9
+    {span: 'Jump Rope', value: 'jumpRope'},
+    {span: 'Sled', value: 'sled'},
+    {span: 'Sandbag', value: 'sandbag'},
+    {span: 'Conditioning Ropes', value: 'conditioningRope'},
     {span: 'Air Bike', value: 'airBike'},
     {span: 'Rower', value: 'rower'},
     {span: 'SkiErg', value: 'skiErg'},
     {span: 'Treadmill', value: 'treadmill'},
-    {span: 'Outdoor Running Space', value: 'outdoorRun'},
+    {span: 'Outdoor Running Space', value: 'outdoorRun'}
   ]
 
 }
