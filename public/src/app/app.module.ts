@@ -3,7 +3,8 @@ import { NgModule                     } from '@angular/core';
 import { HttpModule                   } from '@angular/http';
 import { HttpClientModule             } from '@angular/common/http';
 import { AngularFontAwesomeModule     } from 'angular-font-awesome';
-import { ReactiveFormsModule          } from '@angular/forms';
+import { ReactiveFormsModule, 
+         FormsModule                  } from '@angular/forms';
 import { AppRoutingModule             } from './app-routing.module';
 
 
@@ -84,6 +85,7 @@ import { UserGenModel                 } from './models/user-gen-wod';
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     AngularFontAwesomeModule
   ],
   providers: [

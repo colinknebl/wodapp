@@ -1,56 +1,80 @@
 <div class="section-content">
   <form [formGroup]="form" (submit)="submit()">
     
-    <label class="form-first-name">First Name
+    <label class="form--label">
+      <span class="form--label-header">First Name</span>
       <input
-        class="input-text"
+        class="form--input-text"
         type="text" 
         name="firstName" 
         formControlName="firstName">
-        <div [ngClass]="{ 
-              'form-has-error': (form.controls.firstName.errors && form.controls.firstName.dirty), 
-              'form-has-success': !form.controls.firstName.errors}">
-          <ul class="required-ul">
-            <li *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">This field is required</li>
-            <li *ngIf="form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty">This field can be no more than 20 characters long</li>
-          </ul>
-        </div>
+        <ul class="required-ul">
+          <li 
+          *ngIf="
+            (form.controls.firstName.errors?.required && form.controls.firstName.dirty) ||
+            (form.controls.firstName.errors?.required && formSubmitted)
+          ">
+            This field is required
+          </li>
+          <li 
+          *ngIf="
+            form.controls.firstName.errors?.maxlength && form.controls.firstName.dirty
+          ">
+            This field can be no more than 20 characters long
+          </li>
+        </ul>
     </label>
 
-    <label class="form-last-name">Last Name
+    <label class="form--label">
+      <span class="form--label-header">Last Name</span>
       <input
-        class="input-text"
+        class="form--input-text"
         type="text"
         name="lastName"
         formControlName="lastName">
-        <div [ngClass]="{ 
-              'form-has-error': (form.controls.lastName.errors && form.controls.lastName.dirty), 
-              'form-has-success': !form.controls.lastName.errors}">
-          <ul class="required-ul">
-            <li *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.dirty">This field is required</li>
-            <li *ngIf="form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty">This field can be no more than 20 characters long</li>
-          </ul>
-        </div>
+        <ul class="required-ul">
+          <li 
+          *ngIf="
+            (form.controls.lastName.errors?.required && form.controls.lastName.dirty) ||
+            (form.controls.lastName.errors?.required && formSubmitted)
+          ">
+            This field is required
+          </li>
+          <li 
+          *ngIf="
+            form.controls.lastName.errors?.maxlength && form.controls.lastName.dirty
+          ">
+            This field can be no more than 20 characters long
+          </li>
+        </ul>
     </label>
 
-    <label class="form-email">Email
+    <label class="form--label">
+      <span class="form--label-header">Email</span>
       <input
-        class="input-text"
+        class="form--input-text"
         type="email"
         name="email"
         formControlName="email">
-        <div [ngClass]="{ 
-              'form-has-error': (form.controls.email.errors && form.controls.email.dirty), 
-              'form-has-success': (!form.controls.email.errors && form.controls.email.dirty)
-            }">
-          <ul class="required-ul">
-            <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
-            <li *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">This must be a valid email</li>
-          </ul>
-        </div>
+        <ul class="required-ul">
+          <li 
+          *ngIf="
+            (form.controls.email.errors?.required && form.controls.email.dirty) ||
+            (form.controls.email.errors?.required && formSubmitted)
+          ">
+            This field is required
+          </li>
+          <li 
+          *ngIf="
+            form.controls.email.errors?.validateEmail && form.controls.email.dirty
+          ">
+            This must be a valid email
+          </li>
+        </ul>
     </label>
 
-    <label class="form-request-type">Request Type
+    <label class="form--label">
+      <span class="form--label-header">Request Type</span>
       <select formControlName="requestType">
         <option>Question</option>
         <option>Comment</option>
@@ -58,26 +82,61 @@
         <option>Exercise Addition</option>
         <option>Kudos</option>
       </select>
-      <div [ngClass]="{ 
-              'form-has-error': (form.controls.email.errors && form.controls.email.dirty), 
-              'form-has-success': (!form.controls.email.errors && form.controls.email.dirty)
-            }">
-          <ul class="required-ul">
-            <li *ngIf="form.controls.requestType.errors?.required &&
-             (form.controls.message.errors?.required && form.controls.message.dirty)">Please select an option.</li>
-          </ul>
-      </div>
-    </label>
-
-    <label class="form-message">Message
-      <textarea class="input-text" rows="6" required formControlName="message"></textarea>
       <ul class="required-ul">
-        <li *ngIf="form.controls.message.errors?.required && form.controls.message.dirty">Please include a brief message.</li>
+        <li 
+        *ngIf="
+          (form.controls.requestType.errors?.required && form.controls.message.dirty) ||
+          (form.controls.message.errors?.required && formSubmitted)
+        ">
+          Please select an option.
+        </li>
       </ul>
     </label>
+
+    <label class="form--label">
+      <span class="form--label-header">Message</span>
+      <textarea 
+        class="input-text" 
+        rows="6"
+        formControlName="message">
+      </textarea>
+      <ul class="required-ul">
+        <li 
+        *ngIf="
+          (form.controls.message.errors?.required && form.controls.message.dirty) ||
+          (form.controls.message.errors?.required && formSubmitted)
+        ">
+          Please include a brief message.
+        </li>
+      </ul>
+    </label>
+
+
 
     <input class="submit" type="submit" name="submit" value="Submit">
     
   </form>
-  <h5 class="message">{{ message }}</h5>
+  <h5 
+    class="message"
+    [ngClass]=
+    "{
+      'form--message-success': formIsValid,
+      'form--message-error': !formIsValid
+    }"
+  >
+    {{ message }}
+  </h5>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

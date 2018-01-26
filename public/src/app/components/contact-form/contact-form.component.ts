@@ -14,6 +14,8 @@ export class ContactFormComponent implements OnInit {
 
   public form: FormGroup;
   public message: string;
+  public formSubmitted: boolean = false;
+  public formIsValid: boolean;
 
   constructor(
     public contactFormService: ContactFormService,
@@ -42,10 +44,6 @@ export class ContactFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  validate() {
-    console.log('test');
-  }
-
   validateEmail(controls) {
     const regExp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
@@ -58,12 +56,20 @@ export class ContactFormComponent implements OnInit {
   }
 
   submit() {
+    this.formSubmitted = true;
     let form = this.form.value;
 
-    this.contactFormService.submit(form)
+    if (this.form.valid) {
+      this.formIsValid = true;
+      this.message = '';
+      this.contactFormService.submit(form)
       .subscribe(data => {
         this.message = data.message;
       });
+    }
+    else {
+      this.formIsValid = false;
+      this.message = 'Please complete the required fields.'
+    }
   }
-
 }
