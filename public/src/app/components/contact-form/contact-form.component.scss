@@ -46,6 +46,23 @@ textarea {
 }
 .submit {
   grid-area: submit;
+  border: 2px solid $teal;
+  // border-radius: 50px;
+  background: $footer-color;
+  color: $teal;
+  padding: 1rem 2rem;
+  margin: auto;
+  display: block;
+  cursor: pointer;
+  width: 40%;
+  min-width: 250px;
+  font-size: 1rem;
+  transition: background .25s, color .25s, border-color .25s;
+  &:hover, &:active {
+    background: $teal;
+    color: $footer-color;
+    border-color: $footer-color;
+  }
 }
 .input-text, select {
   @extend .general-input-styles;

@@ -38,3 +38,32 @@ label {
   @extend .input-border;
   width: 100%;
 }
+.form--btn {
+  border: 2px solid $teal;
+  // border-radius: 50px;
+  background: $footer-color;
+  color: $teal;
+  padding: 1rem 2rem;
+  margin: auto;
+  display: block;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+  transition: background .25s, color .25s, border-color .25s;
+  &:hover, &:active {
+    background: $teal;
+    color: $footer-color;
+    border-color: $footer-color;
+  }
+}
+.form--mobile-message {
+  font-style: italic;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.form--mobile-message-err {
+  color: red;
+}
+.form--mobile-message-success {
+  color: $teal;
+}

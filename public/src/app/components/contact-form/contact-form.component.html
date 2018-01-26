@@ -41,7 +41,7 @@
         formControlName="email">
         <div [ngClass]="{ 
               'form-has-error': (form.controls.email.errors && form.controls.email.dirty), 
-              'form-has-success': (!form.controls.email.errors && emailAvailable === true)
+              'form-has-success': (!form.controls.email.errors && form.controls.email.dirty)
             }">
           <ul class="required-ul">
             <li *ngIf="form.controls.email.errors?.required && form.controls.email.dirty">This field is required</li>
@@ -60,7 +60,7 @@
       </select>
       <div [ngClass]="{ 
               'form-has-error': (form.controls.email.errors && form.controls.email.dirty), 
-              'form-has-success': (!form.controls.email.errors && emailAvailable === true)
+              'form-has-success': (!form.controls.email.errors && form.controls.email.dirty)
             }">
           <ul class="required-ul">
             <li *ngIf="form.controls.requestType.errors?.required &&
@@ -76,7 +76,7 @@
       </ul>
     </label>
 
-    <input class="btn submit btn-gradient-right" type="submit" name="submit" value="Submit">
+    <input class="submit" type="submit" name="submit" value="Submit">
     
   </form>
   <h5 class="message">{{ message }}</h5>

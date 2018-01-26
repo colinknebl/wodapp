@@ -225,6 +225,25 @@ $form-bg: #2D2D2D;
     padding-left: 1.2em;
   }
 }
+.index-btn {
+  border: 2px solid $teal;
+  // border-radius: 50px;
+  background: $footer-color;
+  color: $teal;
+  padding: 1rem 2rem;
+  margin: auto;
+  display: block;
+  cursor: pointer;
+  width: 40%;
+  min-width: 250px;
+  font-size: 1rem;
+  transition: background .25s, color .25s, border-color .25s;
+  &:hover, &:active {
+    background: $teal;
+    color: $form-bg;
+    border-color: $form-bg;
+  }
+}
 
 
 @media screen and (min-width: $break-point) {

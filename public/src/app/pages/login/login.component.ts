@@ -1,9 +1,11 @@
-import { Component, OnInit }    from '@angular/core';
-import { 
-  FormControl, 
-  FormGroup, 
-  FormBuilder, 
-  Validators }                  from '@angular/forms';
+import { Component,
+         OnInit,
+         ViewChild,
+         ElementRef }           from '@angular/core';
+import { FormControl, 
+         FormGroup, 
+         FormBuilder, 
+         Validators }           from '@angular/forms';
 import { AuthService }          from '../../services/auth/auth.service';
 import { Router }               from '@angular/router';
 import { AuthGuard }            from '../../guards/auth.guard';
@@ -22,6 +24,8 @@ export class LoginComponent implements OnInit {
   public processing: boolean = false;
   public message: string;
   public previousUrl: string;
+  public mobileMessage: string;
+  public loginSuccess: boolean;
 
   constructor(
     public router: Router,
@@ -88,6 +92,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    
     this.processing = true;
     this.disableForm();
     let form = this.form.value;
@@ -96,8 +101,11 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         this.enableForm();
         this.processing = false;
-        
+
+        this.mobileMessage = data.message;
+
         if (data.success) {
+          this.loginSuccess = true;
           this.flashMessagesService.sendMessage({
             message: 'Login successful!',
             messageClass: 'success',
@@ -118,6 +126,16 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/account']);
             }
           }, 2000)
+        }
+        else {
+          this.loginSuccess = false;
+          this.loginSuccess = true;
+          this.flashMessagesService.sendMessage({
+            message: 'Login failed!',
+            messageClass: 'alert',
+            showMessageBool: true,
+            messageDuration: 4000
+          });
         }
       });
   }

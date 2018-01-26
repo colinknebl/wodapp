@@ -47,12 +47,16 @@
         </label>
 
         <input 
-          class="btn submit btn-gradient-right" 
+          class="form--btn" 
           type="submit" 
           name="submit" 
           value="Submit"
           [disabled]="!form.valid || processing"
         />
+        <p class="form--mobile-message" [ngClass]="{
+              'form--mobile-message-err': loginSuccess,
+              'form--mobile-message-success': !loginSuccess
+            }">{{ mobileMessage }}</p>
       </form>
     </div>
   </section>

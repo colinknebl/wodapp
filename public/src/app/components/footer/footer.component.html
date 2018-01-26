@@ -29,7 +29,7 @@
             <input type="submit" class="footer--email-form-btn" name="submit" value="Submit">
             <p class="footer--form-message-error" 
               *ngIf="
-                (!showMessage && form.controls.email.dirty || formSubmitted) && 
+                (form.controls.email.errors?.validateEmail && form.controls.email.dirty || formSubmitted) && 
                 (form.controls.email.errors?.required || form.controls.email.errors?.validateEmail)">
             Please enter a valid email.</p>
             <p [ngClass]="{
@@ -52,39 +52,3 @@
     <p class="copyright">&copy; 2018 Forgd</p>
   </div>
 </footer>
-
-
-
-<!-- <footer class="footer">
-  <div class="section-content">
-    <ul id="footer-site-map-list" class="footer-list">
-      <li><h6 class="footer-header">Site Map</h6></li>
-      <li><a class="footer-link" routerLink="/">Home</a></li>
-      <li><a class="footer-link" routerLink="/features">Features</a></li>
-      <li><a class="footer-link" routerLink="/about">About</a></li>
-      <li><a class="footer-link" routerLink="/contact">Contact</a></li>
-      <li><a class="footer-link" routerLink="/account">Account</a></li>
-    </ul>
-    <ul id="footer-examples-list" class="footer-list">
-      <li><h6 class="footer-header">Case Studies</h6></li>
-      <li><a href="" class="footer-link">Garage Gym</a></li>
-      <li><a href="" class="footer-link">CrossFit<span class="registered-logo-sm">&reg;</span> Box</a></li>
-      <li><a href="" class="footer-link">Commercial Gym</a></li>
-    </ul>
-    <ul id="footer-support-list" class="footer-list">
-      <li><h6 class="footer-header">Support</h6></li>
-      <li><a href="" class="footer-link" routerLink="/help">Help Center</a></li>
-      <li><a href="" class="footer-link" routerLink="/faq">FAQs</a></li>
-      <li><a href="" class="footer-link" routerLink="/contact">Contact Us</a></li>
-    </ul>
-    <ul id="social-list" class="footer-list">
-      <li><h6 class="footer-header social-header">Social</h6></li>
-      <li class="social-list-item"><a href="" class="footer-link">facebook</a></li>
-      <li class="social-list-item"><a href="" class="footer-link">twitter</a></li>
-      <li class="social-list-item"><a href="" class="footer-link">instagram</a></li>
-      <li class="social-list-item"><a href="" class="footer-link">linkedin</a></li>
-      <li class="social-list-item"><a href="" class="footer-link">google+</a></li>
-    </ul>
-    <p id="copyright">&copy; 2018 Forgd</p>
-  </div>
-</footer> -->

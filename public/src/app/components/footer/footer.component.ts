@@ -19,6 +19,7 @@ export class FooterComponent implements OnInit {
   public formSubmitted: boolean = false;
   public formSubmitMessage: string;
   public formSubmitSuccess: boolean;
+  public showMessage: boolean;
 
   constructor(
     public fb: FormBuilder,

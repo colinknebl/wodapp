@@ -12,11 +12,40 @@
     </div>
     
     <ul class="nav-menu-list">
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/" (click)="navClose()">Home</a></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/features" (click)="navClose()">Features</a></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/about" (click)="navClose()">About</a></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/contact" (click)="navClose()">Contact</a></li>
-      <li class="nav-menu-item"><a class="nav-menu-link" routerLink="/login" (click)="navClose()">Login</a></li>
+      <li class="nav-menu-item">
+        <a class="nav-menu-link" routerLink="/" (click)="navClose()">Home</a>
+      </li>
+
+      <li class="nav-menu-item">
+        <a class="nav-menu-link" routerLink="/features" (click)="navClose()">Features</a>
+      </li>
+
+      <li class="nav-menu-item">
+        <a class="nav-menu-link" routerLink="/about" (click)="navClose()">About</a>
+      </li>
+
+      <li class="nav-menu-item">
+        <a class="nav-menu-link" routerLink="/contact" (click)="navClose()">Contact</a>
+      </li>
+
+      <li 
+        class="nav-menu-item"
+        *ngIf="!authService.tokenCheck()">
+        <a class="nav-menu-link" routerLink="/login" (click)="navClose()">Login</a>
+      </li>
+
+      <li
+        class="nav-menu-item"
+        *ngIf="authService.tokenCheck()">
+        <a class="nav-menu-link" routerLink="/account" (click)="navClose()">Account</a>
+      </li>
+
+      <li
+        class="nav-menu-item"
+        *ngIf="authService.tokenCheck()">
+        <a class="nav-menu-link" routerLink="/" (click)="navClose();logout()">Logout</a>
+      </li>
+
     </ul>
 
   
