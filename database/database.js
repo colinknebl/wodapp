@@ -216,7 +216,20 @@ mongodb = {
 
           const registeredUser = db.collection('registeredUsers')
             .find(query).next((err, user) => {
-              if (user) {
+
+              if (!user) {
+                reject({
+                  success: false,
+                  message: `Error locating user in database. Error: ${err.message}.`
+                });
+              }
+              else if (!user && !err) {
+                reject({
+                  success: false,
+                  message: `Error locating user in database. Error: ${err.message}.`
+                });
+              }
+              else if (user) {
                 resolve({
                   success: true,
                   message: 'User account loaded successfully.',

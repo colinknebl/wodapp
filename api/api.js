@@ -177,7 +177,7 @@ api.get('/api/check-email/v1/:email', (req, res) => {
 
 api.post('/api/auth/login/v1', (req, res) => {
 
-
+  console.log(req.body);
   if (req.body.username && req.body.password) {
 
     let userLoginQuery = mongodb.login.v1(req.body.username);

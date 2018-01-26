@@ -15,8 +15,8 @@ export class AuthService {
   public loginUrl = 'http://localhost:4800/api/auth/login/v1';
   // public loginUrl = 'http://forgdapp.com/api/auth/login/v1';
 
-  // public getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/testing/';
-  public getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/v1/';
+  public getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/testing/';
+  // public getAccountInfoUrl = 'http://localhost:4800/api/auth/get-account-info/v1/';
   // public getAccountInfoUrl = 'http://forgdapp.com/api/auth/get-account-info/v1/';
 
   constructor(public http: Http) { }
