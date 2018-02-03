@@ -426,9 +426,9 @@ mongodb = {
 
     // BUILD THE DATABASE QUERY
     const query = mongodb.queryBuilder.v1(data);
-    // console.log('/*****************/');
-    // console.log('The DB query is: ', query);
-    // console.log('/*****************/');
+    console.log('/*****************/');
+    console.log('The DB query is: ', query);
+    console.log('/*****************/');
     // ************************
 
 
@@ -444,7 +444,7 @@ mongodb = {
           _id:0,
           primaryMuscleTarget:0,
           secondaryMuscleTarget:0,
-          category:0,
+          // category:0,
           level:0,
           muscleGrps:0,
         };
@@ -456,9 +456,16 @@ mongodb = {
         }, () => {
           db.close();
           if (exerciseArray) {
-            resolve(exerciseArray);
+            resolve({
+              success: true,
+              message: 'Successfully retrieved exercises from database.',
+              exercises: exerciseArray
+            });
           } else {
-            reject('failed to load');
+            reject({
+              success: false,
+              message: 'Failed to retrieve exercises from database.'
+            });
           }
         });
       });
@@ -484,9 +491,9 @@ mongodb = {
         )
       */
 
-      data.queryTypes.forEach((queryType) => {
+      data.queryTypes.forEach((queryType, i) => {
 
-        // console.log('queryType: ', queryType);
+        console.log('queryType: ', queryType, i, query);
 
 
         if (queryType === 'skillLvl') {
@@ -592,25 +599,78 @@ mongodb = {
             muscleGrpInstance.muscleGrps = data.muscleGroupSearchValue;
             queryDetails.push(muscleGrpInstance);
           }
+          else if ('muscleGrp' in data.user && data.user.muscleGrp === 'any') {
+            // nothing happens 
+          }
           else {
-            console.log('error in muscle group query builder. tag: 3132598ykjsdbkasdg');
+            console.log(`error in muscle group query builder; muscleGrp = ${data.user.muscleGrp}. tag: 3132598ykjsdbkasdg`);
           }
         }
 
+/*
+
+
+db.exercises.find({ '$and': [ { '$or': 
+   [ { category: 'crossfit' },
+     { category: 'metabolic conditioning' } ] } ] }).count()
+ 
+db.exercises.find(
+  {
+    $and: [
+      {$or: 
+        [
+          {category: 'crossfit'}, 
+          {category: 'metabolic conditioning'}
+        ]
+      },
+      {$or : [
+                {'skillLevel' : 'beginner'},
+                {'skillLevel' : 'intermediate'}
+              ]
+            }
+    ]
+  },
+  {
+    _id: 0,
+    name: 1,
+    category: 1
+  }
+).count()
+
+
+
+84 = db.exercises.find().count()
+
+3 = db.exercises.find({
+  $and: [{category: 'crossfit'}, {category: 'metabolic conditioning'}]
+}).count()
+
+74 = db.exercises.find({
+  $or: [{category: 'crossfit'}, {category: 'metabolic conditioning'}]
+}).count()
+
+*/
 
 
         else if (queryType === 'category') {
 
-          let categoryInstance = {};
-
           if (data.categorySearchValues) {
 
-            data.categorySearchValues.forEach((categorySearchValue) => {
+            let categorySearchArray = [];
+            let categorySearchObject = {$or: categorySearchArray};
 
-              categoryInstance.category = categorySearchValue;
-              queryDetails.push(categoryInstance);
-              
+            // data.categorySearchValues.forEach((categorySearchValue, i) => {
+            //   queryDetails.push({category: categorySearchValue});
+            // });
+            data.categorySearchValues.forEach((categorySearchValue, i) => {
+
+              categorySearchArray.push({category: categorySearchValue});
+
             });
+            console.log(categorySearchObject);
+            queryDetails.push(categorySearchObject);
+
+
           }
           else {
             console.log("categorySearchValues in query 'data' object did not exist--category search value will be generic. tag:9f]2jfae09g");

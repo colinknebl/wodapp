@@ -61,14 +61,59 @@ module.exports = {
       };
     }
 
+    // CHECK FOR VALID BODYWEIGHT ONLY
+    if (!user.bodyweightOnly || user.bodyweightOnly === null || user.bodyweightOnly === undefined) {
+      user.bodyweightOnly = false;
+    }
+    else if (user.bodyweightOnly === 'idc') {
+      let options = [true, false];
+      user.bodyweightOnly = options[numbers.pickOneFromList(0, options.length)];
+    }
+    else if (user.bodyweightOnly === 'yes') {
+      user.bodyweightOnly = true;
+    }
+    else {
+      user.bodyweightOnly = false; 
+    }
+
+    // CHECK FOR VALID ENDURANCE FOCUS
+    if (!user.enduranceFocus || user.enduranceFocus === null || user.enduranceFocus === undefined) {
+      user.enduranceFocus = false;
+    }
+    else if (user.enduranceFocus === 'idc') {
+      let options = [true, false];
+      user.enduranceFocus = options[numbers.pickOneFromList(0, options.length)];
+    }
+    else if (user.enduranceFocus === 'yes') {
+      user.enduranceFocus = true;
+    }
+    else {
+      user.enduranceFocus = false; 
+    }
+
+    // CHECK FOR VALID STRONGMAN EXERCISES
+    if (!user.includeStrongManExercises || user.includeStrongManExercises === null || user.includeStrongManExercises === undefined) {
+      user.includeStrongManExercises = false;
+    }
+    else if (user.includeStrongManExercises === 'idc') {
+      let options = [true, false];
+      user.includeStrongManExercises = options[numbers.pickOneFromList(0, options.length)];
+    }
+    else if (user.includeStrongManExercises === 'yes') {
+      user.includeStrongManExercises = true;
+    }
+    else {
+      user.includeStrongManExercises = false; 
+    }
+
     // CHECK FOR VALID WORKOUT (WOD) TYPE
     if (!user.wodType ||
          user.wodType === undefined ||
         (user.wodType !== 'any' &&
          user.wodType !== 'AMRAP' &&
-         user.wodType !== 'Triplet' &&
          user.wodType !== 'Singlet' &&
          user.wodType !== 'Couplet' &&
+         user.wodType !== 'Triplet' &&
          user.wodType !== 'Chipper' &&
          user.wodType !== 'EMOM' &&
          user.wodType !== 'Tabata'&&
@@ -79,14 +124,17 @@ module.exports = {
 
     // CHECK FOR VALID MUSCLE GROUP
     if (!user.muscleGrp ||
+         user.muscleGrp === null ||
          user.muscleGrp === undefined ||
-        (user.muscleGrp !== 'any' && 
-         user.muscleGrp !== 'chest' &&
-         user.muscleGrp !== 'shoulders' &&
-         user.muscleGrp !== 'legs' &&
-         user.muscleGrp !== 'back')
-       ) {
+         user.muscleGrp === 'any') 
+    {
       user.muscleGrp = 'any';
+    }
+    else if (user.muscleGrp === 'chest' ||
+             user.muscleGrp === 'shoulders' ||
+             user.muscleGrp === 'legs' ||
+             user.muscleGrp === 'back') {
+      // nothing happens, stays the same
     }
     else {
       user.muscleGrp = 'any';

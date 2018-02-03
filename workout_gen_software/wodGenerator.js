@@ -1976,153 +1976,153 @@ helpers = {
 
 
 
-  filterExercisesBasedOnEquipment: {
-    v1: (exerciseArray, userEquip) => {
+  // filterExercisesBasedOnEquipment: {
+    // v1: (exerciseArray, userEquip) => {
 
-      let validExercises = [];
+    //   let validExercises = [];
 
-      // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
+    //   // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
 
-      // loop through each exercise in the exerciseArray
-      for (let i = 0; i < exerciseArray.length; i++) {
-        if (exerciseArray[i].necessaryEquip !== undefined) {
-          let matches = 0;
+    //   // loop through each exercise in the exerciseArray
+    //   for (let i = 0; i < exerciseArray.length; i++) {
+    //     if (exerciseArray[i].necessaryEquip !== undefined) {
+    //       let matches = 0;
 
-          // loop through each "necessaryEquip" of that exercise 
-          let equipNum = exerciseArray[i].necessaryEquip;
-          for (let a = 0; a < equipNum.length; a++) {
+    //       // loop through each "necessaryEquip" of that exercise 
+    //       let equipNum = exerciseArray[i].necessaryEquip;
+    //       for (let a = 0; a < equipNum.length; a++) {
             
-            // loop through each item in the "userEquip" array
-            for (let t = 0; t < userEquip.length; t++) {
+    //         // loop through each item in the "userEquip" array
+    //         for (let t = 0; t < userEquip.length; t++) {
               
-              // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
-              if (equipNum[a] === userEquip[t]) {
-                matches++;
-              }
-            }
-            if (equipNum.length === matches) {
-              // if the value of matches is equal to the amount of the number of equipment needed in the "necessaryEquip" array, add the exercise to the "validExercises" array.
-              validExercises.push(exerciseArray[i]);
-            }
-          }
-        } 
-        else {
-          validExercises.push(exerciseArray[i]);
-        }
-      } 
-      return validExercises;
-    },
+    //           // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
+    //           if (equipNum[a] === userEquip[t]) {
+    //             matches++;
+    //           }
+    //         }
+    //         if (equipNum.length === matches) {
+    //           // if the value of matches is equal to the amount of the number of equipment needed in the "necessaryEquip" array, add the exercise to the "validExercises" array.
+    //           validExercises.push(exerciseArray[i]);
+    //         }
+    //       }
+    //     } 
+    //     else {
+    //       validExercises.push(exerciseArray[i]);
+    //     }
+    //   } 
+    //   return validExercises;
+    // },
 
 
 
 
 
-    v2: (exerciseArray, userEquip) => {
+    // v2: (exerciseArray, userEquip) => {
 
-      let validExercises = [];
+    //   let validExercises = [];
 
-      // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
+    //   // FILTER OUT THE EXERCISES THE USER CANNOT PERFORM BECAUSE THEY DO NOT HAVE THE NECESSARY EQUIPMENT
 
-      function needOneEquipConfig(exercise) {
+    //   function needOneEquipConfig(exercise) {
 
-        let arrayMatch = 0;
-        let added = false;
-        userEquip.forEach((userEquipItem) => {
-          if (added === true) { return; }
+    //     let arrayMatch = 0;
+    //     let added = false;
+    //     userEquip.forEach((userEquipItem) => {
+    //       if (added === true) { return; }
 
-          exercise.needOneEquipConfig.forEach((needOneEquipConfigItem) => {
+    //       exercise.needOneEquipConfig.forEach((needOneEquipConfigItem) => {
 
-            if (added === true) { return; }
+    //         if (added === true) { return; }
 
 
-            if (Array.isArray(needOneEquipConfigItem)) {
+    //         if (Array.isArray(needOneEquipConfigItem)) {
               
-              needOneEquipConfigItem.forEach((needOneEquipconfigSubItem, index1) => {
+    //           needOneEquipConfigItem.forEach((needOneEquipconfigSubItem, index1) => {
 
-                userEquip.forEach((userEquipItemX, index2) => {
+    //             userEquip.forEach((userEquipItemX, index2) => {
 
-                  if (index1 >= 0 && arrayMatch !== index1) { return; }
+    //               if (index1 >= 0 && arrayMatch !== index1) { return; }
 
-                  if (needOneEquipconfigSubItem === userEquipItemX) {
-                    arrayMatch++;
-                  }
+    //               if (needOneEquipconfigSubItem === userEquipItemX) {
+    //                 arrayMatch++;
+    //               }
 
-                });
+    //             });
 
-                if (needOneEquipConfigItem.length === arrayMatch) {
-                  added = true;
-                  validExercises.push(exercise);
-                }
-              else {
-                console.log(`user does not have necessary optional equipment configurations for ${exercise.name}. tag: 2/3tewaf5asdf63h`);
-              }
+    //             if (needOneEquipConfigItem.length === arrayMatch) {
+    //               added = true;
+    //               validExercises.push(exercise);
+    //             }
+    //           else {
+    //             console.log(`user does not have necessary optional equipment configurations for ${exercise.name}. tag: 2/3tewaf5asdf63h`);
+    //           }
 
-              });
-            }
-            else {
-              if (needOneEquipConfigItem === userEquipItem) {
-                added = true;
-                validExercises.push(exercise);
-              }
-              else {
-                console.log(`user does not have necessary optional equipment configurations for ${exercise.name}. tag: 20abcagre654erwg`);
-              }
-            }
-          });
+    //           });
+    //         }
+    //         else {
+    //           if (needOneEquipConfigItem === userEquipItem) {
+    //             added = true;
+    //             validExercises.push(exercise);
+    //           }
+    //           else {
+    //             console.log(`user does not have necessary optional equipment configurations for ${exercise.name}. tag: 20abcagre654erwg`);
+    //           }
+    //         }
+    //       });
 
-        });
-      }
-
-
+    //     });
+    //   }
 
 
-      // loop through each exercise in the exerciseArray
-      exerciseArray.forEach((exercise) => {
-
-        // if the exercise contains a "necessaryEquip" key/value pair
-        if (exercise.necessaryEquip) {
-          let matches = 0;
-
-          // loop through each "necessaryEquip" of that exercise 
-          exercise.necessaryEquip.forEach((necessaryEquipItem, neindex) => {
 
 
-            // loop through each item in the "userEquip" array
-            userEquip.forEach((userEquipItem) => {
+    //   // loop through each exercise in the exerciseArray
+    //   exerciseArray.forEach((exercise) => {
 
-              if (matches === neindex + 1) {return;}
+    //     // if the exercise contains a "necessaryEquip" key/value pair
+    //     if (exercise.necessaryEquip) {
+    //       let matches = 0;
 
-              // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
-              if (necessaryEquipItem === userEquipItem) {
-                matches++;
-              }
+    //       // loop through each "necessaryEquip" of that exercise 
+    //       exercise.necessaryEquip.forEach((necessaryEquipItem, neindex) => {
 
-              // if the value of matches is equal to the amount of the number of equipment needed in the "necessaryEquip" array, add the exercise to the "validExercises" array.
-              if (exercise.necessaryEquip.length === matches) {
 
-                if (exercise.needOneEquipConfig) {
-                  needOneEquipConfig(exercise);
-                }
-                else {
-                  validExercises.push(exercise);
-                }
-              }
-            });
-          });
-        }
-        else if (exercise.needOneEquipConfig) {
-          needOneEquipConfig(exercise);
-        }
-        else {
-          // if the exercise does not require any equipment (does not contain the "necessaryEquip" key/value pair), add the exercise to the "validExercises" array
-          validExercises.push(exercise);
-        }
+    //         // loop through each item in the "userEquip" array
+    //         userEquip.forEach((userEquipItem) => {
 
-      });
+    //           if (matches === neindex + 1) {return;}
 
-      return validExercises;
-    }
-  },
+    //           // if the iteration of necessary equipment matches the iteration of equipment the user has, add 1 to matches variable
+    //           if (necessaryEquipItem === userEquipItem) {
+    //             matches++;
+    //           }
+
+    //           // if the value of matches is equal to the amount of the number of equipment needed in the "necessaryEquip" array, add the exercise to the "validExercises" array.
+    //           if (exercise.necessaryEquip.length === matches) {
+
+    //             if (exercise.needOneEquipConfig) {
+    //               needOneEquipConfig(exercise);
+    //             }
+    //             else {
+    //               validExercises.push(exercise);
+    //             }
+    //           }
+    //         });
+    //       });
+    //     }
+    //     else if (exercise.needOneEquipConfig) {
+    //       needOneEquipConfig(exercise);
+    //     }
+    //     else {
+    //       // if the exercise does not require any equipment (does not contain the "necessaryEquip" key/value pair), add the exercise to the "validExercises" array
+    //       validExercises.push(exercise);
+    //     }
+
+    //   });
+
+    //   return validExercises;
+    // }
+  // },
 
   
 

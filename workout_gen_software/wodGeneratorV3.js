@@ -30,7 +30,6 @@ wodGeneratorV3 = {
         });
       }
 
-
       let wod = {
         _id: data._id,
         type: null,
@@ -41,9 +40,7 @@ wodGeneratorV3 = {
         run: null, // true/false if there is a run involved with the wod
         instructions: null,
         exercises: []
-      };
-
-      
+      };      
 
       // VALIDATE USER DATA
       let user = userClass.validate(data.user);
@@ -58,6 +55,8 @@ wodGeneratorV3 = {
       wod = wodClass.setUp(user, wod);
 
 
+
+      
 
 
       resolve({buildingV3: true});

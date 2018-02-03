@@ -1,7 +1,8 @@
 const numbers = require('../numbers/numbers.js'),
       type    = require('./type'),
       timer   = require('./timer'),
-      rounds   = require('./rounds');
+      rounds   = require('./rounds'),
+      exercises = require('./exercises');
 
 
 /*
@@ -21,8 +22,8 @@ const numbers = require('../numbers/numbers.js'),
 
 
   Chippers:
-  1. cannot be low reps, high weight
-  2. no timer in chippers
+  1. DONE: cannot be low reps, high weight
+  2. DONE: no timer in chippers
 
 
   Bodyweight: 
@@ -53,10 +54,10 @@ const numbers = require('../numbers/numbers.js'),
 module.exports = {
   setUp: (user, wod) => {
 
-    console.log('======== USER ========>', user);
-    console.log('***********************');
-    console.log('========  WOD  =======>', wod);
-    console.log('***********************');
+    // console.log('======== USER ========>', user);
+    // console.log('***********************');
+    // console.log('========  WOD  =======>', wod);
+    // console.log('***********************');
 
     // SET WOD TYPE
     wodTypeSetup = type.setUp(user.wodType, wod);
@@ -102,34 +103,59 @@ module.exports = {
       5. strongman add on (T/F)
 
       - AMRAP
+      1. choose exercises
+      2. choose reps
+      3. choose weight
 
       - Triplet
       1. choose exercises
-      2. choose weight
-      3. choose reps
-
-      1. choose reps
-      2. choose exercises
-      3. choose weight 
+      2. choose reps
+      3. choose weight
 
       - Couplet
+      1. choose exercises
+      2. choose reps
+      3. choose weight
 
       - Singlet
+      1. choose exercises
+      2. choose reps
 
       - Chipper
+      1. choose exercises
+      2. choose reps
+      3. choose weight
 
       - EMOM
+      1. choose exercises
+      2. choose reps
+      3. choose weight
 
       - Tabata
+      1. choose exercises
+      2. choose reps
+      3. choose weight
 
       - Bodybuilding
+      1. choose exercises
+      2. choose reps
+      3. choose weight
 
     */
+
+    // GET EXERCISES
+    getWodExercises = exercises.get.v1(user, wod);
+    if (!getWodExercises.success) {
+      return getWodExercises;
+    }
+    else {
+      wod = getWodExercises.wod;
+    }
 
 
 
     // INSTRUCTIONS ARE FILLED IN LATER DURING THE INDIVIDUAL WOD CREATION.
 
-    console.log('wod to return:', wod);
+    // console.log('wod to return:', wod);
   }
 };

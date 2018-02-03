@@ -27,14 +27,10 @@ module.exports = {
 
 
 wodTypes = ['AMRAP',
-            'Triplet',
             'Singlet',
             'Couplet',
+            'Triplet',
             'Chipper',
             'EMOM',
-            'Endurance',
-            'Strength',
-            'Strongman',
             'Tabata',
-            'Weightlifting',
             'Bodybuilding'];
